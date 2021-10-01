@@ -6,7 +6,7 @@
         <router-link to="/about">
           <c-text mx="4">เกี่ยวกับเรา</c-text></router-link
         >
-        <router-link to="/about">
+        <router-link to="/contact-us">
           <c-text mx="4">ติดต่อเรา</c-text></router-link
         >
       </c-flex>
@@ -18,18 +18,11 @@
 
       <!-- RIGHT -->
       <c-flex>
-        <!-- <c-icon-button
-          :icon="colorMode === 'light' ? 'moon' : 'sun'"
-          @click="$toggleColorMode"
-          :aria-label="
-            `Switch to ${colorMode === 'light' ? 'dark' : 'light'} mode`
-          "
-        /> -->
         <c-button
           backgroundColor="brand.400"
           color="brand.500"
           as="router-link"
-          to="/about"
+          to="/login"
           mx="4"
           fontWeight="sm"
           >เข้าสู่ระบบ</c-button
@@ -38,7 +31,7 @@
           backgroundColor="brand.500"
           color="white"
           as="router-link"
-          to="/about"
+          to="/register"
           mx="4"
           fontWeight="sm"
           >สมัครสมาชิก</c-button

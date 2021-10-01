@@ -8,7 +8,7 @@
         color="primary.800"
         textAlign="left"
       >
-        {{ title }}
+        Job Serm
       </c-heading>
       <c-heading
         as="h2"
@@ -20,7 +20,10 @@
         textAlign="left"
         white-space="pre-line"
       >
-        {{ subtitle }}
+        {{
+          `งานเทพๆ หาง่ายกว่าที่คิดเยอะ! 
+          คิดถึงงาน คิดถึงเรา`
+        }}
       </c-heading>
       <c-flex>
         <c-link v-bind:to="{ ctaLink }">
@@ -31,7 +34,7 @@
             to="/about"
             fontWeight="sm"
             mr="2"
-            >{{ ctaText }}</c-button
+            >หาคนเข้าทำงาน</c-button
           >
         </c-link>
         <c-link v-bind:to="{ ctaLink }">
@@ -66,7 +69,6 @@
 <script>
 export default {
   name: "Hero",
-  props: ["title", "subtitle", "ctaText", "image"],
 };
 </script>
 
