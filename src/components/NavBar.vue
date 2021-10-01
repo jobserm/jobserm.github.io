@@ -1,6 +1,16 @@
 <template>
   <div id="nav-bar">
     <c-flex
+      py="4"
+      align="center"
+      justify="center"
+      v-on:click="show = !show"
+      :display="['flex', 'none', 'none', 'none']"
+    >
+      <c-image src="/logo.svg" />
+    </c-flex>
+
+    <c-flex
       as="nav"
       px="15vw"
       py="4"
@@ -8,6 +18,7 @@
       align="center"
       :justify="['center', 'center', 'center', 'space-between']"
       wrap="wrap"
+      :display="[show ? 'block' : 'none', 'flex', 'flex', 'flex']"
     >
       <!-- LEFT -->
       <c-flex wrap="wrap">
@@ -30,6 +41,7 @@
         <button-primary :url="`/register`" :text="`สมัครสมาชิก`" mx="4" />
       </c-flex>
     </c-flex>
+
     <c-divider my="-0.5" />
   </div>
 </template>
@@ -41,42 +53,10 @@ export default {
   components: { ButtonPrimary, ButtonSecondary },
   name: "Navbar",
   inject: ["$chakraColorMode", "$toggleColorMode"],
-  computed: {
-    colorMode() {
-      return this.$chakraColorMode();
-    },
-  },
-  watch: {
-    colorMode(newVal) {
-      if (!process.client) {
-        return;
-      }
-      try {
-        localStorage.setItem("chakra_ui_docs_color_mode", newVal);
-      } catch (error) {
-        console.error(error);
-      }
-    },
-  },
-  created() {
-    if (!process.client) {
-      return;
-    }
-    try {
-      const savedColorMode = localStorage.getItem("chakra_ui_docs_color_mode");
-      if (!savedColorMode) {
-        return;
-      }
-      if (
-        savedColorMode &&
-        this.colorMode &&
-        this.colorMode !== savedColorMode
-      ) {
-        this.$toggleColorMode();
-      }
-    } catch (error) {
-      console.error(error);
-    }
+  data() {
+    return {
+      show: false,
+    };
   },
 };
 </script>
