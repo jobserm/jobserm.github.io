@@ -1,13 +1,7 @@
 <template>
   <c-flex align="center" justify="space-between" minH="70vh" dir="row" mb="16">
-    <c-stack spacing="4" align="flex-start" ml="16vw">
-      <c-heading
-        as="h1"
-        size="xl"
-        fontWeight="bold"
-        color="primary.800"
-        textAlign="left"
-      >
+    <c-stack spacing="4" align="flex-start">
+      <c-heading as="h1" size="xl" fontWeight="bold" color="primary.800">
         Job Serm
       </c-heading>
       <c-heading
@@ -17,11 +11,10 @@
         opacity="0.8"
         fontWeight="normal"
         lineHeight="1.5"
-        textAlign="left"
         white-space="pre-line"
       >
         {{
-          `งานเทพๆ หาง่ายกว่าที่คิดเยอะ! 
+          `งานเทพๆ หาง่ายกว่าที่คิดเยอะ!\n
           คิดถึงงาน คิดถึงเรา`
         }}
       </c-heading>
@@ -50,18 +43,17 @@
           >
         </c-link>
       </c-flex>
-      <c-text
-        fontSize="xs"
-        mt="2"
-        textAlign="left"
-        color="primary.800"
-        opacity="0.6"
-      >
+      <c-text fontSize="xs" mt="2" color="primary.800" opacity="0.6">
         No credit card required.
       </c-text>
     </c-stack>
+
     <c-box>
-      <img src="../assets/hero.svg" size="100%" rounded="1rem" shadow="2xl" />
+      <c-image
+        :src="require('../../assets/hero.svg')"
+        size="80%"
+        rounded="1rem"
+      />
     </c-box>
   </c-flex>
 </template>

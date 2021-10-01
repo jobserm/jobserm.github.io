@@ -1,20 +1,8 @@
-<svg width="759" height="698" viewBox="0 0 759 698" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<circle opacity="0.5" cx="458" cy="207" r="370" fill="#8C30F5"/>
-<circle cx="336" cy="662" r="36" fill="#75E3EA"/>
-<circle cx="36" cy="406" r="36" fill="#FFC278"/>
-<g filter="url(#filter0_d)">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M10.5242 226.768C9.99503 222.217 13.3895 218.152 17.9624 217.861L517.905 186.03C522.167 185.759 525.89 188.882 526.364 193.126L561.885 511.015C562.357 515.242 559.44 519.099 555.245 519.796L62.5522 601.612C58.0424 602.361 53.8232 599.185 53.2952 594.644L10.5242 226.768Z" fill="url(#pattern0)"/>
-</g>
+<svg width="570" height="543" viewBox="0 0 570 543" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<circle cx="336" cy="507" r="36" fill="#75E3EA"/>
+<circle cx="36" cy="251" r="36" fill="#FFC278"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M10.5242 71.7684C9.99503 67.2169 13.3895 63.1518 17.9624 62.8606L517.905 31.0303C522.167 30.7589 525.89 33.8821 526.364 38.1257L561.885 356.015C562.357 360.242 559.44 364.099 555.245 364.796L62.5522 446.612C58.0424 447.361 53.8232 444.185 53.2952 439.644L10.5242 71.7684Z" fill="url(#pattern0)"/>
 <defs>
-<filter id="filter0_d" x="7.19238" y="131.983" width="657.696" height="542.653" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-<feOffset dx="48" dy="24"/>
-<feGaussianBlur stdDeviation="24"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0.0941176 0 0 0 0 0.145098 0 0 0 0 0.219608 0 0 0 0.12 0"/>
-<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
-<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
-</filter>
 <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
 <use xlink:href="#image0" transform="translate(-0.0601894) scale(0.0010804 0.00144718)"/>
 </pattern>

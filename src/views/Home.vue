@@ -1,19 +1,19 @@
 <template>
-  <div>
+  <c-stack px="16vw">
     <hero />
-  </div>
+    <hero-2 />
+  </c-stack>
 </template>
 
 <script>
-import Hero from "../components/Hero.vue";
+import Hero from "../components/landing-page/Hero.vue";
+import Hero2 from "../components/landing-page/Hero2.vue";
 
 export default {
   name: "Home",
   components: {
     Hero,
+    Hero2,
   },
-  data() {},
-  computed: {},
-  methods: {},
 };
 </script>
