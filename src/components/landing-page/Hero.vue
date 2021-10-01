@@ -1,5 +1,5 @@
 <template>
-  <c-flex align="center" justify="space-evenly" minH="70vh" dir="row" mb="16">
+  <c-flex align="center" justify="space-around" minH="70vh" dir="row" mb="16">
     <c-stack spacing="4" align="flex-start">
       <c-heading as="h1" size="xl" fontWeight="bold" color="primary.800">
         Job Serm
@@ -14,8 +14,7 @@
         white-space="pre-line"
       >
         {{
-          `งานเทพๆ หาง่ายกว่าที่คิดเยอะ!\n
-          คิดถึงงาน คิดถึงเรา`
+          `งานเทพๆ หาง่ายกว่าที่คิดเยอะ!\nคิดถึงงาน คิดถึงเรา`
         }}
       </c-heading>
       <c-flex>
