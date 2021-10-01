@@ -1,5 +1,5 @@
 <template>
-  <c-flex align="center" justify="space-between" minH="70vh" dir="row" mb="16">
+  <c-flex align="center" justify="space-evenly" minH="70vh" dir="row" mb="16">
     <c-stack spacing="4" align="flex-start">
       <c-heading as="h1" size="xl" fontWeight="bold" color="primary.800">
         Job Serm
@@ -48,13 +48,13 @@
       </c-text>
     </c-stack>
 
-    <c-box>
+
       <c-image
         :src="require('../../assets/hero.svg')"
-        size="80%"
+        size="lg"
         rounded="1rem"
       />
-    </c-box>
+
   </c-flex>
 </template>
 
