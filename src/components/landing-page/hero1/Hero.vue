@@ -3,10 +3,13 @@
     align="center"
     justify="space-around"
     minH="70vh"
-    dir="row"
+    :direction="['column-reverse', 'column-reverse', 'column-reverse', 'row']"
     wrap="wrap"
   >
-    <c-stack spacing="4" align="flex-start">
+    <c-stack
+      spacing="4"
+      :align="['center', 'center', 'flex-start', 'flex-start']"
+    >
       <c-heading as="h1" size="xl" fontWeight="bold" color="primary.800">
         Job Serm
       </c-heading>
@@ -25,12 +28,16 @@
         <button-primary :url="`/register`" :text="`หาคนเข้าทำงาน`" mr="2" />
         <button-secondary :url="`/login`" :text="`ประกาศหางาน`" ml="2" />
       </c-flex>
-      <c-text fontSize="xs"  color="primary.800" opacity="0.6">
+      <c-text fontSize="xs" color="primary.800" opacity="0.6">
         No credit card required.
       </c-text>
     </c-stack>
 
-    <c-image :src="require('../../../assets/hero.svg')" size="lg" rounded="1rem" />
+    <c-image
+      :src="require('../../../assets/hero.svg')"
+      size="lg"
+      rounded="1rem"
+    />
   </c-flex>
 </template>
 

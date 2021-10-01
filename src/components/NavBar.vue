@@ -1,6 +1,14 @@
 <template>
   <div id="nav-bar">
-    <c-flex as="nav" px="15vw" py="4" w="100%" align="center" justify="space-between" wrap="wrap">
+    <c-flex
+      as="nav"
+      px="15vw"
+      py="4"
+      w="100%"
+      align="center"
+      :justify="['center', 'center', 'center', 'space-between']"
+      wrap="wrap"
+    >
       <!-- LEFT -->
       <c-flex wrap="wrap">
         <router-link to="/about">
@@ -13,7 +21,7 @@
 
       <!-- CENTER -->
       <router-link to="/">
-        <img src="/logo.svg" />
+        <c-image src="/logo.svg" :display="['none', 'none', 'flex', 'flex']" />
       </router-link>
 
       <!-- RIGHT -->
