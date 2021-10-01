@@ -18,29 +18,8 @@
         }}
       </c-heading>
       <c-flex>
-        <c-link v-bind:to="{ ctaLink }">
-          <c-button
-            backgroundColor="brand.500"
-            color="white"
-            as="router-link"
-            to="/about"
-            fontWeight="sm"
-            mr="2"
-            >หาคนเข้าทำงาน</c-button
-          >
-        </c-link>
-        <c-link v-bind:to="{ ctaLink }">
-          <c-button
-            backgroundColor="brand.400"
-            variant="outline"
-            color="brand.500"
-            as="router-link"
-            to="/about"
-            fontWeight="sm"
-            mx="2"
-            >ประกาศหางาน</c-button
-          >
-        </c-link>
+        <button-primary :url="`/register`" :text="`หาคนเข้าทำงาน`" mr="2"/>
+        <button-secondary :url="`/login`" :text="`ประกาศหางาน`" ml="2"/>
       </c-flex>
       <c-text fontSize="xs" mt="2" color="primary.800" opacity="0.6">
         No credit card required.
@@ -58,7 +37,10 @@
 </template>
 
 <script>
+import ButtonPrimary from '../button/ButtonPrimary.vue';
+import ButtonSecondary from '../button/ButtonSecondary.vue';
 export default {
+  components: { ButtonPrimary, ButtonSecondary },
   name: "Hero",
 };
 </script>

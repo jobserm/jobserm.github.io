@@ -18,24 +18,8 @@
 
       <!-- RIGHT -->
       <c-flex>
-        <c-button
-          backgroundColor="brand.400"
-          color="brand.500"
-          as="router-link"
-          to="/login"
-          mx="4"
-          fontWeight="sm"
-          >เข้าสู่ระบบ</c-button
-        >
-        <c-button
-          backgroundColor="brand.500"
-          color="white"
-          as="router-link"
-          to="/register"
-          mx="4"
-          fontWeight="sm"
-          >สมัครสมาชิก</c-button
-        >
+        <button-secondary :url="`/login`" :text="`เข้าสู่ระบบ`" mx="4" />
+        <button-primary :url="`/register`" :text="`สมัครสมาชิก`" mx="4" />
       </c-flex>
     </c-flex>
     <c-divider my="-0.5" />
@@ -43,7 +27,10 @@
 </template>
 
 <script>
+import ButtonPrimary from "./button/ButtonPrimary.vue";
+import ButtonSecondary from "./button/ButtonSecondary.vue";
 export default {
+  components: { ButtonPrimary, ButtonSecondary },
   name: "Navbar",
   inject: ["$chakraColorMode", "$toggleColorMode"],
   computed: {
