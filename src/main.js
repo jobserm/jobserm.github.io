@@ -6,8 +6,8 @@ import Chakra, {
   CBox,
   CReset,
 } from "@chakra-ui/vue";
-import "./font.css";
-import extendTheme from "./theme.js";
+import "./styles/font.css";
+import extendTheme from "./styles/theme.js";
 import router from "./router";
 
 // Import Chakra UI Plugin and register it.
