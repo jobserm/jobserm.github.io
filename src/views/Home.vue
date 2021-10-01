@@ -4,8 +4,10 @@
       :title="'Job\' Serm'"
       :image="'../assets/hero.svg'"
       :ctaText="'หาคนเข้าทำงาน'"
-      :subtitle="`งานเทพๆ หาง่ายกว่าที่คิดเยอะ! 
-                  คิดถึงงาน คิดถึงเรา`"
+      :subtitle="
+        `งานเทพๆ หาง่ายกว่าที่คิดเยอะ! 
+                  คิดถึงงาน คิดถึงเรา`
+      "
     />
     <!-- <CBox
       v-bind="mainStyles[colorMode]"
@@ -86,44 +88,12 @@
 </template>
 
 <script>
-import {
-  CBox,
-  CButton,
-  CAvatarGroup,
-  CAvatar,
-  CAvatarBadge,
-  CModal,
-  CModalContent,
-  CModalOverlay,
-  CModalHeader,
-  CModalFooter,
-  CModalBody,
-  CModalCloseButton,
-  CIconButton,
-  CFlex,
-  CHeading,
-} from "@chakra-ui/vue";
 import Hero from "../components/Hero.vue";
 
 export default {
   name: "Home",
   inject: ["$chakraColorMode", "$toggleColorMode"],
   components: {
-    CBox,
-    CButton,
-    CAvatarGroup,
-    CAvatar,
-    CAvatarBadge,
-    CModal,
-    CModalContent,
-    CModalOverlay,
-    CModalHeader,
-    CModalFooter,
-    CModalBody,
-    CModalCloseButton,
-    CIconButton,
-    CFlex,
-    CHeading,
     Hero,
   },
   data() {
