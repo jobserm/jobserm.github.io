@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import Hero from "../components/landing-page/Hero.vue";
+import Hero from "../components/landing-page/hero1/Hero.vue";
 import Hero2 from "../components/landing-page/hero2/Hero2.vue";
 
 export default {

@@ -1,8 +1,8 @@
 <template>
   <div id="nav-bar">
-    <c-flex as="nav" px="15vw" py="4" align="center" justify="space-between">
+    <c-flex as="nav" px="15vw" py="4" w="100%" align="center" justify="space-between" wrap="wrap">
       <!-- LEFT -->
-      <c-flex>
+      <c-flex wrap="wrap">
         <router-link to="/about">
           <c-text mx="4">เกี่ยวกับเรา</c-text></router-link
         >
@@ -17,7 +17,7 @@
       </router-link>
 
       <!-- RIGHT -->
-      <c-flex>
+      <c-flex wrap="wrap">
         <button-secondary :url="`/login`" :text="`เข้าสู่ระบบ`" mx="4" />
         <button-primary :url="`/register`" :text="`สมัครสมาชิก`" mx="4" />
       </c-flex>
