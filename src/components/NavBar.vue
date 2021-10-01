@@ -22,7 +22,7 @@
       :direction="['column', 'row', 'row', 'row']"
     >
       <!-- LEFT -->
-      <c-flex wrap="wrap" :direction="['column', 'row', 'row', 'row']" >
+      <c-flex wrap="wrap" :direction="['column', 'row', 'row', 'row']">
         <router-link to="/about">
           <c-text mx="4">เกี่ยวกับเรา</c-text></router-link
         >
@@ -80,19 +80,9 @@ export default {
   }),
   methods: {
     login: async () => {
-      if (liff.isLoggedIn()) {
-        await liff.ready;
-        console.log(liff.getAccessToken());
-        // backendInstance.defaults.headers.common.Authorization = `Bearer ${liff.getAccessToken()}`;
-      } else {
-        liff.login({
-          redirectUri: window.location.href.includes("logout")
-            ? undefined
-            : window.location.href,
-        });
-        this.profile = await liff.getProfile();
-        console.log(this.profile);
-      }
+      liff.login({
+        redirectUri: "/login-callback",
+      });
     },
   },
   mounted() {
