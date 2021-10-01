@@ -6,4 +6,5 @@ module.exports = {
   configureWebpack: {
     plugins: [new ChakraLoaderPlugin()],
   },
+  devServer: { https: true },
 };

@@ -22,7 +22,7 @@
       :direction="['column', 'row', 'row', 'row']"
     >
       <!-- LEFT -->
-      <c-flex wrap="wrap" :direction="['column', 'row', 'row', 'row']">
+      <c-flex wrap="wrap" :direction="['column', 'row', 'row', 'row']" >
         <router-link to="/about">
           <c-text mx="4">เกี่ยวกับเรา</c-text></router-link
         >
@@ -37,8 +37,28 @@
       </router-link>
 
       <!-- RIGHT -->
-      <c-flex wrap="wrap" :direction="['column', 'row', 'row', 'row']">
-        <button-secondary :url="`/login`" :text="`เข้าสู่ระบบ`" mx="4" />
+      <c-menu v-if="profile.pictureUrl">
+        <c-menu-button bgColor="transparent" w="15rem">
+          <c-image :src="profile.pictureUrl" boxSize="3rem" rounded="50%" />
+        </c-menu-button>
+        <c-menu-list>
+          <c-menu-group :title="profile.displayName || 'Profile'">
+            <c-link href="/logout" textDecoration="none">
+              <c-menu-item textDecoration="none">Logout</c-menu-item>
+            </c-link>
+          </c-menu-group>
+        </c-menu-list>
+      </c-menu>
+
+      <c-flex v-else wrap="wrap" :direction="['column', 'row', 'row', 'row']">
+        <c-button
+          @click="login"
+          backgroundColor="brand.400"
+          color="brand.500"
+          fontWeight="sm"
+          mx="4"
+          >เข้าสู่ระบบ</c-button
+        >
         <button-primary :url="`/register`" :text="`สมัครสมาชิก`" mx="4" />
       </c-flex>
     </c-flex>
@@ -49,15 +69,39 @@
 
 <script>
 import ButtonPrimary from "./button/ButtonPrimary.vue";
-import ButtonSecondary from "./button/ButtonSecondary.vue";
+import liff from "@line/liff";
+
 export default {
-  components: { ButtonPrimary, ButtonSecondary },
+  components: { ButtonPrimary },
   name: "Navbar",
-  inject: ["$chakraColorMode", "$toggleColorMode"],
-  data() {
-    return {
-      show: false,
-    };
+  data: () => ({
+    show: false,
+    profile: {},
+  }),
+  methods: {
+    login: async () => {
+      if (liff.isLoggedIn()) {
+        await liff.ready;
+        console.log(liff.getAccessToken());
+        // backendInstance.defaults.headers.common.Authorization = `Bearer ${liff.getAccessToken()}`;
+      } else {
+        liff.login({
+          redirectUri: window.location.href.includes("logout")
+            ? undefined
+            : window.location.href,
+        });
+        this.profile = await liff.getProfile();
+        console.log(this.profile);
+      }
+    },
+  },
+  mounted() {
+    (async () => {
+      if (liff.isLoggedIn()) {
+        this.profile = await liff.getProfile();
+        console.log(this.profile);
+      }
+    })();
   },
 };
 </script>
