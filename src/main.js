@@ -6,8 +6,9 @@ import Chakra, {
   CBox,
   CReset,
 } from "@chakra-ui/vue";
-import './font.css'
+import "./font.css";
 import extendTheme from "./theme.js";
+import router from "./router";
 
 // Import Chakra UI Plugin and register it.
 Vue.use(Chakra, {
@@ -17,6 +18,8 @@ Vue.use(Chakra, {
 Vue.config.productionTip = false;
 
 new Vue({
+  router,
+
   render(h) {
     // Mount our application inside the
     // ThemeProvider and ColorModeProvider components :)

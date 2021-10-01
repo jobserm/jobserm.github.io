@@ -1,8 +1,13 @@
 export default {
-    breakpoints: ['30em', '48em', '62em', '80em'],
-    fonts: {
-      heading: '"Mitr", sans-serif',
-      body: '"Mitr", sans-serif',
-      mono: '"Mitr", sans-serif'
+  fonts: {
+    heading: '"Mitr", sans-serif',
+    body: '"Mitr", sans-serif',
+    mono: '"Mitr", sans-serif',
+  },
+  colors: {
+    brand: {
+      400: "#F1E4FF",
+      500: "#8C30F5",
     },
-  }
+  },
+};
