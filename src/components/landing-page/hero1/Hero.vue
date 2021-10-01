@@ -5,6 +5,7 @@
     minH="70vh"
     :direction="['column-reverse', 'column-reverse', 'column-reverse', 'row']"
     wrap="wrap"
+    pb="8"
   >
     <c-stack
       spacing="4"
@@ -35,7 +36,7 @@
 
     <c-image
       :src="require('../../../assets/hero.svg')"
-      size="lg"
+      :size="['xs', 'sm', 'md', 'lg']"
       rounded="1rem"
     />
   </c-flex>
