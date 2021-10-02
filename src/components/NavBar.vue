@@ -1,28 +1,21 @@
 <template>
-  <div id="nav-bar">
-    <c-flex
-      py="4"
-      align="center"
-      justify="center"
-      v-on:click="show = !show"
-      :display="['flex', 'none', 'none', 'none']"
-    >
-      <c-image src="/logo.svg" />
-    </c-flex>
-
-    <c-flex
+  <div>
+    <c-simple-grid
+      :columns="3"
       as="nav"
       px="15vw"
       py="4"
       w="100%"
-      align="center"
-      justify="space-around"
-      wrap="wrap"
-      :display="[show ? 'block' : 'none', 'flex', 'flex', 'flex']"
-      :direction="['column', 'row', 'row', 'row']"
+      alignItems="center"
+      justifyContent="space-around"
+      :display="['block', 'grid', 'grid', 'grid']"
     >
-      <!-- LEFT -->
-      <c-flex wrap="wrap" :direction="['column', 'row', 'row', 'row']">
+      <c-flex
+        wrap="wrap"
+        align="center"
+        justify="center"
+        :direction="['column', 'row', 'row', 'row']"
+      >
         <router-link to="/about">
           <c-text mx="4">เกี่ยวกับเรา</c-text></router-link
         >
@@ -31,28 +24,31 @@
         >
       </c-flex>
 
-      <!-- CENTER -->
-      <router-link to="/">
-        <c-image src="/logo.svg" :display="['none', 'none', 'flex', 'flex']" />
-      </router-link>
+      <c-flex
+        wrap="wrap"
+        align="center"
+        justify="center"
+        :direction="['column', 'row', 'row', 'row']"
+      >
+        <router-link to="/">
+          <c-image
+            src="/logo.svg"
+          />
+        </router-link>
+      </c-flex>
 
-      <!-- RIGHT -->
       <c-flex
         v-if="profile.pictureUrl"
         wrap="wrap"
         align="center"
+        justify="center"
         :direction="['column', 'row', 'row', 'row']"
       >
         <router-link to="/profile">
           <c-text mx="4">แก้ไขข้อมูล</c-text></router-link
         >
         <c-menu mx="4">
-          <c-menu-button
-            as="box"
-            bgColor="transparent"
-
-            :_hover="{ bg: 'transparent' }"
-          >
+          <c-menu-button bgColor="transparent" :_hover="{ bg: 'transparent' }">
             <c-image :src="profile.pictureUrl" boxSize="3rem" rounded="50%" />
           </c-menu-button>
           <c-menu-list>
@@ -76,7 +72,7 @@
         >
         <button-primary :url="`/register`" :text="`สมัครสมาชิก`" mx="4" />
       </c-flex>
-    </c-flex>
+    </c-simple-grid>
 
     <c-divider my="-0.5" />
   </div>
