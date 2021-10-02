@@ -19,6 +19,7 @@ Vue.config.productionTip = false;
 
 new Vue({
   router,
+
   render(h) {
     // Mount our application inside the
     // ThemeProvider and ColorModeProvider components :)
