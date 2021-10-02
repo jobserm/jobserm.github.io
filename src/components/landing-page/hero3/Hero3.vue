@@ -1,11 +1,22 @@
 <template>
   <c-box pb="16">
+    <c-image
+      position="absolute"
+      :src="require('./circle.svg')"
+      size="60%"
+      zIndex="-1"
+      right="0"
+      mt="-8"
+      opacity="0.6"
+      :display="['none', 'none', 'none', 'block']"
+    />
     <c-stack pb="4">
       <c-heading>ตัวอย่างงานที่ผ่านมา</c-heading>
       <c-heading opacity="0.6" size="sm" fontWeight="sm"
         >งานยอดนิยมที่พาร์ทเนอร์ของเราพอใจมากที่สุด</c-heading
       >
     </c-stack>
+
     <c-simple-grid :columns="[1, 2, 2, 4]" spacing="16">
       <hero-3-item
         :icon="require('./1.svg')"
