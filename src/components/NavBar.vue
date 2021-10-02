@@ -31,9 +31,7 @@
         :direction="['column', 'row', 'row', 'row']"
       >
         <router-link to="/">
-          <c-image
-            src="/logo.svg"
-          />
+          <c-image src="/logo.svg" />
         </router-link>
       </c-flex>
 
@@ -91,11 +89,10 @@ export default {
   }),
   methods: {
     login: async () => {
+      const port = window.location.port != 80 ? `:${window.location.port}` : "";
+      const host = `https://${window.location.hostname + port}`;
       liff.login({
-        redirectUri: `https://${window.location.hostname +
-          (window.location.port != 80
-            ? `:${window.location.port}`
-            : "")}/login-callback`,
+        redirectUri: `${host}/login-callback`,
       });
     },
   },
