@@ -92,7 +92,7 @@ export default {
       const port = window.location.port != 80 ? `:${window.location.port}` : "";
       const host = `https://${window.location.hostname + port}`;
       liff.login({
-        redirectUri: `${host}/login-callback`,
+        redirectUri: `${host}/#/login-callback`,
       });
     },
   },
