@@ -6,6 +6,7 @@
     h="100%"
     shadow="md"
     alignContent="space-between"
+    bgColor="white"
   >
     <c-heading size="md" pb="2">{{ heading }}</c-heading>
 
