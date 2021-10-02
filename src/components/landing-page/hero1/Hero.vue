@@ -36,7 +36,7 @@
 
     <c-image
       :src="require('../../../assets/hero.svg')"
-      :size="['xs', 'sm', 'md', 'lg']"
+      size="lg"
       rounded="1rem"
     />
   </c-flex>

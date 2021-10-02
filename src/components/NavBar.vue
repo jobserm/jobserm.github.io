@@ -1,28 +1,21 @@
 <template>
-  <div id="nav-bar">
-    <c-flex
-      py="4"
-      align="center"
-      justify="center"
-      v-on:click="show = !show"
-      :display="['flex', 'none', 'none', 'none']"
-    >
-      <c-image src="/logo.svg" />
-    </c-flex>
-
-    <c-flex
+  <div>
+    <c-simple-grid
+      :columns="3"
       as="nav"
       px="15vw"
       py="4"
       w="100%"
-      align="center"
-      justify="space-between"
-      wrap="wrap"
-      :display="[show ? 'block' : 'none', 'flex', 'flex', 'flex']"
-      :direction="['column', 'row', 'row', 'row']"
+      alignItems="center"
+      justifyContent="space-around"
+      :display="['block', 'grid', 'grid', 'grid']"
     >
-      <!-- LEFT -->
-      <c-flex wrap="wrap" :direction="['column', 'row', 'row', 'row']">
+      <c-flex
+        wrap="wrap"
+        align="center"
+        justify="center"
+        :direction="['column', 'row', 'row', 'row']"
+      >
         <router-link to="/about">
           <c-text mx="4">เกี่ยวกับเรา</c-text></router-link
         >
@@ -31,17 +24,53 @@
         >
       </c-flex>
 
-      <!-- CENTER -->
-      <router-link to="/">
-        <c-image src="/logo.svg" :display="['none', 'none', 'flex', 'flex']" />
-      </router-link>
+      <c-flex
+        wrap="wrap"
+        align="center"
+        justify="center"
+        :direction="['column', 'row', 'row', 'row']"
+      >
+        <router-link to="/">
+          <c-image src="/logo.svg" />
+        </router-link>
+      </c-flex>
 
-      <!-- RIGHT -->
-      <c-flex wrap="wrap" :direction="['column', 'row', 'row', 'row']">
-        <button-secondary :url="`/login`" :text="`เข้าสู่ระบบ`" mx="4" />
+      <c-flex
+        v-if="profile.pictureUrl"
+        wrap="wrap"
+        align="center"
+        justify="center"
+        :direction="['column', 'row', 'row', 'row']"
+      >
+        <router-link to="/profile">
+          <c-text mx="4">แก้ไขข้อมูล</c-text></router-link
+        >
+        <c-menu mx="4">
+          <c-menu-button bgColor="transparent" :_hover="{ bg: 'transparent' }">
+            <c-image :src="profile.pictureUrl" boxSize="3rem" rounded="50%" />
+          </c-menu-button>
+          <c-menu-list>
+            <c-menu-group :title="profile.displayName || 'Profile'">
+              <router-link to="/logout">
+                <c-menu-item textDecoration="none">Logout</c-menu-item>
+              </router-link>
+            </c-menu-group>
+          </c-menu-list>
+        </c-menu>
+      </c-flex>
+
+      <c-flex v-else wrap="wrap" :direction="['column', 'row', 'row', 'row']">
+        <c-button
+          @click="login"
+          backgroundColor="brand.400"
+          color="brand.500"
+          fontWeight="sm"
+          mx="4"
+          >เข้าสู่ระบบ</c-button
+        >
         <button-primary :url="`/register`" :text="`สมัครสมาชิก`" mx="4" />
       </c-flex>
-    </c-flex>
+    </c-simple-grid>
 
     <c-divider my="-0.5" />
   </div>
@@ -49,15 +78,31 @@
 
 <script>
 import ButtonPrimary from "./button/ButtonPrimary.vue";
-import ButtonSecondary from "./button/ButtonSecondary.vue";
+import liff from "@line/liff";
+
 export default {
-  components: { ButtonPrimary, ButtonSecondary },
+  components: { ButtonPrimary },
   name: "Navbar",
-  inject: ["$chakraColorMode", "$toggleColorMode"],
-  data() {
-    return {
-      show: false,
-    };
+  data: () => ({
+    show: false,
+    profile: {},
+  }),
+  methods: {
+    login: async () => {
+      const port = window.location.port != 80 ? `:${window.location.port}` : "";
+      const host = `https://${window.location.hostname + port}`;
+      liff.login({
+        redirectUri: `${host}/login-callback`,
+      });
+    },
+  },
+  beforeMount() {
+    (async () => {
+      if (liff.isLoggedIn()) {
+        this.profile = await liff.getProfile();
+        console.log(this.profile);
+      }
+    })();
   },
 };
 </script>

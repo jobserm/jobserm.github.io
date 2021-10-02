@@ -15,7 +15,10 @@ jobs:
         with:
           node-version: "14.x"
       - run: npm install
-      - run: npm run build
+      - name: "build"
+        run: npm run build
+        env:
+          VUE_APP_LIFF_ID: $${{ secrets.VUE_APP_LIFF_ID }}
       - run: npm test
       - name: Deploy
         uses: crazy-max/ghaction-github-pages@v1
