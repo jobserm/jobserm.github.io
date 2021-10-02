@@ -16,7 +16,7 @@
       py="4"
       w="100%"
       align="center"
-      justify="space-between"
+      justify="space-around"
       wrap="wrap"
       :display="[show ? 'block' : 'none', 'flex', 'flex', 'flex']"
       :direction="['column', 'row', 'row', 'row']"
@@ -37,18 +37,33 @@
       </router-link>
 
       <!-- RIGHT -->
-      <c-menu v-if="profile.pictureUrl">
-        <c-menu-button bgColor="transparent" w="15rem">
-          <c-image :src="profile.pictureUrl" boxSize="3rem" rounded="50%" />
-        </c-menu-button>
-        <c-menu-list>
-          <c-menu-group :title="profile.displayName || 'Profile'">
-            <c-link href="/logout" textDecoration="none">
-              <c-menu-item textDecoration="none">Logout</c-menu-item>
-            </c-link>
-          </c-menu-group>
-        </c-menu-list>
-      </c-menu>
+      <c-flex
+        v-if="profile.pictureUrl"
+        wrap="wrap"
+        align="center"
+        :direction="['column', 'row', 'row', 'row']"
+      >
+        <router-link to="/profile">
+          <c-text mx="4">แก้ไขข้อมูล</c-text></router-link
+        >
+        <c-menu mx="4">
+          <c-menu-button
+            as="box"
+            bgColor="transparent"
+
+            :_hover="{ bg: 'transparent' }"
+          >
+            <c-image :src="profile.pictureUrl" boxSize="3rem" rounded="50%" />
+          </c-menu-button>
+          <c-menu-list>
+            <c-menu-group :title="profile.displayName || 'Profile'">
+              <router-link to="/logout">
+                <c-menu-item textDecoration="none">Logout</c-menu-item>
+              </router-link>
+            </c-menu-group>
+          </c-menu-list>
+        </c-menu>
+      </c-flex>
 
       <c-flex v-else wrap="wrap" :direction="['column', 'row', 'row', 'row']">
         <c-button
@@ -81,11 +96,14 @@ export default {
   methods: {
     login: async () => {
       liff.login({
-        redirectUri: "/login-callback",
+        redirectUri: `https://${window.location.hostname +
+          (window.location.port != 80
+            ? `:${window.location.port}`
+            : "")}/login-callback`,
       });
     },
   },
-  mounted() {
+  beforeMount() {
     (async () => {
       if (liff.isLoggedIn()) {
         this.profile = await liff.getProfile();
