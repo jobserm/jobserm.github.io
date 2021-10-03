@@ -1,5 +1,5 @@
 <template>
-  <c-box pb="16">
+  <c-box pb="16" v-bind="[$props, $attrs]">
     <c-image
       position="absolute"
       :src="require('./circle.svg')"

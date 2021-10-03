@@ -1,5 +1,5 @@
 <template>
-  <c-box pb="16">
+  <c-box pb="16" v-bind="[$props, $attrs]">
     <c-heading pb="8">เว็บเรามีอะไร ไม่รู้ววว....</c-heading>
     <c-simple-grid :columns="[1, 1, 1, 2]" spacing="16">
       <hero-2-item
