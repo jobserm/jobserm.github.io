@@ -6,6 +6,7 @@
     :direction="['column-reverse', 'column-reverse', 'column-reverse', 'row']"
     wrap="wrap"
     pb="8"
+    v-bind="[$props, $attrs]"
   >
     <c-stack
       spacing="4"
