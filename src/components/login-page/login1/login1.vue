@@ -3,14 +3,14 @@
     align="center"
     justify="center"
   >
-  <c-flex bg="#D6B1FF" size="350px" align="center" justify="center">
+  <c-flex bg="#D6B1FF" size="470px" align="center" justify="center">
     <c-image
       :src="require('../../../assets/loginPicture.svg')"
-      :size="['xs', 'sm', 'md', 'lg']"
+      :size="550"
       rounded="1rem"
     />
   </c-flex>
-  <c-flex bg="#D6B1FF" size="350px" align="center" justify="center">
+  <c-flex bg="#D6B1FF" size="470px" align="center" justify="center">
     <c-stack
       spacing="4"
       :align="['center', 'center', 'flex-start', 'flex-start']"
@@ -56,7 +56,7 @@
       </p>
 
       <c-flex wrap="wrap">
-        <c-button variant-color="pink" variant="solid" mr="10">
+        <c-button width="250px" variant-color="pink" variant="solid" mr="10">
           เข้าสู่ระบบ
         </c-button>
       </c-flex>
