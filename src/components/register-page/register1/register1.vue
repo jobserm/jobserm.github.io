@@ -27,13 +27,25 @@
         lineHeight="1.5"
         white-space="pre-line"
       >
-        {{ "เข้าสู่ระบบ" }}
+        {{ "สมัครสมาชิก" }}
       </c-heading>
 
       <c-input
           pr="4.5rem"
           placeholder="อีเมล"
           v-model="email"
+      />
+
+      <c-input
+          pr="4.5rem"
+          placeholder="ชื่อ-สกุล"
+          v-model="nameSurname"
+      />
+
+      <c-input
+          pr="4.5rem"
+          placeholder="เบอร์โทรศัพท์"
+          v-model="callNumb"
       />
 
       <c-input-group size="md">
@@ -51,24 +63,26 @@
        </c-input-right-element>
        </c-input-group>
 
-      <p class="forgot-password text-right mt-2 mb-4">
-                <router-link to="/forgot-password" >ลืมรหัสผ่าน ?</router-link>
-      </p>
+       <c-input-group size="md">
+        <c-input
+          pr="4.5rem"
+         :type="show ? 'text' : 'password'"
+          placeholder="ยืนยันรหัสผ่าน"
+          v-model="passwordAgain"
+        />
+       <c-input-right-element width="4.5rem">
+            <c-button h="1.75rem" size="sm" @click="show = !show">
+              <c-image src="/eye.svg" w="30px" />
+           <!-- {{ show ? 'Hide' : 'Show' }} -->
+           </c-button>
+       </c-input-right-element>
+       </c-input-group>
 
       <c-flex wrap="wrap">
-        <c-button width="250px" variant-color="pink" variant="solid" mr="10">
-          เข้าสู่ระบบ
+        <c-button width="200px" variant-color="pink" variant="solid" mr="10">
+          สมัครสมาชิก
         </c-button>
       </c-flex>
-
-      <p class="notHaveAnAccount" >
-        <c-text fontSize="xs" color="primary.800" opacity="0.6">
-          คุณยังไม่มีบัญชี? 
-          <router-link class="shadowLink" to="/register" >
-            <a>สมัครสมาชิก</a>
-          </router-link>
-        </c-text>
-      </p>
       
     </c-stack>
   </c-flex>
@@ -78,7 +92,7 @@
 <script>
 export default {
   components: { },
-  name: "Login1",
+  name: "Register1",
   name2: 'PasswordInput',
   data () {
     return {
@@ -89,12 +103,4 @@ export default {
 }
 </script>
 
-<style>
-  .notHaveAnAccount{
-    display: inline;
-  }
-  .shadowLink {
-    color: #881fff;
-    text-shadow: 1px 1px 1px rgba(0,0,0,0.4);
-  }
-</style>
+<style></style>
