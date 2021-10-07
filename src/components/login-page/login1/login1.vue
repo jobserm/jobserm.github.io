@@ -52,7 +52,7 @@
        </c-input-group>
 
       <p class="forgot-password text-right mt-2 mb-4">
-                <router-link to="/forgot-password" >ลืมรหัสผ่าน ?</router-link>
+        <router-link to="/forgot-password" >ลืมรหัสผ่าน ?</router-link>
       </p>
 
       <c-flex wrap="wrap">
