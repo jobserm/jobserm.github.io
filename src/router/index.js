@@ -55,11 +55,6 @@ const routes = [
     name: 'postjob',
     component: () => import(/* webpackChunkName: "about" */ '../views/JobForm.vue')
   },
-  {
-    path: '/admin/',
-    name: 'admin',
-    component: () => import('../views/admin/index.vue')
-  }
 ]
 
 const router = new VueRouter({
