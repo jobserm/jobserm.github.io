@@ -35,21 +35,14 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/Register.vue')
   },
   {
-    path: '/postjob',
-    name: 'postjob',
+    path: '/freelance',
+    name: 'Freelance',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/JobForm.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/Freelance.vue')
   },
-  {
-    path: '/personalinformation',
-    name: 'personalinformation',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/PersonalForm.vue')
-  }
+
 ]
 
 const router = new VueRouter({
