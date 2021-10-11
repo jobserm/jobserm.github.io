@@ -51,14 +51,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/PersonalForm.vue')
   },
   {
-<<<<<<< Updated upstream
     path: '/postjob',
     name: 'postjob',
     component: () => import(/* webpackChunkName: "about" */ '../views/JobForm.vue')
   },
   {
-=======
->>>>>>> Stashed changes
     path: '/admin/',
     name: 'admin',
     component: () => import('../views/admin/index.vue')
