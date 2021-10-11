@@ -55,7 +55,6 @@ const routes = [
     name: 'postjob',
     component: () => import(/* webpackChunkName: "about" */ '../views/JobForm.vue')
   },
-  },
   {
     path: '/additionals',
     name: 'AdditionalsInfo',
