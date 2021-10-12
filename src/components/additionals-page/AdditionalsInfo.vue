@@ -70,7 +70,7 @@
     </c-box>
 
     <c-box textAlign="right">
-        <c-button backgroundColor="brand.500" width="250px" variant-color="pink" variant="solid" mt="1.5rem" @click="saveInfo">
+        <c-button backgroundColor="brand.500" width="250px"  variant="solid" mt="1.5rem" @click="saveInfo">
             ส่งข้อมูล
         </c-button>
     </c-box> 
@@ -90,7 +90,7 @@ export default {
   methods: {
     saveInfo () {
       this.$emit('saveInfo', this.form)
-    }
+    },
   }
 }
 </script>
