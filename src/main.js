@@ -9,9 +9,13 @@ import Chakra, {
 import "./styles/font.css";
 import extendTheme from "./styles/theme.js";
 import router from "./router";
+import VueAxios from "vue-axios";
+import VueSwal from "vue-swal";
+ 
 
 // import icons
 import { faHome } from '@fortawesome/free-solid-svg-icons'
+import axios from "axios";
 
 // Import Chakra UI Plugin and register it.
 Vue.use(Chakra, {
@@ -23,6 +27,9 @@ Vue.use(Chakra, {
     }
   }
 });
+
+Vue.use(VueAxios, axios);
+Vue.use(VueSwal);
 
 Vue.config.productionTip = false;
 
