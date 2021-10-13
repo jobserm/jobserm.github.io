@@ -33,7 +33,7 @@ export default new Vuex.Store({
             commit("fetch", res.data);
         },
         async addPost({ commit }) {
-            let res = await PostService.post("post", payload);
+            let res = await PostService.post("jobs", payload);
             commit("addPost", res.res.data)
             return res;
         }
