@@ -1,0 +1,83 @@
+<template>
+    
+        <c-stack
+            wrap="wrap"
+            rounded="0.5rem"
+            p="5"
+            bgColor="brand.400"
+            :_hover="{ bg: '#E2E8F0'}"
+            shadow="xl" 
+            border-width="1px"
+            >
+            
+            <c-box justify="center">
+                <c-image v-bind:src="image" 
+                         w="5rem" 
+                         borderRadius="50%" 
+                         marginTop="auto"
+                         py="2"/>
+            </c-box>
+            
+    
+            <c-heading size="md" pb="2">{{ freelancerName }}</c-heading>
+
+            <c-flex justify="center" >
+                <c-image v-bind:src="star" 
+                        w="20px"
+                        h="20px"
+                        />
+                        
+                <c-text
+                    as="h2"
+                    size="md"
+                    color="primary.800"
+                    opacity="0.9"
+                    fontWeight="normal"
+                    lineHeight="1.5"
+                    pl="2"
+                    > {{ rating }} / 5
+                </c-text>
+            </c-flex>
+
+            
+            <c-flex justify="center">
+                <c-text
+                    as="h2"
+                    size="md"
+                    color="primary.800"
+                    opacity="0.8"
+                    fontWeight="normal"
+                    lineHeight="1.7"
+                    white-space="pre-line"
+                    pr="3"
+                    >เพศ : {{ gender }}
+                </c-text>
+
+
+                <c-text
+                    as="h2"
+                    size="md"
+                    color="primary.800"
+                    opacity="0.8"
+                    fontWeight="normal"
+                    lineHeight="1.7"
+                    white-space="pre-line"
+                    >อายุ : {{ age }}
+                </c-text>
+            </c-flex>
+
+        </c-stack>
+    
+   
+</template>
+
+<script>
+export default {
+    name:"Info",
+    props: ["image", "freelancerName", "star", "rating", "gender", "age"]
+}
+</script>
+
+<style>
+
+</style>
