@@ -28,19 +28,19 @@ export default {
     },
 
     async getUser() {
-        let res = await Axios.get(`${api_endpoint}/users/me`, this.getApiHeader());
+        let res = await Axios.get(`${api_endpoint}/api/users/me`, this.getApiHeader());
         let body = res.data;
         return body;
     },
 
     async getUserById(id) {
-        let res = await Axios.get(`${api_endpoint}/users/${id}`, this.getApiHeader());
+        let res = await Axios.get(`${api_endpoint}/api/users/${id}`, this.getApiHeader());
         let body = res.data;
         return body
     },
 
     async isAdmin() {
-        let res = await Axios.get(`${api_endpoint}/users/me`, this.getApiHeader());
+        let res = await Axios.get(`${api_endpoint}/api/auth/me`, this.getApiHeader());
         let body = res.data.isAdmin
         return body
     },
@@ -57,7 +57,7 @@ export default {
                 password: password,
             };
 
-            let url = `${api_endpoint}/auth/local`
+            let url = `${api_endpoint}/api/auth/login`
             let res = await Axios.post(url, body);
             localStorage.setItem(auth_key, JSON.stringify(res.data));
             this.jwt = res.data.jwt;
@@ -79,7 +79,7 @@ export default {
 
     async register(payload) {
         try {
-            let url = `${api_endpoint}/auth/local/register`;
+            let url = `${api_endpoint}/api/auth/register`;
             let res = await Axios.post(url, payload);
             if (res.status === 200) {
                 return {
