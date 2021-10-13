@@ -21,8 +21,8 @@
     "vue-easytable": "^2.9.0",
     "vue-router": "^3.5.2",
     "vue-swal": "^1.0.0",
-    "vuex": "^3.6.2"
-    "vue-apexcharts": "^1.6.2",
+    "vuex": "^3.6.2",
+    "vue-apexcharts": "^1.6.2"
   },
   "devDependencies": {
     "@babel/plugin-syntax-jsx": "^7.14.5",
@@ -45,7 +45,9 @@
       "plugin:vue/essential",
       "eslint:recommended"
     ],
-    "rules": {},
+    "rules": {
+      "no-unused-vars": "off"
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }
