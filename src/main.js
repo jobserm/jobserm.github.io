@@ -11,7 +11,11 @@ import extendTheme from "./styles/theme.js";
 import router from "./router";
 import VueAxios from "vue-axios";
 import VueSwal from "vue-swal";
- 
+
+// VueTable
+import VueEasytable from "vue-easytable"; // import library
+Vue.use(VueEasytable);
+import "vue-easytable/libs/theme-default/index.css"; // import style
 
 // import icons
 import { faHome } from '@fortawesome/free-solid-svg-icons'

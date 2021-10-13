@@ -84,6 +84,11 @@ const routes = [
     name: "admin",
     component: () => import("../views/admin/index.vue"),
   },
+  {
+    path:"/table",
+    name: "test table",
+    component: () => import("../views/testTable.vue")
+  }
 ];
 
 const router = new VueRouter({
