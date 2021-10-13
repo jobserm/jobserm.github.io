@@ -88,6 +88,11 @@ const routes = [
     path:"/table",
     name: "test table",
     component: () => import("../views/testTable.vue")
+  },
+  {
+    path: '/admin/accountsetting',
+    name: "account setting",
+    component: () => import("../views/admin/AccountSetting.vue")
   }
 ];
 
