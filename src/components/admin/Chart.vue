@@ -1,6 +1,5 @@
 <template>
-  <div>
-      chart
+  <div style="margin-top: 2rem">
     <apexchart
       type="bar"
       height="350"
