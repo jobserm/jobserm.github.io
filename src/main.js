@@ -18,7 +18,7 @@ Vue.use(VueEasytable);
 import "vue-easytable/libs/theme-default/index.css"; // import style
 
 // import icons
-import { faHome } from '@fortawesome/free-solid-svg-icons'
+import { faHome, faUser, faStar } from '@fortawesome/free-solid-svg-icons'
 import VueApexCharts from 'vue-apexcharts'
 import axios from "axios";
 
@@ -28,7 +28,9 @@ Vue.use(Chakra, {
   icons: {
     iconPack: 'fa',
     iconSet: {
-      faHome
+      faHome,
+      faUser,
+      faStar
     }
   }
 });
