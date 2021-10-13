@@ -8,7 +8,7 @@
       <c-menu>
         <c-menu-button w="100%" justifyContent="flex-start">
             <c-flex>
-                <c-icon name="moon" />
+                <c-icon v-bind:name="icon"/>
                 <c-text ml="5" display="flex">{{ menu }}</c-text>
             </c-flex>
         </c-menu-button>
@@ -19,7 +19,7 @@
 
 <script>
 export default {
-    props: ['menu']
+    props: ['menu', 'icon']
 }
 </script>
 
