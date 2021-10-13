@@ -15,12 +15,14 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@vue/cli-plugin-babel": "4.1.1",
     "axios": "^0.22.0",
+    "apexcharts": "^3.29.0",
     "vue": "^2.6.11",
     "vue-axios": "^3.3.7",
     "vue-easytable": "^2.9.0",
     "vue-router": "^3.5.2",
     "vue-swal": "^1.0.0",
     "vuex": "^3.6.2"
+    "vue-apexcharts": "^1.6.2",
   },
   "devDependencies": {
     "@babel/plugin-syntax-jsx": "^7.14.5",

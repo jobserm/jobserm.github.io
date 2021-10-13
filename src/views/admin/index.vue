@@ -12,6 +12,7 @@
                 <WeeklyCard header="Jobs" amount="402" remark="Increased by 7%"/>
                 <WeeklyCard header="Recently Online" amount="572" remark="Increased by 11%"/>
             </c-flex>
+            <Chart />
           </c-stack>
       </c-flex>
   </div>
@@ -20,10 +21,12 @@
 <script>
 import Sidebar from "../../components/admin/sidebar.vue";
 import WeeklyCard from "../../components/admin/WeeklyCard.vue";
+import Chart from "../../components/admin/Chart.vue";
 export default {
     components: {
         Sidebar,
         WeeklyCard,
+        Chart,
     }
 }
 </script>

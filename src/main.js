@@ -19,6 +19,7 @@ import "vue-easytable/libs/theme-default/index.css"; // import style
 
 // import icons
 import { faHome } from '@fortawesome/free-solid-svg-icons'
+import VueApexCharts from 'vue-apexcharts'
 import axios from "axios";
 
 // Import Chakra UI Plugin and register it.
@@ -34,6 +35,10 @@ Vue.use(Chakra, {
 
 Vue.use(VueAxios, axios);
 Vue.use(VueSwal);
+
+// inject apexchart
+Vue.use(VueApexCharts)
+Vue.component('apexchart', VueApexCharts)
 
 Vue.config.productionTip = false;
 
