@@ -12,6 +12,7 @@ import router from "./router";
 
 // import icons
 import { faHome } from '@fortawesome/free-solid-svg-icons'
+import VueApexCharts from 'vue-apexcharts'
 
 // Import Chakra UI Plugin and register it.
 Vue.use(Chakra, {
@@ -23,6 +24,10 @@ Vue.use(Chakra, {
     }
   }
 });
+
+// inject apexchart
+Vue.use(VueApexCharts)
+Vue.component('apexchart', VueApexCharts)
 
 Vue.config.productionTip = false;
 
