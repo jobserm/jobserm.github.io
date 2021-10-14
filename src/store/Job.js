@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import PostService from '@/services/PostService'
+import Authservice from '../services/Authservice';
+
+let api_endpoint = process.env.VUE_APP_JOBSERM_ENDPOINT || "http://localhost:8000";
 
 Vue.use(Vuex);
 
@@ -17,7 +19,7 @@ export default new Vuex.Store({
             state.posts = res;
         },
         addPost(state, post) {
-            state.posts.unshift(post); //?? what is unshift 
+            state.posts.unshift(post); 
         },
         // updatePost(state, res) {
         //     state.posts.forEach((post) => {
@@ -29,12 +31,14 @@ export default new Vuex.Store({
     },
     actions: {
         async fetchData({ commit }) {
-            let res = await PostService.getAll();
-            commit("fetch", res.data);
+            let header = Authservice.getApiHeader();
+            let res = await Axios.get(`${api_endpoint}/api/jobs`, header);
+            commit("fetch", res);
         },
-        async addPost({ commit }) {
-            let res = await PostService.post("jobs", payload);
-            commit("addPost", res.res.data)
+        async addPost({ commit }, payload) {
+            let header = Authservice.getApiHeader();
+            let res = await Axios.post(`${api_endpoint}/api/jobs`, payload, header);
+            commit("addPost", res)
             return res;
         }
     }
