@@ -1,7 +1,7 @@
 import Axios from "axios";
 import Vue from "vue";
 import Vuex from "vuex";
-import AuthService from "../services/AuthService";
+import AuthService from "../services/Authservice";
 
 let api_endpoint = process.env.VUE_APP_JOBSERM_ENDPOINT || "http://localhost:8000";
 
