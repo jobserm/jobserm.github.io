@@ -1,7 +1,9 @@
+import Axios from "axios";
 import Vue from "vue";
 import Vuex from "vuex";
-import Postservice from "../services/PostService";
 import AuthService from "../services/AuthService";
+
+let api_endpoint = process.env.VUE_APP_JOBSERM_ENDPOINT || "http://localhost:8000";
 
 Vue.use(Vuex)
 
@@ -28,8 +30,8 @@ export default new Vuex.Store({
         },
 
         async addReview({ commit }, payload) {
-            let res = await Postservice.post("reviews", payload);
-            commit("addReview", res.data); ///????
+            let res = await Axios.post(`${api_endpoint}/api/reviews`, payload);
+            commit("addReview", res.data); 
             return res;
         }
     },
