@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import AuthService from '@/services/AuthService'
+
+import AuthService from '../services/Authservice';
 
 Vue.use(Vuex)
 
@@ -16,12 +17,20 @@ const initialState = {
 
 export default new Vuex.Store({
     state: initialState,
+
+    getters:{
+        user:(state) => state.user,
+        jwt: (state) => state.jwt,
+        isAuthen: (state) => state.isAuthen,
+        isAdmin: (state) => state.isAdmin,
+    },
+
     mutations: {
         loginSuccess(state, user, jwt){
           state.user = user
           state.jwt = jwt
           state.isAuthen = true
-          state.isAdmin = state.user.role.type === "admin"
+          state.isAdmin = state.user.role === "ADMIN"
         },
         logoutSuccess(state){
           state.user = ""
@@ -31,29 +40,28 @@ export default new Vuex.Store({
         },
     },
     actions: {
-        async login({commit}, {email, password}){
-            let res = await AuthService.login({email,password})
-            if(res.success){
-                commit('loginSuccess', res.email, res.jwt) // type true=admin false=user
+        async login({ commit }, { email, password }) {
+            let res = await AuthService.login({ email,password })
+            if (res.success) {
+                let body = {
+                    user: res.user,
+                    jwt: res.jwt,
+                };
+                commit('loginSuccess', body); // type true=admin false=user
             }
             return res
         },
-        async logout({commit}){
-          AuthService.logout()
-          commit('logoutSuccess')
+        async logout({ commit }){
+            AuthService.logout()
+            commit('logoutSuccess')
         },
-        async register({commit}, {email, password}){
-            let res = await AuthService.register({email, password})
-            if(res.success){
-                commit("loginSuccess", res.user, res.jwt, res.type)
-            }
-            return res
+        async register({ commit }, payload){
+            let res = await AuthService.register(payload)
+            // if(res.success){
+            //     commit("loginSuccess", res.user, res.jwt, res.type)
+            // }
+            return res;
         },
     },
-    getters:{
-        user:(state) => state.user,
-        jwt: (state) => state.jwt,
-        isAuthen: (state) => state.isAuthen,
-        isAdmin: (state) => state.isAdmin,
-    },
+
 });
