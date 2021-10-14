@@ -27,7 +27,7 @@
         {{ `งานเทพๆ หาง่ายกว่าที่คิดเยอะ!\nคิดถึงงาน คิดถึงเรา` }}
       </c-heading>
       <c-flex wrap="wrap">
-        <button-primary :url="`/employer`" :text="`หาคนเข้าทำงาน`" mr="2" />
+        <button-primary :url="`/register`" :text="`หาคนเข้าทำงาน`" mr="2" />
         <button-secondary :url="`/login`" :text="`ประกาศหางาน`" ml="2" />
       </c-flex>
       <c-text fontSize="xs" color="primary.800" opacity="0.6">
