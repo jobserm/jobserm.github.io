@@ -19,9 +19,13 @@ export default new Vuex.Store({
     },
     actions: {
         async fetchUsers({commit}){
-            let res = await axios.get(baseURL + "/users")
-            console.log(res.data)
-            commit('setUsers', res.data)
+            try {
+                let res = await axios.get(baseURL + "/users")
+                commit('setUsers', res.data)
+
+            } catch(e) {
+                console.log(e)
+            }
         },
 
     },
