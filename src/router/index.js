@@ -97,6 +97,11 @@ const routes = [
     path:"/table",
     name: "test table",
     component: () => import("../views/testTable.vue")
+  },
+  {
+    path:"/firebase",
+    name: "firebase",
+    component: () => import("../views/testFirebase.vue")
   }
 ];
 
