@@ -4,15 +4,9 @@
       mt="30"
       flexDirection="column"
       w="100%"
-      alignItems="center">
-      <c-menu>
-        <c-menu-button w="100%" justifyContent="flex-start">
-            <c-flex>
-                <c-icon v-bind:name="icon"/>
-                <c-text ml="5" display="flex">{{ menu }}</c-text>
-            </c-flex>
-        </c-menu-button>
-      </c-menu>
+      alignItems="stretch"
+      >
+        <c-button v-bind:left-icon="icon" variant-color="indigo">{{ menu }}</c-button>
       </c-flex>
   </div>
 </template>

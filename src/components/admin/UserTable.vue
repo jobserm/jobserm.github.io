@@ -1,55 +1,70 @@
 <template>
   <div>
+    <loading v-if="loading"/>
     <c-stack mt="2rem">
       <ve-table
         :columns="columns"
         :table-data="tableData"
-        :total="600"
-        :expand-option="expandOption"
-        row-key-field-name="rowKey"
       />
+      <c-box w="100%">
+        <c-text fontSize="xl" textAlign="center" mt="2rem" v-show="dataEmpty">Data empty</c-text>
+      </c-box>
       <c-box mt="2rem" textAlign="right">
-        <ve-pagination :total="600" />
+        <ve-pagination  
+        :total="totalCount"
+        :page-index="pageIndex"
+        :page-size="pageSize" 
+        @on-page-number-change="pageNumberChange"
+        @on-page-size-change="pageSizeChange"
+        />
       </c-box>
     </c-stack>
   </div>
 </template>
 
 <script>
+import UserStore from "../../store/UserStore"
+import Authservice from "../../services/Authservice";
+import axios from 'axios'
+import { CBadge } from '@chakra-ui/vue';
+
 export default {
   data() {
     return {
-      expandOption: {
-        render: ({ row, column, rowIndex }, h) => {
-          return (
-            <p>
-              My name is <span style="color:#1890ff;">{row.name}</span>
-              ,I'm living in {row.address}
-            </p>
-          );
-        },
-      },
+      pageIndex: 1,
+      pageSize: 10,
       columns: [
         {
-          field: "",
+          field: "id",
           key: "a",
-          // 设置需要显示展开图标的列
           type: "expand",
-          title: "",
-          width: 50,
+          title: "ID",
           align: "center",
         },
         {
           field: "name",
           key: "b",
           title: "Name",
-          width: 200,
           align: "left",
+          renderBodyCell: ({ row, column, rowIndex }, h) => {
+              const text = row[column.field];
+              return (
+                  <span>
+                      <a
+                          class="test-text"
+                          onClick={() => this.getUserByID(row['id'])}
+                          style="color:#1890ff;cursor:pointer;"
+                      >
+                          {text}
+                      </a>
+                  </span>
+              );
+          },
         },
         {
-          field: "hobby",
+          field: "lastname",
           key: "c",
-          title: "Hobby",
+          title: "lastname",
           width: 300,
           align: "left",
         },
@@ -60,47 +75,83 @@ export default {
           width: "",
           align: "left",
         },
-      ],
-      tableData: [
         {
-          rowKey: 1001,
-          name: "John",
-          date: "1900-05-20",
-          hobby: "coding",
-          address: "No.1 Century Avenue, Shanghai",
+          field: "phone",
+          key: "e",
+          title: "phone",
+          width: "",
+          align: "left",
         },
         {
-          rowKey: 1002,
-          name: "Dickerson",
-          date: "1910-06-20",
-          hobby: "coding",
-          address: "No.1 Century Avenue, Beijing",
+          field: "facebook",
+          key: "f",
+          title: "facebook",
+          width: "",
+          align: "left",
         },
         {
-          rowKey: 1003,
-          name: "Larsen",
-          date: "2000-07-20",
-          hobby: "coding and coding repeat",
-          address: "No.1 Century Avenue, Chongqing",
-        },
-        {
-          rowKey: 1004,
-          name: "Geneva",
-          date: "2010-08-20",
-          hobby: "coding and coding repeat",
-          address: "No.1 Century Avenue, Xiamen",
-        },
-        {
-          rowKey: 1005,
-          name: "Jami",
-          date: "2020-09-20",
-          hobby: "coding and coding repeat",
-          address: "No.1 Century Avenue, Shenzhen",
+          field: "activation",
+          key: "g",
+          title: "activation",
+          width: "",
+          align: "left",
+          renderBodyCell: ({ row, column, rowIndex }, h) => {
+              const text = row[column.field];
+              if (text === 1) {
+                return (
+                  <CBadge variant-color="green" mx="2">activated</CBadge>
+                )
+              }
+              return (
+                  <CBadge variant-color="red" mx="2">deactivated</CBadge>
+              )
+          },
         },
       ],
+      rawData: [],
+      loading: true,
+      dataEmpty: true
     };
   },
+  computed: {
+    tableData() {
+      const { pageIndex, pageSize } = this
+      return this.rawData.slice((pageIndex - 1) * pageSize, pageIndex * pageSize)
+    },
+    totalCount() {
+      return this.rawData.length
+    }
+  },
+  async created() {
+    await this.fetchUsers()
+  },
+  methods: {
+    async fetchUsers() {
+      await UserStore.dispatch('fetchUsers')
+      let data = UserStore.getters.getUsers
+      if (data.length != 0) {
+        this.rawData = data
+        this.loading = false
+        this.dataEmpty = false
+      }
+      this.loading = false
+    },
+    pageNumberChange(pageIndex) {
+      this.pageIndex = pageIndex
+    },
+    pageSizeChange(pageSize) {
+      this.pageIndex = 1
+      this.pageSize = pageSize
+    },
+    async getUserByID(id) {
+      // let user = await Authservice.getUserById(id)
+      let res = await axios.get(`http://localhost:8000/api/users/${id}`) 
+      this.$emit('parentGetUserByID', res.data)
+    }
+  }
 };
 </script>
 
-<style></style>
+<style>
+
+</style>

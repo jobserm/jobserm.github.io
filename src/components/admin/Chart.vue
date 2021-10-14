@@ -1,12 +1,12 @@
 <template>
-  <div style="margin-top: 2rem">
+  <c-box mt="2rem" bgColor="white">
     <apexchart
       type="bar"
       height="350"
       :options="chartOptions"
       :series="series"
     ></apexchart>
-  </div>
+  </c-box>
 </template>
 
 <script>

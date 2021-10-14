@@ -19,13 +19,14 @@
             </router-link>
         </c-box>
         <c-box w="100%">
-            <NavItem menu="Jobs" />
+            <router-link to="/admin/jobs">
+                <NavItem menu="Jobs & Categories" icon="briefcase"/>
+            </router-link>
         </c-box>
         <c-box w="100%">
-            <NavItem menu="Categories" />
-        </c-box>
-        <c-box w="100%">
-            <NavItem menu="Review" />
+            <router-link to="/admin/review">
+                <NavItem menu="Review" icon="star"/>
+            </router-link>
         </c-box>
         <c-box w="100%">
             <router-link to="/admin/accountsetting">
