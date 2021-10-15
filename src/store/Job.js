@@ -1,3 +1,4 @@
+import Axios from 'axios';
 import Vue from 'vue'
 import Vuex from 'vuex'
 
@@ -35,11 +36,22 @@ export default new Vuex.Store({
             let res = await Axios.get(`${api_endpoint}/api/jobs`, header);
             commit("fetch", res);
         },
+
         async addPost({ commit }, payload) {
             let header = Authservice.getApiHeader();
             let res = await Axios.post(`${api_endpoint}/api/jobs`, payload, header);
             commit("addPost", res)
             return res;
-        }
+        },
+
+        async getJobByID(id) {
+            let res = await Axios.get(`${api_endpoint}/api/jobs/${id}`);
+            let body = res.data;
+            return body;
+        },
+
+
+
+    
     }
 })
