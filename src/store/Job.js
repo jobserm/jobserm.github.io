@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import Axios from 'axios'
 
 import Authservice from '../services/Authservice';
 
@@ -9,17 +10,17 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        posts: []
-    },
+        data: []
+    },  
     getters: {
-        posts: (state) => state.posts
+        jobs: (state) => state.data
     },
     mutations: {
         fetch(state, res) {
-            state.posts = res;
+            state.data = res.data;
         },
         addPost(state, post) {
-            state.posts.unshift(post); 
+            state.data.unshift(post); 
         },
         // updatePost(state, res) {
         //     state.posts.forEach((post) => {
@@ -31,8 +32,8 @@ export default new Vuex.Store({
     },
     actions: {
         async fetchData({ commit }) {
-            let header = Authservice.getApiHeader();
-            let res = await Axios.get(`${api_endpoint}/api/jobs`, header);
+            // let header = Authservice.getApiHeader();
+            let res = await Axios.get(`${api_endpoint}/api/jobs`);
             commit("fetch", res);
         },
         async addPost({ commit }, payload) {

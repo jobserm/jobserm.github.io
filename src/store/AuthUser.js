@@ -12,7 +12,7 @@ const initialState = {
     user: auth ? auth.user : "",
     jwt: auth ? auth.jwt : "",
     isAuthen :auth ? true : false,
-    isAdmin: auth ? auth.user.role.type === "admin" : false,
+    isAdmin: auth ? auth.user.role === "ADMIN" : false,
 }
 
 export default new Vuex.Store({
@@ -57,9 +57,9 @@ export default new Vuex.Store({
         },
         async register({ commit }, payload){
             let res = await AuthService.register(payload)
-            // if(res.success){
-            //     commit("loginSuccess", res.user, res.jwt, res.type)
-            // }
+            if(res.success){
+                commit("loginSuccess", res.user, res.jwt, res.type)
+            }
             return res;
         },
     },
