@@ -25,6 +25,14 @@ export default new Vuex.Store({
             console.log((await res).data)
             console.log("api")
             commit("fetch",{ res })
+        },
+        async paginate({commit},route){
+            let res = Axios.get(route)
+            console.log("route")
+            console.log(route)
+            console.log("data from url")
+            console.log((await res).data)
+            commit("fetch",{ res })
         }
     }
 
