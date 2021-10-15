@@ -97,6 +97,11 @@ const routes = [
     path:"/table",
     name: "test table",
     component: () => import("../views/testTable.vue")
+  },
+  {
+    path: "/newuser",
+    name: "new user",
+    component: () => import("../views/NewUser.vue")
   }
 ];
 
