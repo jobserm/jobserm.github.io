@@ -59,6 +59,11 @@ export default new Vuex.Store({
             console.log((await res).data)
             commit("fetch",{ res })
         },
+        async getJobByID(id) {
+            let res = await Axios.get(`${api_endpoint}/api/jobs/${id}`);
+            let body = res.data;
+            return body;
+        },
         async fetchJobById({ commit },id){
             console.log("---id---")
             console.log(id)
@@ -67,6 +72,5 @@ export default new Vuex.Store({
             console.log("api")
             commit("fetch",{ res })
         },
-
     }
 })
