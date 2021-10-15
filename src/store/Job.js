@@ -1,7 +1,6 @@
 import Axios from 'axios';
 import Vue from 'vue'
 import Vuex from 'vuex'
-import Axios from 'axios'
 
 import Authservice from '../services/Authservice';
 
