@@ -7,6 +7,7 @@
             <Header header="Jobs Management" icon="briefcase"/>
             <JobChart />
             <Header header="Categories Management" icon="tag"/>
+            <CategoryTable />
           </c-stack>
         </c-flex>
       </c-flex>
@@ -17,11 +18,13 @@
 import Sidebar from "../../components/admin/Sidebar.vue";
 import Header from '../../components/admin/Header.vue'
 import JobChart from "../../components/admin/jobs/JobChart.vue";
+import CategoryTable from "../../components/admin/CategoryTable.vue";
 export default {
     components: {
         Sidebar,
         Header,
         JobChart,
+        CategoryTable
     }
 }
 </script>
