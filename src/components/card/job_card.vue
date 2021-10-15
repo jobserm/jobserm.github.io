@@ -13,7 +13,7 @@
                             <p class="requirement">{{ index.requirement }}</p>
                             <p class="compensation">ค่าจ้าง {{ index.compensation }} บาท/ชม</p>
                             <br>
-                            <a href="#/job" key="">รายละเอียดงาน</a>
+                            <a @click='value(index.id)' :href="'#/job'" >รายละเอียดงาน</a>
                         </c-box>
                         
                     
@@ -66,6 +66,10 @@ export default {
             this.count_job = this.jobs.meta.total
             this.$forceUpdate();
 
+        },
+        async value(id){
+            await JobApi.dispatch("fetchJobById" ,  id )
+            console.log(id)
         }
     },
     colors:{
