@@ -38,59 +38,91 @@
 
 <script>
 import info from "./Info.vue"
+import Job from "../../store/Job"
+
 export default {
-  components: { info },
-  name: "Info",
+    components: { info },
+    name: "Info",
 
-  data() {
-    return {
-      freelancers: [
-      {
-        path: './user.png',
-        freelancerName:"ปฏิภาณ บุญสิมมา",
-        rating: "4.5",
-        gender: "เจ้าหญิง",
-        age:"24",
-      },
-      {
-        path: './user.png',
-        freelancerName:"คนิตา หวั่นแสง",
-        rating: "4.0",
-        gender: "ชาย",
-        age:"23",
-      },
-      {
-        path: './user.png',
-        freelancerName:"กานต์รวี วารินทร์ศิริกุล",
-        rating: "4.8",
-        gender: "ชาย",
-        age:"22",
-      },
-      {
-        path: './user.png',
-        freelancerName:"พีรพัฒน์ จิตรเจริญวีรกุล",
-        rating: "5.0",
-        gender: "หญิง",
-        age:"21",
-      }],
+    data() {
+      return {
+        job: {},
+        freelancers: {}
+      }
+    },
 
-      title: "พาน้องหมาไปเดินเล่น 10 ตัว",
+    async mounted(id) {  //id???
+      this.job = await Job.dispatch("getByJobID", id);
+      this.freelancers = this.job.user_id
+      // await getJob(id),
+      // await getFreelancers()
+    },
+    
+    methods: {
+      // async getJob(id) {
+      //   this.job = await Job.dispatch("getByJobID", id);
+      // },
+
+      // async getFreelancers() {
+      //   this.freelancers = this.job.user_id
+      // },
+
+
+      // async fet
+    },
+    
+
+
+
+  // data() {
+  //   return {
+  //     freelancers: [
+  //     {
+  //       path: './user.png',
+  //       freelancerName:"ปฏิภาณ บุญสิมมา",
+  //       rating: "4.5",
+  //       gender: "เจ้าหญิง",
+  //       age:"24",
+  //     },
+  //     {
+  //       path: './user.png',
+  //       freelancerName:"คนิตา หวั่นแสง",
+  //       rating: "4.0",
+  //       gender: "ชาย",
+  //       age:"23",
+  //     },
+  //     {
+  //       path: './user.png',
+  //       freelancerName:"กานต์รวี วารินทร์ศิริกุล",
+  //       rating: "4.8",
+  //       gender: "ชาย",
+  //       age:"22",
+  //     },
+  //     {
+  //       path: './user.png',
+  //       freelancerName:"พีรพัฒน์ จิตรเจริญวีรกุล",
+  //       rating: "5.0",
+  //       gender: "หญิง",
+  //       age:"21",
+  //     }],
+
+  //     title: "พาน้องหมาไปเดินเล่น 10 ตัว",
       
-      job_images:[
-        {
-          dog: "./dog_walking_1.jpg"
-        },
-        {
-          dog: "./dog_walking_2.jpg"
-        },
-                {
-          dog: "./dog_walking_3.jpg"
-        },
+  //     job_images:[
+  //       {
+  //         dog: "./dog_walking_1.jpg"
+  //       },
+  //       {
+  //         dog: "./dog_walking_2.jpg"
+  //       },
+  //               {
+  //         dog: "./dog_walking_3.jpg"
+  //       },
 
 
-      ]
-    };
-  },  
+  //     ]
+    // };
+  // },  
 
   async created() {
 

@@ -43,11 +43,7 @@ export default new Vuex.Store({
         async login({ commit }, { email, password }) {
             let res = await AuthService.login({ email,password })
             if (res.success) {
-                let body = {
-                    user: res.user,
-                    jwt: res.jwt,
-                };
-                commit('loginSuccess', body); // type true=admin false=user
+                commit('loginSuccess', res.user, res.jwt); // type true=admin false=user
             }
             return res
         },
@@ -55,10 +51,10 @@ export default new Vuex.Store({
             AuthService.logout()
             commit('logoutSuccess')
         },
-        async register({ commit }, payload){
+        async register(payload){
             let res = await AuthService.register(payload)
             // if(res.success){
-            //     commit("loginSuccess", res.user, res.jwt, res.type)
+            //     commit("loginSuccess", res.user, res.jwt, res.role)
             // }
             return res;
         },
