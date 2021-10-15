@@ -24,7 +24,7 @@
             <c-form-label for="name" color="gray.600">{{
               "ชื่อจริง"
             }}</c-form-label>
-            <c-input id="name" placeholder="ชื่อจริง" v-model="form.firstname"/>
+            <c-input disabled id="name" placeholder="ชื่อจริง" v-model="firstname"/>
           </c-box>
           <c-box>
             <c-form-label for="birthdate" color="gray.600">{{
@@ -36,7 +36,7 @@
             <c-form-label for="lastname" color="gray.600">{{
               "นามสกุล"
             }}</c-form-label>
-            <c-input id="lastname" placeholder="นามสกุล" v-model="form.lastname"/>
+            <c-input disabled id="lastname" placeholder="นามสกุล" v-model="lastname"/>
           </c-box>
           <c-box pb="3vh">
             <c-form-label for="address" color="gray.600">{{
@@ -56,13 +56,13 @@
             <c-form-label for="email" color="gray.600">{{
               "Email"
             }}</c-form-label>
-            <c-input id="email" placeholder="email" v-model="form.email"/>
+            <c-input disabled id="email" placeholder="email" v-model="email"/>
           </c-box>
           <c-box>
             <c-form-label for="เบอร์โทรศัพท์" color="gray.600">{{
               "เบอร์โทรศัพท์"
             }}</c-form-label>
-            <c-input id="phone" placeholder="เบอร์โทรศัพท์" v-model="form.phone"/>
+            <c-input disabled id="phone" placeholder="เบอร์โทรศัพท์" v-model="phone"/>
           </c-box>
           <c-box>
             <c-form-label for="facebook" color="gray.600">{{
@@ -109,16 +109,19 @@
 
 <script>
 export default {
-  props: ['title'],
+  props: {
+      title: String,
+      user: Object,
+      email: String,
+      firstname: String,
+      lastname: String,
+      phone: String,
+  },
   data() {
     return {
       form: {
-        firstname: "",
         birthdate: "",
-        lastname: "",
         address: "",
-        email: "",
-        phone: "",
         facebook: "",
         line: "",
         about_me: "",
