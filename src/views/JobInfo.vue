@@ -19,6 +19,7 @@
           <c-button right-icon="chevron-right" variant-color="blue" variant="outline">
           </c-button>
       </c-button-group>
+      <p> {{ jobs }}</p>
       
       
   </div>
@@ -30,9 +31,27 @@ import Country from "../components/combo-box/country.vue"
 import Category from "../components/combo-box/category.vue"
 import Money_range from "../components/combo-box/money-range.vue"
 import JobCard from "../components/card/job_card.vue"
+import JobApi from "../store/JobApi.js"
 
 export default {
-  components:{ Country,Category,Money_range,JobCard }
+  components:{ Country,Category,Money_range,JobCard },
+  data(){
+    return{
+      jobs:{}
+    }
+  },
+  async created(){
+    await this.fetchJobs()
+  },
+  methods:{
+    async fetchJobs(){
+      await JobApi.dispatch("fetchJob")
+      this.jobs = JobApi.getters.jobs
+      console.log("this.jobs")
+      console.log(this.jobs)
+    }
+  }
+  
 }
 </script>
 

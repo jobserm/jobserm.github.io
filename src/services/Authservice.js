@@ -49,16 +49,15 @@ export default {
         return jwt;
     },
 
-    async login({ identifier, password }) {
+    async login({ email, password }) {
         
         try {
             let body = {
-                identifier: identifier,
+                email: email,
                 password: password,
             };
 
-            let url = `${api_endpoint}/api/auth/login`
-            let res = await Axios.post(url, body);
+            let res = await Axios.post(`${api_endpoint}/api/auth/login`, body);
             localStorage.setItem(auth_key, JSON.stringify(res.data));
             this.jwt = res.data.jwt;
             
@@ -79,8 +78,7 @@ export default {
 
     async register(payload) {
         try {
-            let url = `${api_endpoint}/api/auth/register`;
-            let res = await Axios.post(url, payload);
+            let res = await Axios.post(`${api_endpoint}/api/auth/register`, payload);
             if (res.status === 200) {
                 return {
                     success: true,
