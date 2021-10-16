@@ -121,7 +121,22 @@ const routes = [
     path: "/review",
     name: "Review",
     component: () => import("../views/Review.vue")
-  }
+  },
+  {
+    path: '/admin/accountsetting',
+    name: "account setting",
+    component: () => import("../views/admin/AccountSetting.vue")
+  },
+  {
+    path: '/admin/jobs',
+    name: "jobs setting",
+    component: () => import("../views/admin/Jobs.vue")
+  },
+  {
+    path: '/admin/review',
+    name: "review setting",
+    component: () => import("../views/admin/Review.vue")
+  },
 ];
 
 const router = new VueRouter({

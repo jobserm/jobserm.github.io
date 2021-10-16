@@ -1,12 +1,12 @@
 <template>
-  <c-box mt="2rem" bgColor="white">
-    <apexchart
-      type="bar"
-      height="350"
-      :options="chartOptions"
-      :series="series"
-    ></apexchart>
-  </c-box>
+    <c-box mt="2rem" bgColor="white">
+        <apexchart
+            type="bar"
+            height="350"
+            :options="chartOptions"
+            :series="series"
+        />
+    </c-box>
 </template>
 
 <script>
@@ -14,13 +14,12 @@ export default {
     data() {
         let months =  ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct']
         return {
-            series: [{
-            name: 'Users',
-            data: [220, 140, 158, 258, 185, 149, 341, 456, 415]
-            }, {
-            name: 'Jobs',
-            data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
-            }],
+            series: [
+                {
+                    name: 'Jobs',
+                    data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
+                },
+            ],
             chartOptions: {
             chart: {
                 type: 'bar',
@@ -38,7 +37,7 @@ export default {
             },
             stroke: {
                 show: true,
-                width: 2,
+                width: 1,
                 colors: ['transparent']
             },
             xaxis: {
@@ -46,7 +45,7 @@ export default {
             },
             yaxis: {
                 title: {
-                text: '$ (thousands)'
+                    text: 'posted job'
                 }
             },
             fill: {
@@ -55,7 +54,7 @@ export default {
             tooltip: {
                 y: {
                 formatter: function (val) {
-                    return "$ " + val + " thousands"
+                    return "ประกาศงานทั้งหมด " + val
                 }
                 }
             }
