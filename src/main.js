@@ -11,6 +11,9 @@ import extendTheme from "./styles/theme.js";
 import router from "./router";
 import VueAxios from "vue-axios";
 import VueSwal from "vue-swal";
+import dotenv from "dotenv";
+
+dotenv.config()
 
 // VueTable
 import VueEasytable from "vue-easytable"; // import library

@@ -39,12 +39,6 @@ export default {
         return body
     },
 
-    async isAdmin() {
-        let res = await Axios.get(`${api_endpoint}/api/auth/me`, this.getApiHeader());
-        let body = res.data.isAdmin
-        return body
-    },
-
     getJwt() {
         return jwt;
     },
@@ -59,19 +53,23 @@ export default {
 
             let res = await Axios.post(`${api_endpoint}/api/auth/login`, body);
             localStorage.setItem(auth_key, JSON.stringify(res.data));
-            this.jwt = res.data.jwt;
-            
+            this.jwt = res.data.access_token;
+
             return {
                 success: true,
                 user: res.data.user,
-                jwt: res.data.jwt,
+                jwt: res.data.access_token,
             };
 
-        } catch (error) {
-            console.error(error);
+        } catch (e) {
+            // console.log(e.response)
+            // console.error(e);
+            //console.log(e.response.data.email[0])
+
             return {
                 success: false,
-                message: error.response.data.message[0].messages[0].message,
+                message: "กรุณาตรวจสอบอีเมลและรหัสผ่านอีกครั้ง"
+                //message: e.response.data.error,
             };
         }
     },
@@ -92,15 +90,15 @@ export default {
                 return {
                     success: true,
                     user: res.data.user,
-                    jwt: res.data.jwt,
+                    jwt: res.data.access_token,
                 };
             }
-        } catch (error) {
-            console.error(error);
-            if (error.response.status === 400) {
+        } catch (e) {
+            //console.error(error);
+            if (e.response.status === 400) {
                 return {
                     success: false,
-                    message: error.response.data.message[0].messages[0].message,
+                    message: e.response.data.error
                 };                
             }
         } 
@@ -111,13 +109,7 @@ export default {
         localStorage.removeItem(auth_key);
         return {
             success: true,
-            message: "Sign out successfully"
         };
     },
-
-    
-
-    
-//?????????????????????????
 
 }
