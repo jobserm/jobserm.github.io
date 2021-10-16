@@ -26,7 +26,7 @@ jobs:
             ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-node-14-x
+            ${{ runner.os }}-node-14-x-${{ github.ref }}
 
       - name: Install NPM Dependencies
         run: npm install
