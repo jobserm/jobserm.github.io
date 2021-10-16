@@ -67,7 +67,7 @@ export default {
           align: "left",
         },
         {
-          field: "Reviewee",
+          field: "user",
           key: "d",
           title: "Reviewee",
           width: "",
