@@ -13,12 +13,6 @@
       </c-flex>
       <JobCard></JobCard>
 
-      <c-button-group :spacing="0" class="paginate">
-          <c-button right-icon="chevron-left" variant-color="blue" variant="outline">
-          </c-button>
-          <c-button right-icon="chevron-right" variant-color="blue" variant="outline">
-          </c-button>
-      </c-button-group>
       <p> {{ jobs }}</p>
       
       
@@ -56,8 +50,4 @@ export default {
 </script>
 
 <style>
-  .paginate{
-    margin-left: 800px;
-    margin-bottom: 100px;
-  }
 </style>

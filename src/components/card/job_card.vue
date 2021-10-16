@@ -13,14 +13,19 @@
                             <p class="requirement">{{ index.requirement }}</p>
                             <p class="compensation">ค่าจ้าง {{ index.compensation }} บาท/ชม</p>
                             <br>
-                            <a href="#">รายละเอียดงาน</a>
+                            <a @click='value(index.id)' :href="'#/job'" >รายละเอียดงาน</a>
                         </c-box>
+                        
                     
                         
 
                     </div>
                 </div>
             </div>
+            <div class="paginate">
+                <ve-pagination :total="count_job" :page-size="4" :layout="['total', 'prev', 'pager', 'next', 'jumper']" @on-page-number-change="pageNumberChange"></ve-pagination>
+            </div>
+            
         </body>
         
     </div>
@@ -33,7 +38,9 @@ export default {
     components:{  },
     data(){
         return{
-        jobs:{}
+            jobs:{},
+            count_job:0,
+            payload_url:""
         }
     },
     async created(){
@@ -43,8 +50,26 @@ export default {
         async fetchJobs(){
         await JobApi.dispatch("fetchJob")
         this.jobs = JobApi.getters.jobs
+        this.count_job = this.jobs.meta.total
         console.log("this.jobs")
         console.log(this.jobs.data)
+        console.log("count_job")
+        console.log(this.count_job)
+        },
+        async pageNumberChange(pageIndex) {
+            console.log(pageIndex)
+            this.payload_url = this.jobs.meta.links[pageIndex].url
+            await JobApi.dispatch("paginate" ,  this.payload_url )
+            console.log("payload_url")
+            console.log(this.payload_url)
+            this.jobs = JobApi.getters.jobs
+            this.count_job = this.jobs.meta.total
+            this.$forceUpdate();
+
+        },
+        async value(id){
+            await JobApi.dispatch("fetchJobById" ,  id )
+            console.log(id)
         }
     },
     colors:{
@@ -54,6 +79,11 @@ export default {
 </script>
 
 <style>
+    .paginate{
+        display: flex;
+        flex-direction: row-reverse;
+        margin-top: 50px;
+    }
     .compensation{
         margin-top: 20px;
         font-size: 20px;
