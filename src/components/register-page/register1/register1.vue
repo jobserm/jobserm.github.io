@@ -3,14 +3,14 @@
     align="center"
     justify="center"
   >
-  <c-flex bg="#D6B1FF" size="470px" align="center" justify="center">
+  <c-flex bg="#D6B1FF" size="560px" align="center" justify="center">
     <c-image
       :src="require('../../../assets/loginPicture.svg')"
-      :size="550"
+      :size="600"
       rounded="1rem"
     />
   </c-flex>
-  <c-flex bg="#D6B1FF" size="470px" align="center" justify="center">
+  <c-flex bg="#D6B1FF" size="560px" align="center" justify="center">
     <c-stack
       spacing="4"
       :align="['center', 'center', 'flex-start', 'flex-start']"
@@ -33,19 +33,31 @@
       <c-input
           pr="4.5rem"
           placeholder="อีเมล"
-          v-model="email"
+          v-model="form.email"
       />
 
       <c-input
           pr="4.5rem"
-          placeholder="ชื่อ-สกุล"
-          v-model="nameSurname"
+          placeholder="username"
+          v-model="form.username"
+      />
+
+      <c-input
+          pr="4.5rem"
+          placeholder="ชื่อ"
+          v-model="form.name"
+      />
+
+      <c-input
+          pr="4.5rem"
+          placeholder="สกุล"
+          v-model="form.lastname" 
       />
 
       <c-input
           pr="4.5rem"
           placeholder="เบอร์โทรศัพท์"
-          v-model="callNumb"
+          v-model="form.phone"
       />
 
       <c-input-group size="md">
@@ -53,7 +65,7 @@
           pr="4.5rem"
          :type="show ? 'text' : 'password'"
           placeholder="รหัสผ่าน"
-          v-model="password"
+          v-model="form.password"
         />
        <c-input-right-element width="4.5rem">
             <c-button h="1.75rem" size="sm" @click="show = !show">
@@ -68,7 +80,7 @@
           pr="4.5rem"
          :type="show ? 'text' : 'password'"
           placeholder="ยืนยันรหัสผ่าน"
-          v-model="passwordAgain"
+          v-model="form.confirmpassword"
         />
        <c-input-right-element width="4.5rem">
             <c-button h="1.75rem" size="sm" @click="show = !show">
@@ -79,7 +91,7 @@
        </c-input-group>
 
       <c-flex wrap="wrap">
-        <c-button width="200px" variant-color="pink" variant="solid" mr="10">
+        <c-button @click="register" width="200px" variant-color="pink" variant="solid" mr="10">
           สมัครสมาชิก
         </c-button>
       </c-flex>
@@ -90,16 +102,53 @@
 </template>
 
 <script>
+import AuthUser from '@/store/AuthUser'
 export default {
   components: { },
   name: "Register1",
   name2: 'PasswordInput',
   data () {
     return {
-      password: '',
+      form: {
+        name: '',
+        email: '',
+        password: '',
+        lastname: '',
+        phone: '',
+        username: '',
+      },
+      confirmpassword: '',
       show: false
     }
-  }
+  },
+  methods: {
+        // clearForm() {
+        //     this.form = {
+        //         email: '',
+        //         nameSurname: '',
+        //         callNumb: '',
+        //         password: '',
+        //         passwordAgain: '',
+        //         show: false
+        //     }
+        // },
+        async register(){
+            if(this.form.password === this.form.confirmpassword){
+                let res = await AuthUser.dispatch('register',this.form)
+                console.log(res)
+                if(res.success){
+                    this.$swal("Register Success", `Welcome ${res.user.email}`, "success")
+                    this.$router.push("/")
+                } 
+                else {
+                    this.$swal("Register Failed", res.message, "error")
+                }
+            }
+            else{
+                this.$swal('Password is not match', '', "error")
+            }
+        }
+    }
 }
 </script>
 

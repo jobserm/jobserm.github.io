@@ -74,9 +74,18 @@ export default {
         }
     },
 
-    async register(payload) {
+    async register({name, email, password, lastname, phone, username}) {
         try {
-            let res = await Axios.post(`${api_endpoint}/api/auth/register`, payload);
+            let body = {
+                name: name,
+                email: email,
+                password: password,
+                lastname: lastname,
+                phone: phone,
+                username: username
+            };
+            let res = await Axios.post(`${api_endpoint}/api/auth/register`, body);
+            
             if (res.status === 200) {
                 return {
                     success: true,
@@ -92,7 +101,8 @@ export default {
                     message: e.response.data.error
                 };                
             }
-        }
+        } 
+    
     },
 
     logout() {
