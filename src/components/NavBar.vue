@@ -19,7 +19,7 @@
         <router-link to="/about">
           <c-text mx="4">เกี่ยวกับเรา</c-text></router-link
         >
-        <router-link to="/contact-us">
+        <router-link to="/contact">
           <c-text mx="4">ติดต่อเรา</c-text></router-link
         >
       </c-flex>
