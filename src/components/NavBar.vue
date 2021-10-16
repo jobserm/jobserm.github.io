@@ -36,7 +36,14 @@
       </c-flex>
 
       <c-flex wrap="wrap" :direction="['column', 'row', 'row', 'row']">
-        <button-secondary :text="`เข้าสู่ระบบ`" :url="`/login`" mx="4" />
+        <div v-if="!isAuthen()">
+          <button-secondary :text="`เข้าสู่ระบบ`" :url="`/login`" mx="4" />
+        </div>
+
+        <div v-if="isAuthen()">
+          <button-secondary :text="`ออกจากระบบ`" :url="`/logout`" mx="4" />
+        </div>
+        
 
         <button-primary :url="`/register`" :text="`สมัครสมาชิก`" mx="4" />
       </c-flex>
@@ -49,14 +56,30 @@
 <script>
 import ButtonPrimary from "./button/ButtonPrimary.vue";
 import ButtonSecondary from "./button/ButtonSecondary.vue";
+import AuthUser from "../store/AuthUser";
+
 export default {
   components: { ButtonPrimary, ButtonSecondary },
   name: "Navbar",
   inject: ["$chakraColorMode", "$toggleColorMode"],
   data() {
     return {
+      user: {},
       show: false,
     };
+  },
+
+  methods: {
+    isAuthen() {
+      return AuthUser.getters.isAuthen
+    },
+
+    logout() {
+      AuthUser.dispatch("logout");
+      if (this.$router.currentRoute.path != "/") {
+        this.$router.push("/");
+      }
+    }
   },
 };
 </script>
