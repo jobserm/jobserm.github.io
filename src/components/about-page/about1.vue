@@ -19,9 +19,6 @@
   <br>
   <br>
 
-
-
-
   <c-box :p="5" shadow="md" border-width="1px">
     <c-heading color="#472760">Finding jobs</c-heading>
     <c-text :mt="4">
@@ -46,7 +43,7 @@
 export default {
   data() {
     return {
-      image: { backgroundImage: "url(https://raw.githubusercontent.com/jobserm/jobserm.github.io/5dcdad23858f783268f9a6b0be7dc81061045a10/src/components/about-page/BgAbout.svg)" }
+      image: { backgroundImage: "url(https://raw.githubusercontent.com/jobserm/jobserm.github.io/2069614f67bff4d8eade11d087cc4504cb388e33/src/components/about-page/GroupBackground.svg)" }
     };
   }
 };

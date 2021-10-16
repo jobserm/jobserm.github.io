@@ -11,7 +11,7 @@
         name="Jane Cooper"
         role="จากใจคนลองใช้จริง"
         :bgImg="require('./1.svg')"
-        :img="require('./Person2.jpg')"
+        :img="require('./Person3.jpg')"
       />
       <about2Item
         title="Intuitive Design"
@@ -27,7 +27,7 @@
         name="Taylor Andrea"
         role="จากใจคนจ้างงาน"
         :bgImg="require('./1.svg')"
-        :img="require('./Person3.jpg')"
+        :img="require('./Person2.jpg')"
       />
     </c-simple-grid>
   </c-stack>
