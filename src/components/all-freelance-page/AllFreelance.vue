@@ -15,7 +15,6 @@
           </div>
       </c-flex>
 
-
       <c-simple-grid :columns="[1, 1, 1, 4]" spacing="8" align="center" py="16">
         <div v-for="freelancer in freelancers" :key="freelancer.id">
             <router-link to="/" >   
