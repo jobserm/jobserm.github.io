@@ -62,15 +62,18 @@ export default {
             };
 
         } catch (e) {
-            // console.log(e.response)
-            // console.error(e);
-            //console.log(e.response.data.email[0])
-
-            return {
-                success: false,
-                message: "กรุณาตรวจสอบอีเมลและรหัสผ่านอีกครั้ง"
-                //message: e.response.data.error,
-            };
+            if (e.response.status === 409) {
+                return {
+                    success: false,
+                    message: "บัญชีของคุณถูกระงับ โปรดติดต่อผู้แลระบบ"
+                }
+            
+            } else {
+                return {
+                    success: false,
+                    message: "กรุณาตรวจสอบอีเมลและรหัสผ่านอีกครั้ง"
+                }
+            }
         }
     },
 

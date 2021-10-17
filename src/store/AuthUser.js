@@ -28,12 +28,7 @@ export default new Vuex.Store({
 
     mutations: {
         loginSuccess(state, { user, jwt }) {
-          if (user.activation === 0) {
-            state.isAuthen = false
-          } else {
-            state.isAuthen = true
-          }
-
+          state.isAuthen = true
           state.user = user
           state.jwt = jwt
           state.isAdmin = state.user.role === "ADMIN"
