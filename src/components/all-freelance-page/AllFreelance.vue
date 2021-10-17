@@ -15,14 +15,9 @@
           </div>
       </c-flex>
 
-<<<<<<< HEAD
-      <c-simple-grid :columns="[1, 1, 1, 4]" spacing="8" align="center" py="16">
-        <div v-for="freelancer in freelancers" :key="freelancer.id">
-=======
 
       <c-simple-grid :columns="[1, 1, 1, 5]" spacing="8" align="center" py="16">
         <div v-for="user in users" :key="user.id">
->>>>>>> a6cebb392bdd63cf63594ee89c1e8c610bd9d427
             <router-link to="/" >   
               <info
                 :image="require(`${user.path}`)"
