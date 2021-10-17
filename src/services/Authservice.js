@@ -74,19 +74,21 @@ export default {
         }
     },
 
-    async register({name, email, password, lastname, phone, username}) {
+    async register({name, email, password, password_confirmation,lastname, phone, username}) {
         try {
             let body = {
                 name: name,
                 email: email,
                 password: password,
+                password_confirmation: password_confirmation,
                 lastname: lastname,
                 phone: phone,
                 username: username
             };
+
             let res = await Axios.post(`${api_endpoint}/api/auth/register`, body);
-            
-            if (res.status === 200) {
+            console.log(res);
+            if (res.status === 201) {
                 return {
                     success: true,
                     user: res.data.user,
