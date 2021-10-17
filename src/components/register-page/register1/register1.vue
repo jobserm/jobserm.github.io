@@ -80,7 +80,7 @@
           pr="4.5rem"
          :type="show ? 'text' : 'password'"
           placeholder="ยืนยันรหัสผ่าน"
-          v-model="form.confirmpassword"
+          v-model="form.password_confirmation"
         />
        <c-input-right-element width="4.5rem">
             <c-button h="1.75rem" size="sm" @click="show = !show">
@@ -116,8 +116,9 @@ export default {
         lastname: '',
         phone: '',
         username: '',
+        password_confirmation: '',
       },
-      confirmpassword: '',
+
       show: false
     }
   },
@@ -133,7 +134,8 @@ export default {
         //     }
         // },
         async register(){
-            if(this.form.password === this.form.confirmpassword){
+          console.log(this.form)
+            if(this.form.password === this.form.password_confirmation){
                 let res = await AuthUser.dispatch('register',this.form)
                 console.log(res)
                 if(res.success){
