@@ -98,21 +98,14 @@ export default {
         let res = await AuthUser.dispatch("login", this.form);
 
         if (res.success) {
-          if (res.user.activation === 0) {
-            console.log("error");
-            this.$swal("เข้าสู่ระบบไม่สำเร็จ", `กรุณาติดต่อผู้ดูแลระบบ`, "error");
-            this.$router.push("/");
-          } else if (res.user.role === "ADMIN") {
-            console.log("error1");
+          if (res.user.role === "ADMIN") {
             this.$swal("เข้าสู่ระบบสำเร็จ" , `ยินดีต้อนรับผู้ดูแลระบบ คุณ ${res.user.name}`, "success");
             this.$router.push("/admin");
           } else {
-            console.log("error2");
             this.$swal("เข้าสู่ระบบสำเร็จ" , `ยินดีต้อนรับคุณ ${res.user.name}`, "success");
             this.$router.push("/");
           }
         } else {
-          console.log("error3");
           this.$swal("เข้าสู่ระบบไม่สำเร็จ", res.message, "error");
         }
       }
