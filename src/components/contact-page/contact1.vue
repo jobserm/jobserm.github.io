@@ -33,7 +33,7 @@
       <c-stack align="center" w="16rem">
         <c-image :src="require('./email.png')" size="100px"></c-image>
         <c-heading>EMAIL</c-heading>
-        <c-text fontWeight="300">jobserm.se@gmail.com</c-text>
+        <c-text fontWeight="300"> jobserm.se@gmail.com </c-text>
       </c-stack>
     </c-flex>
   </c-flex>
