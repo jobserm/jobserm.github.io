@@ -1,4 +1,5 @@
 import Axios from "axios";
+import AuthUser from "../store/AuthUser";
 
 const auth_key = process.env.VUE_APP_AUTH_KEY;
 let auth = JSON.parse(localStorage.getItem(auth_key));
@@ -89,10 +90,12 @@ export default {
                 username: username
             };
 
+            console.log(body)
+            
             let res = await Axios.post(`${api_endpoint}/api/auth/register`, body);
             //console.log(res);
             if (res.status === 201) {
-                let autoLogin = this.login(body.email, body.password)
+                let autoLogin = await AuthUser.dispatch('login', body)
                 console.log(autoLogin.jwt)
                 
                 return {
