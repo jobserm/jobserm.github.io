@@ -135,20 +135,25 @@ export default {
         // },
         async register(){
           console.log(this.form)
+          if (this.form.name !== "" && this.form.email !== "" && this.form.password !== "" && this.form.lastname !== "" && this.form.phone !== "" && this.form.username !== "" && this.form.email !== "") {
             if(this.form.password === this.form.password_confirmation){
                 let res = await AuthUser.dispatch('register',this.form)
                 console.log(res)
                 if(res.success){
-                    this.$swal("Register Success", `Welcome ${res.user.email}`, "success")
-                    this.$router.push("/")
+                    this.$swal("ลงทะเบียนสำเร็จ", `Welcome ${res.user.email}`, "success")
+                    this.$router.push("/new-user")
                 } 
                 else {
-                    this.$swal("Register Failed", res.message, "error")
+                    this.$swal("ลงทะเบียนไม่สำเร็จ", res.message, "error")
                 }
             }
             else{
-                this.$swal('Password is not match', '', "error")
+                this.$swal('รหัสผ่านไม่ตรงกัน', '', "error")
             }
+          } else {
+            this.$swal("ลงทะเบียนไม่สำเร็จ", `โปรดกรอกข้อมูลให้ครบถ้วน`, "error");
+          }
+            
         }
     }
 }

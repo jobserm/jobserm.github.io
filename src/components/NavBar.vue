@@ -44,8 +44,10 @@
           <button-secondary :text="`ออกจากระบบ`" :url="`/logout`" mx="4" />
         </div>
         
-
-        <button-primary :url="`/register`" :text="`สมัครสมาชิก`" mx="4" />
+        <div v-if="!isAuthen()">
+          <button-primary :url="`/register`" :text="`สมัครสมาชิก`" mx="4" />
+        </div>
+        
       </c-flex>
     </c-simple-grid>
 

@@ -90,12 +90,15 @@ export default {
             };
 
             let res = await Axios.post(`${api_endpoint}/api/auth/register`, body);
-            console.log(res);
+            //console.log(res);
             if (res.status === 201) {
+                let autoLogin = this.login(body.email, body.password)
+                console.log(autoLogin.jwt)
+                
                 return {
                     success: true,
                     user: res.data.user,
-                    jwt: res.data.access_token,
+                    jwt: autoLogin.jwt,
                 };
             }
         } catch (e) {
@@ -103,7 +106,7 @@ export default {
             if (e.response.status === 400) {
                 return {
                     success: false,
-                    message: e.response.data.error
+                    message: e.response.data
                 };                
             }
         } 
