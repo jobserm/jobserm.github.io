@@ -28,7 +28,8 @@
       </c-heading>
       <c-flex wrap="wrap">
         <button-primary :url="`/employer`" :text="`หาคนเข้าทำงาน`" mr="2" />
-        <button-secondary :url="`/login`" :text="`ประกาศหางาน`" ml="2" />
+
+        <button-secondary :url="`/jobinfo`" :text="`ประกาศหางาน`" ml="2" />
       </c-flex>
       <c-text fontSize="xs" color="primary.800" opacity="0.6">
         No credit card required.
@@ -46,6 +47,7 @@
 <script>
 import ButtonPrimary from "../../button/ButtonPrimary.vue";
 import ButtonSecondary from "../../button/ButtonSecondary.vue";
+
 export default {
   components: { ButtonPrimary, ButtonSecondary },
   name: "Hero",

@@ -1,4 +1,4 @@
 module.exports = {
-  presets: ["@babel/preset-react"],
+  presets: ["@vue/babel-preset-jsx"],
   plugins: ["@babel/plugin-syntax-jsx"],
 };

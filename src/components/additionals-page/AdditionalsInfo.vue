@@ -1,5 +1,6 @@
 <template>
  <div>
+     <!-- //jolie.morar@example.org -->
     <c-text fontSize="4xl" textAlign="center">{{ "กรุณากรอกข้อมูลเพิ่มเติม" }}</c-text>
     <c-text fontsize="md" color="gray.400" textAlign="center">{{
       `Fill the data for profile. It will take a couple of minutes.`
@@ -27,21 +28,21 @@
                 <c-form-label for="email" color="gray.600" c-icon name="email">
                     {{"อีเมล"}}
                 </c-form-label>
-                <c-input id="email" disabled/> {{ user.email }}
+                <c-input id="email" disabled v-model="user.email"/> 
             </c-box>
 
             <c-box>
                 <c-form-label for="phone" color="gray.600" c-icon name="phone">
                     {{"เบอร์โทรศัพท์"}}
                 </c-form-label>
-                <c-input id="phone" disabled/> {{ user.phone }}
+                <c-input id="phone" disabled v-model="user.phone"/>
             </c-box>
 
             <c-box>
                 <c-form-label for="facebook" color="gray.600">
                     {{"Facebook"}}
                 </c-form-label>
-                <c-input id="facebook" disabled/> {{ user.facebook }}
+                <c-input id="facebook" disabled v-model="user.facebook"/> 
             </c-box>
 
         </c-stack>
@@ -65,7 +66,7 @@
     </c-box>
 
     <c-box>
-        <c-textarea placeholder="แนะนำเกี่ยวกับตนเอง" focus-border-color="pink.400" v-model="user.about_me"/>
+        <c-textarea placeholder="แนะนำเกี่ยวกับตนเอง" focus-border-color="pink.400" v-model="form.about_me"/>
     </c-box>
     </c-box>
 
@@ -83,29 +84,21 @@ import AuthUser from "@/store/AuthUser"
 export default {
     data() {
         return {
-            form: "",
-            user: {}
+            user: {},
+            form: {
+                about_me: ''
+            },
         }
     },
     async mounted() {
         this.user = await AuthUser.getters.user;
     },
-    // created(){
-    //     this.getUsers()
-    // },
     methods: {
         saveInfo () {
             this.$emit('saveInfo', this.form)
+            console.log(this.user);
+            this.$router.push("/");
         },
-        // async getUsers(){
-        //     await AuthUser.dispatch("user")
-        //     this.jobs = AuthUser.getters.jobs
-        //     console.log("this.jobs")
-        //     console.log(this.jobs.data)
-        // }
-        // async getUsers(){
-        //     this.user = await AuthUser.getters.user;
-        // },
     }
 }
 </script>

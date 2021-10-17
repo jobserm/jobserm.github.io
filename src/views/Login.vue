@@ -1,6 +1,6 @@
 <template>
   <c-stack>
-    <c-heading align="center" as="h3" size="lg">Login page</c-heading>
+    <!-- <c-heading align="center" as="h3" size="lg">Login page</c-heading> -->
     <br>
     <br>
     <login1 />

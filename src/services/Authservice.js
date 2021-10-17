@@ -1,4 +1,5 @@
 import Axios from "axios";
+import AuthUser from "../store/AuthUser";
 
 const auth_key = process.env.VUE_APP_AUTH_KEY;
 let auth = JSON.parse(localStorage.getItem(auth_key));
@@ -39,12 +40,6 @@ export default {
         return body
     },
 
-    async isAdmin() {
-        let res = await Axios.get(`${api_endpoint}/api/auth/me`, this.getApiHeader());
-        let body = res.data.isAdmin
-        return body
-    },
-
     getJwt() {
         return jwt;
     },
@@ -59,55 +54,73 @@ export default {
 
             let res = await Axios.post(`${api_endpoint}/api/auth/login`, body);
             localStorage.setItem(auth_key, JSON.stringify(res.data));
-            this.jwt = res.data.jwt;
-            
+            this.jwt = res.data.access_token;
+
             return {
                 success: true,
                 user: res.data.user,
-                jwt: res.data.jwt,
+                jwt: res.data.access_token,
             };
 
-        } catch (error) {
-            console.error(error);
-            return {
-                success: false,
-                message: error.response.data.message[0].messages[0].message,
-            };
+        } catch (e) {
+            if (e.response.status === 409) {
+                return {
+                    success: false,
+                    message: "บัญชีของคุณถูกระงับ โปรดติดต่อผู้แลระบบ"
+                }
+            
+            } else {
+                return {
+                    success: false,
+                    message: "กรุณาตรวจสอบอีเมลและรหัสผ่านอีกครั้ง"
+                }
+            }
         }
     },
 
-    async register(payload) {
+    async register({name, email, password, password_confirmation,lastname, phone, username}) {
         try {
-            let res = await Axios.post(`${api_endpoint}/api/auth/register`, payload);
-            if (res.status === 200) {
+            let body = {
+                name: name,
+                email: email,
+                password: password,
+                password_confirmation: password_confirmation,
+                lastname: lastname,
+                phone: phone,
+                username: username
+            };
+
+            console.log(body)
+            
+            let res = await Axios.post(`${api_endpoint}/api/auth/register`, body);
+            //console.log(res);
+            if (res.status === 201) {
+                let autoLogin = await AuthUser.dispatch('login', body)
+                console.log(autoLogin.jwt)
+                
                 return {
                     success: true,
                     user: res.data.user,
-                    jwt: res.data.jwt,
+                    jwt: autoLogin.jwt,
                 };
             }
-        } catch (error) {
-            console.error(error);
-            if (error.response.status === 400) {
+        } catch (e) {
+            //console.error(error);
+            if (e.response.status === 400) {
                 return {
                     success: false,
-                    message: error.response.data.message[0].messages[0].message,
+                    message: e.response.data
                 };                
             }
-        }
+        } 
+    
     },
 
     logout() {
         localStorage.removeItem(auth_key);
         return {
             success: true,
-            message: "Sign out successfully"
         };
     },
-
-    
-
-    
-//?????????????????????????
 
 }

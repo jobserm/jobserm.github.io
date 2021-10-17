@@ -31,7 +31,7 @@
         </c-heading>
 
         <c-input
-            pr="4.5rem"
+            
             placeholder="อีเมล"
             v-model="form.email"
         />
@@ -39,16 +39,17 @@
         <c-input-group size="md">
           <c-input
             pr="4.5rem"
-          :type="show ? 'text' : 'password'"
+            :type="show ? 'text' : 'password'"
             placeholder="รหัสผ่าน"
             v-model="form.password"
           />
-        <c-input-right-element width="4.5rem">
-              <c-button h="1.75rem" size="sm" @click="show = !show">
-                <c-image src="/eye.svg" w="30px" />
-            <!-- {{ show ? 'Hide' : 'Show' }} -->
-            </c-button>
-        </c-input-right-element>
+          <c-input-right-element width="4.5rem">
+                <c-button h="1.75rem" size="sm" @click="show = !show">
+                  <c-image src="/eye.svg" w="30px" />
+                  <!-- {{ show ? 'Hide' : 'Show' }} -->
+                </c-button>
+          </c-input-right-element>
+        
         </c-input-group>
 
         <p class="forgot-password text-right mt-2 mb-4">
@@ -93,15 +94,25 @@ export default {
   },
   methods: {
     async login() {
+      if (this.form.email !== "" && this.form.password !== "") {
+        let res = await AuthUser.dispatch("login", this.form);
 
-      let res = await AuthUser.dispatch("login", this.form);
-      if (res.success) {
-        //refresh for get header in AuthService
-        this.$router.push("/");
-        //Alert.mixin("success", "Signed in successfully");
-      } else {
-        //Alert.window("error", "Sign in failed", res.message);
+        if (res.success) {
+          if (res.user.role === "ADMIN") {
+            this.$swal("เข้าสู่ระบบสำเร็จ" , `ยินดีต้อนรับผู้ดูแลระบบ คุณ ${res.user.name}`, "success");
+            this.$router.push("/admin");
+          } else {
+            this.$swal("เข้าสู่ระบบสำเร็จ" , `ยินดีต้อนรับคุณ ${res.user.name}`, "success");
+            this.$router.push("/");
+          }
+        } else {
+          this.$swal("เข้าสู่ระบบไม่สำเร็จ", res.message, "error");
+        }
       }
+      else {
+        this.$swal("เข้าสู่ระบบไม่สำเร็จ", `โปรดกรอกข้อมูลให้ครบถ้วน`, "error");
+      }
+       
     },
   },
 }

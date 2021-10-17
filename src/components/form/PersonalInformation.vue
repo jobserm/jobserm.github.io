@@ -1,6 +1,6 @@
 <template>
   <div>
-    <c-text fontSize="4xl" textAlign="center">{{ "ข้อมูลสมาชิกใหม่" }}</c-text>
+    <c-text fontSize="4xl" textAlign="center">{{ title }}</c-text>
     <c-text fontsize="md" color="gray.400">{{
       `Fill in the data for profile. It will take a couple of minutes. You only need a passport`
     }}</c-text>
@@ -30,7 +30,7 @@
             <c-form-label for="birthdate" color="gray.600">{{
               "วัน/เดือน/ปีเกิด"
             }}</c-form-label>
-            <c-input disabled id="birthdate" placeholder="วัน/เดือน/ปีเกิด" v-model="form.birthdate" />
+            <c-input type="date" id="birthdate" placeholder="วัน/เดือน/ปีเกิด" v-model="form.birthdate" />
           </c-box>
           <c-box>
             <c-form-label for="lastname" color="gray.600">{{
@@ -109,6 +109,7 @@
 
 <script>
 export default {
+  props: ['title'],
   data() {
     return {
       form: {

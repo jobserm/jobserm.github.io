@@ -15,15 +15,21 @@
           </div>
       </c-flex>
 
+<<<<<<< HEAD
       <c-simple-grid :columns="[1, 1, 1, 4]" spacing="8" align="center" py="16">
         <div v-for="freelancer in freelancers" :key="freelancer.id">
+=======
+
+      <c-simple-grid :columns="[1, 1, 1, 5]" spacing="8" align="center" py="16">
+        <div v-for="user in users" :key="user.id">
+>>>>>>> a6cebb392bdd63cf63594ee89c1e8c610bd9d427
             <router-link to="/" >   
               <info
-                :image="require(`${freelancer.path}`)"
-                :freelancerName="freelancer.freelancerName"
-                :rating="freelancer.rating"
-                :gender="freelancer.gender"
-                :age="freelancer.age"
+                :image="require(`${user.path}`)"
+                :freelancerName="user.name + user.lastname"
+                :rating="user.rating"
+                :gender="user.gender"
+                :age="user.birthdate"
                 :star="require(`./star.png`)"
               
               />
@@ -37,7 +43,7 @@
 
 <script>
 import info from "./Info.vue"
-import Job from "../../store/Job"
+import Job from "../../store/JobApi"
 
 export default {
     components: { info },
@@ -45,29 +51,18 @@ export default {
 
     data() {
       return {
+        id: '',
         job: {},
-        freelancers: {}
       }
     },
 
-    async mounted(id) {  //id???
-      this.job = await Job.dispatch("getByJobID", id);
-      this.freelancers = this.job.user_id
-      // await getJob(id),
-      // await getFreelancers()
-    },
-    
+    // async created() {
+    //   this.id = this.$route.params.id;
+    //   this.job = await Job.dispatch("getByJobID", id);
+    // },
+
     methods: {
-      // async getJob(id) {
-      //   this.job = await Job.dispatch("getByJobID", id);
-      // },
 
-      // async getFreelancers() {
-      //   this.freelancers = this.job.user_id
-      // },
-
-
-      // async fet
     },
     
 
@@ -75,7 +70,7 @@ export default {
 
   // data() {
   //   return {
-  //     freelancers: [
+  //     users: [
   //     {
   //       path: './user.png',
   //       freelancerName:"ปฏิภาณ บุญสิมมา",
@@ -120,13 +115,10 @@ export default {
 
 
   //     ]
-    // };
+  //   };
   // },  
 
-  async created() {
 
-
-  }
 }
 </script>
 
