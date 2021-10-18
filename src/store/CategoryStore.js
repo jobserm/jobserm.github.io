@@ -25,7 +25,8 @@ export default new Vuex.Store({
     actions: {
         async fetchData({ commit }) {
             let header = AuthService.getApiHeader();
-            let res = await Axios.get(`${api_endpoint}/api/categories`, header);
+            // let res = await Axios.get(`${api_endpoint}/api/categories`, header);
+            let res = await Axios.get(`${api_endpoint}/api/categories`);
             commit("setCategories", res.data)
         },
     },

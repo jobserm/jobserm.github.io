@@ -1,6 +1,6 @@
 <template>
     <div>
-        <!-- <loading v-if="loading"/> -->
+        <loading v-if="loading"/>
         <ve-table
             :fixed-header="true"
             :columns="columns"
@@ -8,8 +8,9 @@
         />
         <c-box w="100%">
             <c-text fontSize="xl" textAlign="center" mt="2rem" v-show="dataEmpty"
-            >Data empty</c-text>
-        </c-box>
+            >Data empty</c-text
+        >
+      </c-box>
         <c-box textAlign="right">
             <ve-pagination 
                 :total="countIndex"
@@ -19,18 +20,20 @@
                 @on-page-size-change="pageSizeChange"
             />
         </c-box>
+
+                
     </div>
 </template>
 
 <script>
-import CategoryStore from "../../store/CategoryStore"
+import JobApi from "../../../store/JobApi"
 
 export default {
     data() {
         return {
             columns: [
                 { field: "id", key: "a", title: "ID", align: "center" },
-                { field: "category_name", key: "b", title: "Category Name", align: "left" },
+                { field: "title", key: "b", title: "Job Name", align: "left" },
             ],
             // loading: true,
             rawData: [],
@@ -51,7 +54,7 @@ export default {
         },
     },
     async created () {
-        await this.fetchCategories();
+        await this.fetchAllJobs();
     },
     methods: {
         pageNumberChange( pageIndex ) {
@@ -62,15 +65,15 @@ export default {
             this.pageSize = pageSize
         },
 
-         async fetchCategories() {
-            await CategoryStore.dispatch('fetchData')
-            let categories = CategoryStore.getters.getCategories
-            if (categories.length > 0) {
-                this.rawData = categories
-                this.loading = false
-                this.dataEmpty = false
+         async fetchAllJobs() {
+             await JobApi.dispatch('fetchAllJobs')
+             let jobs = JobApi.getters.getAllJobs
+             if (jobs.length > 0) {
+                 this.rawData = jobs
+                 this.loading = false
+                 this.dataEmpty = false
              }
-            this.loading = false
+             this.loading = false
         },
     },
 

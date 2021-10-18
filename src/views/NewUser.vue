@@ -31,11 +31,6 @@ export default {
     methods: {
         register(value) {
             // get user data from API and assign to data.value
-            value.email = this.email
-            value.phone = this.phone
-            value.firstname = this.firstname
-            value.lastname = this.lastname
-            console.log(value)
         }
     }
 }
