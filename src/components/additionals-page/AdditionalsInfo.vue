@@ -73,8 +73,6 @@
             </c-button>
         </c-box> 
     </c-box>
-
-    {{ users }}
   </div>
     
 </template>
@@ -87,36 +85,17 @@ export default {
         return {
             user: {},
             form: {
-                remark: ''
+                remark: '',
+                jobId: [],
             },
-            // users:[
-            //     {
-            //         "id": 1,
-            //         "name": "Michael",
-            //         "lastname": "Raynor",
-            //         "birthdate": "2012-08-22",
-            //         "gender": "aut",
-            //         "role": "USER",
-            //         "phone": "(442) 259-3006",
-            //         "address": "50491 Prosacco Skyway Apt. 211\nEast Luciohaven, MD 70046-2014",
-            //         "facebook": "toey",
-            //         "line": null,
-            //         "email": "cole.guillermo@example.com",
-            //         "email_verified_at": "2021-10-17T18:58:04.000000Z",
-            //         "username": "qkuhlman",
-            //         "about_me": "Deserunt alias officiis corrupti voluptatibus animi sequi. Et maiores dolores vel. Enim qui voluptas vel.",
-            //         "skill": "Ut dolores ut id nostrum.",
-            //         "activation": 1,
-            //         "is_publish": 0,
-            //         "created_at": "2021-10-17T18:58:04.000000Z",
-            //         "updated_at": "2021-10-17T18:58:04.000000Z",
-            //         "deleted_at": null
-            //     },
-            // ]
         }
     },
     async mounted() {
         this.user = await AuthUser.getters.user;
+    },
+    async created() {
+        this.jobId = JSON.parse(localStorage.getItem('YourItem'));
+        console.log(this.jobId)
     },
     methods: {
         // saveInfo () {
@@ -129,11 +108,8 @@ export default {
                 id: this.user.id,
                 remark: this.form.remark
             }
-            console.log("payload.id---", payload.id)
-            console.log("payload.remark---", payload.remark)
-            await JobApi.dispatch("addRemark", payload)
+            await JobApi.dispatch("addRemarks", payload)
         }
-
     }
 }
 </script>
