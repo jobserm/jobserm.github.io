@@ -12,7 +12,7 @@ export default new Vuex.Store({
     state: {
         posts: [],
         data:[],
-        JobById:[]
+        JobById:[],
         allJobs: [],
     },
     getters: {
