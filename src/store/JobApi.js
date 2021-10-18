@@ -14,6 +14,7 @@ export default new Vuex.Store({
         data:[],
         JobById:[],
         allJobs: [],
+        JobSuggest:[],
         fetchRemark: [],
         fetchUserFinish: []
     },
@@ -24,6 +25,7 @@ export default new Vuex.Store({
             return state.JobById
         },
         getAllJobs: (state) => state.allJobs,
+        getJobSuggest: (state) => state.JobSuggest,
         getUserFinish: (state) => state.fetchUserFinish
     },
     mutations: {
@@ -32,6 +34,9 @@ export default new Vuex.Store({
         },
         async fetchById(state,{res}){
             state.JobById = (await res).data
+        },
+        async fetchSuggest(state,{res}){
+            state.JobSuggest = (await res).data
         },
         addPost(state, post) {
             state.posts.unshift(post); 
@@ -54,6 +59,17 @@ export default new Vuex.Store({
         }
     },
     actions: {
+        async fetchJobSuggest({ commit },id){
+            console.log("fetchJobSuggest")
+            console.log("---id---",id)
+            let body = {
+                id:id
+            }
+            let res = await Axios.post(`${api_endpoint}/jobs/${id}/get-rand-jobs`,body)
+            console.log("JobSuggest",(await res).data )
+            console.log("fetchJobSuggest")
+            commit("fetchSuggest",{ res })
+        },
         async fetchData({ commit }) {
             let header = Authservice.getApiHeader();
             let res = await Axios.get(`${api_endpoint}/jobs`, header);
