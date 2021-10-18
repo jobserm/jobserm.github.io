@@ -3,8 +3,8 @@
      
       <c-text fontSize="4xl">งานทั้งหมด</c-text>
       <c-flex>
-        <c-input-group size="sm" class="input">
-            <c-input-left-element><c-icon name="phone" color="gray.300" /></c-input-left-element>
+        <c-input-group size="sm" class="input" rounded="md">
+            <!-- <c-input-left-element><c-icon name="phone" color="gray.300" /></c-input-left-element> -->
             <c-input borderColor="black" focus-border-color="indigo.200" w="200px" type="phone" placeholder="ค้นหา" />
         </c-input-group>
         <Country></Country>

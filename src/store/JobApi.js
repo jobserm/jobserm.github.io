@@ -11,15 +11,22 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         posts: [],
-        data:[]
+        data:[],
+        JobById:[]
     },
     getters: {
         posts: (state) => state.posts,
         jobs: (state) => state.data,
+        job_filtered: (state) => {
+            return state.JobById
+        },
     },
     mutations: {
         async fetch(state,{res}){
             state.data = (await res).data
+        },
+        async fetchById(state,{res}){
+            state.JobById = (await res).data
         },
         addPost(state, post) {
             state.posts.unshift(post); 
@@ -67,10 +74,15 @@ export default new Vuex.Store({
         async fetchJobById({ commit },id){
             console.log("---id---")
             console.log(id)
-            let res = Axios.get(`${api_endpoint}/jobs/`,id)
-            console.log(res)
-            console.log("api")
-            commit("fetch",{ res })
+            let res = await Axios.get(`${api_endpoint}/jobs/${id}`)
+            console.log((await res).data)
+            console.log("fetchById")
+            commit("fetchById",{ res })
         },
-    }
-})
+    },
+    // computed: {
+    //     job_filtered () {
+    //         return this.$store.getters.job_filtered
+    //     }
+    // }
+});

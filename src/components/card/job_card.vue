@@ -1,6 +1,5 @@
 <template>
     <div>
-        <h1>Job card</h1>
         <body>
             <div class="cards">
                 <div class="services" v-for="index in jobs.data" :key="index.id">
@@ -13,7 +12,7 @@
                             <p class="requirement">{{ index.requirement }}</p>
                             <p class="compensation">ค่าจ้าง {{ index.compensation }} บาท/ชม</p>
                             <br>
-                            <a @click='value(index.id)' :href="'#/job'" >รายละเอียดงาน</a>
+                            <a @click='value(index.id)' :href="'#/job'" v-bind="index">รายละเอียดงาน</a>
                         </c-box>
                         
                     
@@ -35,12 +34,15 @@
 import JobApi from "@/store/JobApi.js"
 
 export default {
-    components:{  },
+    components: { 
+         
+    },
     data(){
         return{
             jobs:{},
             count_job:0,
-            payload_url:""
+            payload_url:"",
+            job_id:0
         }
     },
     async created(){
@@ -69,8 +71,14 @@ export default {
         },
         async value(id){
             await JobApi.dispatch("fetchJobById" ,  id )
+            console.log("id")
             console.log(id)
         }
+        // async value(id){
+        //     await JobApi.dispatch("fetchJobById" ,  id )
+        //     console.log("id")
+        //     console.log(id)
+        // }
     },
     colors:{
         purple: "#9356F7"

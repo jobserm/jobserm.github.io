@@ -1,18 +1,24 @@
 <template>
-  <div class="job infomation">
-     
-    <c-text fontSize="4xl">พาน้องหมาไปเดินเล่น</c-text>
-
-      
+  <div>
+     <Job></Job>
       
   </div>
 </template>
 
 <script>
-
+import Job from "@/components/JobInformation"
 
 export default {
-  components:{  }
+  components:{ Job },
+  data() {
+    return {
+       job:[],
+    }
+  },
+  async created(){
+  },
+  methods:{
+  }
 }
 </script>
 
