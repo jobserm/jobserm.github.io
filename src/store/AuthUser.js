@@ -34,12 +34,15 @@ export default new Vuex.Store({
           state.jwt = jwt
           state.isAdmin = state.user.role === "ADMIN"
         },
-        logoutSuccess(state){
+        logoutSuccess(state) {
           state.user = ""
           state.jwt = ""
           state.isAuthen = false
           state.isAdmin = false
         },
+        registerSuccess(state, user) {
+            state.user = user
+        }
     },
     actions: {
         async login({ commit }, { email, password }) {
@@ -60,6 +63,9 @@ export default new Vuex.Store({
         },
         async register({ commit }, body){
             let res = await AuthService.register(body)
+            commit('registerSuccess', res.user);
+            
+            console.log("register med" , this.state.user)
             return res;
         },
         async firstRegister({ commit }, body) {
@@ -70,18 +76,26 @@ export default new Vuex.Store({
                     }
                 })
                 if (res.status === 201) {
-                    console.log('first register successfully!')
+                    // console.log('first register successfully!')
+                    // console.log(this.state.jwt)
+                    let res = await axios.post(`http://localhost:8000/api/auth/me`, {}, {
+                        headers: {
+                            'Authorization': `Bearer ${this.state.jwt}`
+                        } 
+                    })
+                    
+                    commit('registerSuccess', res.data);
                     return {
                         success: true
                     }
+                    
                 }
             } catch (e) {
-                if (e.response.status === 404) {
-                    return {
-                        success: false,
-                        message: "fail"
-                    }
+                return {
+                    success: false,
+                    message: e.response.data
                 }
+                
             
                 //console.log(e)
             }
