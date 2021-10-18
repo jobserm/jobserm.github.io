@@ -1,5 +1,6 @@
 import Vue from "vue";
 import App from "./App.vue";
+export const EventBus = new Vue();
 import Chakra, {
   CThemeProvider,
   CColorModeProvider,
@@ -12,6 +13,8 @@ import router from "./router";
 import VueAxios from "vue-axios";
 import VueSwal from "vue-swal";
 import dotenv from "dotenv";
+
+
 
 dotenv.config()
 

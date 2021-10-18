@@ -1,6 +1,5 @@
 <template>
  <div>
-     <!-- //jolie.morar@example.org -->
     <c-text fontSize="4xl" textAlign="center">{{ "กรุณากรอกข้อมูลเพิ่มเติม" }}</c-text>
     <c-text fontsize="md" color="gray.400" textAlign="center">{{
       `Fill the data for profile. It will take a couple of minutes.`
@@ -42,9 +41,8 @@
                 <c-form-label for="facebook" color="gray.600">
                     {{"Facebook"}}
                 </c-form-label>
-                <c-input id="facebook" disabled v-model="user.facebook"/> 
+                    <c-input id="facebook" disabled v-model="user.facebook"/> 
             </c-box>
-
         </c-stack>
     </c-box>
 
@@ -56,49 +54,62 @@
       borderRadius="0.5rem"
       p="2rem"
     >
-    <c-box>
-        <c-text fontSize="2xl">
-            {{ "แนะนำตนเอง" }}
-        </c-text>
-        <c-text fontSize="md" color="gray.400">
-            {{"Express yourself!"}}
-        </c-text>
-    </c-box>
+        <c-box>
+            <c-text fontSize="2xl">
+                {{ "แนะนำตนเอง" }}
+            </c-text>
+            <c-text fontSize="md" color="gray.400">
+                {{"Express yourself!"}}
+            </c-text>
+        </c-box>
 
-    <c-box>
-        <c-textarea placeholder="แนะนำเกี่ยวกับตนเอง" focus-border-color="pink.400" v-model="form.about_me"/>
-    </c-box>
-    </c-box>
+        <c-box>
+            <c-textarea placeholder="แนะนำเกี่ยวกับตนเอง" focus-border-color="pink.400" v-model="form.remark"/>
+        </c-box>
 
-    <c-box textAlign="right">
-        <c-button backgroundColor="brand.500" width="250px"  variant="solid" mt="1.5rem" @click="saveInfo">
-            ส่งข้อมูล
-        </c-button>
-    </c-box> 
+        <c-box textAlign="right">
+            <c-button  width="250px" variant-color="blue"  mt="1.5rem" @click="saveInfo">
+                ส่งข้อมูล
+            </c-button>
+        </c-box> 
+    </c-box>
   </div>
     
 </template>
 
 <script>
 import AuthUser from "@/store/AuthUser"
+import JobApi from '@/store/JobApi'
 export default {
     data() {
         return {
             user: {},
             form: {
-                about_me: ''
+                remark: '',
+                jobId: [],
             },
         }
     },
     async mounted() {
         this.user = await AuthUser.getters.user;
     },
+    async created() {
+        this.jobId = JSON.parse(localStorage.getItem('YourItem'));
+        console.log(this.jobId)
+    },
     methods: {
-        saveInfo () {
-            this.$emit('saveInfo', this.form)
-            console.log(this.user);
-            this.$router.push("/");
-        },
+        // saveInfo () {
+        //     this.$emit('saveInfo', this.form)
+        //     console.log("this.remark", this.user.id)
+        //     // this.$router.push("/");
+        // }
+        async saveInfo() {
+            let payload = {
+                id: this.user.id,
+                remark: this.form.remark
+            }
+            await JobApi.dispatch("addRemarks", payload)
+        }
     }
 }
 </script>

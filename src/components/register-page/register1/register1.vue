@@ -118,7 +118,6 @@ export default {
         username: '',
         password_confirmation: '',
       },
-
       show: false
     }
   },
@@ -139,7 +138,7 @@ export default {
             if(this.form.password === this.form.password_confirmation){
                 let res = await AuthUser.dispatch('register', this.form)
                 if(res.success){
-                    this.$swal("ลงทะเบียนสำเร็จ", `ยินดีต้อนรับคุณ ${res.name}`, "success")
+                    this.$swal("ลงทะเบียนสำเร็จ", `ยินดีต้อนรับคุณ ${res.user.name}`, "success")
                     this.$router.push("/newuser")
                 } 
                 else {

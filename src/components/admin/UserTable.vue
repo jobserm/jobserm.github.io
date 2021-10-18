@@ -27,6 +27,7 @@ import UserStore from "../../store/UserStore"
 import Authservice from "../../services/Authservice";
 import axios from 'axios'
 import { CBadge } from '@chakra-ui/vue';
+import AuthUser from '../../store/AuthUser';
 
 export default {
   data() {
@@ -126,8 +127,12 @@ export default {
     await this.fetchUsers()
   },
   methods: {
-    async fetchUsers() {
-      await UserStore.dispatch('fetchUsers')
+    async fetchUsers() {      
+      let headers = {
+        'Authorization': `Bearer ${AuthUser.getters.jwt}`
+      }
+      console.log(headers)
+      await UserStore.dispatch('fetchUsers', headers)
       let data = UserStore.getters.getUsers
       if (data.length != 0) {
         this.rawData = data
@@ -144,9 +149,8 @@ export default {
       this.pageSize = pageSize
     },
     async getUserByID(id) {
-      // let user = await Authservice.getUserById(id)
-      let res = await axios.get(`http://localhost:8000/api/users/${id}`) 
-      this.$emit('parentGetUserByID', res.data)
+      let user = await Authservice.getUserById(id)
+      this.$emit('parentGetUserByID', user)
     }
   }
 };

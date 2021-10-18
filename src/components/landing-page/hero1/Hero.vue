@@ -29,7 +29,7 @@
       <c-flex wrap="wrap">
         <button-primary :url="`/employer`" :text="`หาคนเข้าทำงาน`" mr="2" />
 
-        <button-secondary :url="`/jobinfo`" :text="`ประกาศหางาน`" ml="2" />
+        <button-secondary :url="`/jobinfo`" :text="`เริ่มหางาน`" ml="2" />
       </c-flex>
       <c-text fontSize="xs" color="primary.800" opacity="0.6">
         No credit card required.

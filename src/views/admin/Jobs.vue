@@ -6,6 +6,7 @@
           <c-stack w="95%">
             <Header header="Jobs Management" icon="briefcase"/>
             <JobChart />
+            <JobTable />
             <Header header="Categories Management" icon="tag"/>
             <CategoryTable />
           </c-stack>
@@ -19,12 +20,15 @@ import Sidebar from "../../components/admin/Sidebar.vue";
 import Header from '../../components/admin/Header.vue'
 import JobChart from "../../components/admin/jobs/JobChart.vue";
 import CategoryTable from "../../components/admin/CategoryTable.vue";
+import JobTable from "../../components/admin/jobs/JobTable.vue";
+
 export default {
     components: {
         Sidebar,
         Header,
         JobChart,
-        CategoryTable
+        CategoryTable,
+        JobTable,
     }
 }
 </script>

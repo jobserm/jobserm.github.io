@@ -1,5 +1,9 @@
 <template>
   <div>
+    {{provinces.data}}
+    <div v-for="index in provinces.data" :key="index.id">
+        {{ index.province }}
+    </div>
     <c-text fontSize="4xl" textAlign="center">{{ "ลงประกาศงานใหม่" }}</c-text>
     <c-text fontsize="md" color="gray.400">{{
       `Fill in the data to post new job`
@@ -43,13 +47,23 @@
             <c-form-label for="type" color="gray.600">{{
               "เลือกประเภทงาน"
             }}</c-form-label>
-            <c-select id="type" placeholder="ประเภทงาน" v-model="form.category"/>
+
+            <c-select id="type" v-model="form.category">
+              <option value="" style="display:none;" >ประเภทงาน</option>
+              <option v-for="index in categories" :key="index.id">{{ index.category_name }}</option>
+                
+            </c-select>
+
           </c-box>
           <c-box>
             <c-form-label for="province" color="gray.600">{{
               "จังหวัด"
             }}</c-form-label>
-            <c-select id="province" placeholder="จังหวัด" v-model="form.province"/>
+              <c-select id="province" v-model="form.province">
+                <option value="" style="display:none;" >จังหวัด</option>
+                <option v-for="index in provinces.data" :key="index.id">{{ index.province }}</option>
+                
+              </c-select>
           </c-box>
           <c-box pb="3vh">
             <c-form-label for="compensation" color="gray.600">{{
@@ -68,6 +82,8 @@
   </div>
 </template>
 <script>
+import CategoryStore from "../../store/CategoryStore";
+import Axios from "axios";
 export default {
     data() {
         return {
@@ -78,14 +94,32 @@ export default {
                 category: "",
                 province: "",
                 compensation: ""
-            }
+            }, 
+            categories: [],
+            provinces: []
         }
+    },
+    created() {
+        this.getCategories()
+        this.getProvince()
     },
     methods: {
       post () {
         // this.$emit will invoke parent method (postJob) 
         // and pass this.form back to parent
         this.$emit('postJob', this.form)
+      },
+
+      async getCategories() {
+        //console.log("eiei")
+        await CategoryStore.dispatch('fetchData')
+        this.categories = CategoryStore.getters.getCategories
+       console.log(this.categories)
+      },
+      async getProvince() {
+        let res = await Axios.get(`https://thaiaddressapi-thaikub.herokuapp.com/v1/thailand/provinces`);
+        this.provinces = res.data;
+        console.log(this.provinces.data)
       }
     }
 };

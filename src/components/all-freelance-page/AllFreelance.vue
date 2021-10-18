@@ -23,7 +23,6 @@
                 :image="require(`${user.path}`)"
                 :freelancerName="user.name + user.lastname"
                 :rating="user.rating"
-                :gender="user.gender"
                 :age="user.birthdate"
                 :star="require(`./star.png`)"
               
@@ -38,28 +37,28 @@
 
 <script>
 import info from "./Info.vue"
-import Job from "../../store/JobApi"
+import JobApi from "../../store/JobApi"
+
 export default {
     components: { info },
     name: "Info",
     data() {
       return {
-        id: '',
         job: {},
       }
     },
 
-    async created() {
-      this.id = this.$route.params.id;
-      this.job = await Job.dispatch("getJobByID", this.id);
+    created() {
+      //this.job = JSON.parse(localStorage.getItem('JobInfo'));
+      this.getEsaaa()
     },
 
     methods: {
-      freelancerInfo() {
-        this.$router.push({
-          name: "--",
-          params: { id: this.job.user.id}
-        })
+      async getEsaaa() {
+        await JobApi.dispatch('fetchJobById', 1)
+        this.job = await JobApi.getters.job_filtered
+
+        console.log(this.job)
       }
     },
     
