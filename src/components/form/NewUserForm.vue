@@ -38,22 +38,11 @@
             }}</c-form-label>
             <c-input type="date" id="birthdate" placeholder="วัน/เดือน/ปีเกิด" v-model="form.birthdate" />
           </c-box>
-          <c-box>
+          <c-box pb="3vh">
             <c-form-label for="address" color="gray.600">{{
               "ที่อยู่"
             }}</c-form-label>
             <c-textarea placeholder="ที่อยู่" v-model="form.address"/>
-          </c-box>
-          <c-box pb="3vh">
-            <c-form-label for="address" color="gray.600">{{
-              "เพศ"
-            }}</c-form-label>
-            <c-select disabled v-model="form.gender">
-              <option value="" style="display:none;">เพศ</option>
-              <option value="male">ชาย</option>
-              <option value="female">หญิง</option>
-              <option value="others">อื่น ๆ</option>
-            </c-select>
           </c-box>
 
           <!-- section II -->
