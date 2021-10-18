@@ -219,6 +219,11 @@ const routes = [
     },
     component: () => import("../views/admin/Review.vue")
   },
+  {
+    path: '/testupload',
+    name: "test upload",
+    component: () => import("../views/testUpload.vue")
+  },
 ];
 
 const router = new VueRouter({
