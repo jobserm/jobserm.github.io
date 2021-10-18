@@ -21,11 +21,27 @@
                     </div>
                 </div>
             </div>
-            <div class="paginate">
-                <ve-pagination :total="count_job" :page-size="4" :layout="['total', 'prev', 'pager', 'next', 'jumper']" @on-page-number-change="pageNumberChange"></ve-pagination>
-            </div>
             
-        </body>
+        </body> -->
+        <c-flex justify="space-between" bgColor="blue.300" alignItems="space-around">
+            <c-box v-for="index in jobs.data" :key="index.id">
+                <c-stack>
+                    <c-image class="pic" src="https://static.toiimg.com/photo/msid-67586673/67586673.jpg?3918697" />
+                    <c-stack :spacing="3">
+                        <c-text textAlign="center" class="title" fontSize="2xl">{{ index.title }}</c-text>
+                        <c-text class="description">{{ index.description }}</c-text>
+                        <c-text class="requirement">{{ index.requirement }}</c-text>
+                        <c-box position="absolute" >
+                            <c-text class="compen`sation">ค่าจ้าง {{ index.compensation }} บาท/ชม</c-text>
+                            <a @click='value(index.id)' :href="'#/job'" v-bind="index">รายละเอียดงาน</a>
+                        </c-box>
+                    </c-stack>
+                </c-stack>
+            </c-box>
+        </c-flex>
+        <div class="paginate">
+            <ve-pagination :total="count_job" :page-size="4" :layout="['total', 'prev', 'pager', 'next', 'jumper']" @on-page-number-change="pageNumberChange"></ve-pagination>
+        </div>
         
     </div>
 </template>
@@ -92,7 +108,7 @@ export default {
     .paginate{
         display: flex;
         flex-direction: row-reverse;
-        margin-top: 50px;
+        /* margin-top: 50px; */
     }
     .compensation{
         margin-top: 20px;
