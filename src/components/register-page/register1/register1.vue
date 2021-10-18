@@ -118,7 +118,6 @@ export default {
         username: '',
         password_confirmation: '',
       },
-
       show: false
     }
   },

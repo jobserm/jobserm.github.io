@@ -176,6 +176,11 @@ const routes = [
     component: () => import("../views/Review.vue")
   },
   {
+    path: "/review-form",
+    name: "ReviewForm",
+    component: () => import("../views/ReviewForm.vue")
+  },
+  {
     path: '/admin/accountsetting',
     name: "account setting",
     meta: {
