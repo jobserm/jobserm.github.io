@@ -5,7 +5,6 @@ import Axios from 'axios'
 import Authservice from '../services/Authservice';
 
 let api_endpoint = process.env.VUE_APP_JOBSERM_ENDPOINT || "http://localhost:8000/api";
-
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -45,7 +44,6 @@ export default new Vuex.Store({
             return res;
         },
         async fetchJob({ commit }){
-            console.log("api")
             let res = Axios.get(api_endpoint + "/jobs")
             console.log((await res).data)
             console.log("api")
@@ -60,7 +58,7 @@ export default new Vuex.Store({
             commit("fetch",{ res })
         },
         async getJobByID(id) {
-            let res = await Axios.get(`${api_endpoint}/api/jobs/${id}`);
+            let res = await Axios.get(`${api_endpoint}/jobs/${id}`);
             let body = res.data;
             return body;
         },
