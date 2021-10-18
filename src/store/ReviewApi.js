@@ -33,7 +33,11 @@ export default new Vuex.Store({
             let res = await Axios.post(`${api_endpoint}/api/reviews`, payload);
             commit("addReview", res.data); 
             return res;
-        }
+        },
+        async paginate({ commit }, route){
+            let res = Axios.get(route)
+            commit("fetch", { res })
+        },
     },
     
     modules: {},

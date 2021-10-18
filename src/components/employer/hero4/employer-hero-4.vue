@@ -10,7 +10,13 @@
           กรอกรายละเอียดงานเลย!
         </c-heading>
 
-        <button-secondary text=" กรอกรายละเอียดงานของคุณ" mt="4" />
+        <div v-if="!isAuthen()">
+          <button-secondary :url="`/login`" text=" กรอกรายละเอียดงานของคุณ" mt="4" />
+        </div>
+        <div v-if="isAuthen()">
+          <button-secondary :url="`/postjob`" text=" กรอกรายละเอียดงานของคุณ" mt="4" />
+        </div>
+        
       </c-box>
     </c-stack>
   </c-stack>
@@ -18,8 +24,15 @@
 
 <script>
 import ButtonSecondary from "../../button/ButtonSecondary.vue";
+import AuthUser from "../../../store/AuthUser";
 export default {
   components: { ButtonSecondary },
+
+    methods: {
+      isAuthen() {
+        return AuthUser.getters.isAuthen
+      },
+  }
 };
 </script>
 

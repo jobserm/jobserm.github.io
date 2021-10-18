@@ -12,6 +12,9 @@ import extendTheme from "./styles/theme.js";
 import router from "./router";
 import VueAxios from "vue-axios";
 import VueSwal from "vue-swal";
+import dotenv from "dotenv";
+
+dotenv.config()
 
 // VueTable
 import VueEasytable from "vue-easytable"; // import library
@@ -19,9 +22,10 @@ Vue.use(VueEasytable);
 import "vue-easytable/libs/theme-default/index.css"; // import style
 
 // import icons
-import { faHome } from '@fortawesome/free-solid-svg-icons'
+import { faHome, faUser, faStar, faBriefcase, faTag } from '@fortawesome/free-solid-svg-icons'
 import VueApexCharts from 'vue-apexcharts'
 import axios from "axios";
+import Loading from '../src/components/miscellaneous/Loading.vue'
 
 // Import Chakra UI Plugin and register it.
 Vue.use(Chakra, {
@@ -29,7 +33,11 @@ Vue.use(Chakra, {
   icons: {
     iconPack: 'fa',
     iconSet: {
-      faHome
+      faHome,
+      faUser,
+      faStar,
+      faBriefcase,
+      faTag,
     }
   }
 });
@@ -40,6 +48,7 @@ Vue.use(VueSwal);
 // inject apexchart
 Vue.use(VueApexCharts)
 Vue.component('apexchart', VueApexCharts)
+Vue.component('loading', Loading)
 
 Vue.config.productionTip = false;
 

@@ -1,7 +1,7 @@
 <template>
    <c-box px="20" py="10">
       <c-stack>
-          <c-heading py="12">ผู้ที่สนใจ <br> {{ title }}</c-heading>
+          <c-heading py="12">ผู้ที่สนใจ <br> {{ job.title }}</c-heading>
       </c-stack>
 
       <c-flex>
@@ -16,19 +16,19 @@
       </c-flex>
 
 
-      <c-simple-grid :columns="[1, 1, 1, 4]" spacing="8" align="center" py="16">
-        <div v-for="freelancer in freelancers" :key="freelancer.id">
-            <router-link to="/" >   
+      <c-simple-grid :columns="[1, 1, 1, 5]" spacing="8" align="center" py="16">
+        <div v-for="user in job.user" :key="user.id">
+            <div @click="freelancerInfo()">   
               <info
-                :image="require(`${freelancer.path}`)"
-                :freelancerName="freelancer.freelancerName"
-                :rating="freelancer.rating"
-                :gender="freelancer.gender"
-                :age="freelancer.age"
+                :image="require(`${user.path}`)"
+                :freelancerName="user.name + user.lastname"
+                :rating="user.rating"
+                :gender="user.gender"
+                :age="user.birthdate"
                 :star="require(`./star.png`)"
               
               />
-            </router-link>
+            </div>
         </div>
       </c-simple-grid>
 
@@ -43,94 +43,29 @@ import Job from "../../store/JobApi"
 export default {
     components: { info },
     name: "Info",
-
     data() {
       return {
+        id: '',
         job: {},
-        freelancers: {}
       }
     },
 
-    async mounted(id) {  //id???
-      this.job = await Job.dispatch("getByJobID", id);
-      this.freelancers = this.job.user_id
-      // await getJob(id),
-      // await getFreelancers()
+    async created() {
+      this.id = this.$route.params.id;
+      this.job = await Job.dispatch("getJobByID", this.id);
     },
-    
+
     methods: {
-      // async getJob(id) {
-      //   this.job = await Job.dispatch("getByJobID", id);
-      // },
-
-      // async getFreelancers() {
-      //   this.freelancers = this.job.user_id
-      // },
-
-
-      // async fet
+      freelancerInfo() {
+        this.$router.push({
+          name: "--",
+          params: { id: this.job.user.id}
+        })
+      }
     },
     
-
-
-
-  // data() {
-  //   return {
-  //     freelancers: [
-  //     {
-  //       path: './user.png',
-  //       freelancerName:"ปฏิภาณ บุญสิมมา",
-  //       rating: "4.5",
-  //       gender: "เจ้าหญิง",
-  //       age:"24",
-  //     },
-  //     {
-  //       path: './user.png',
-  //       freelancerName:"คนิตา หวั่นแสง",
-  //       rating: "4.0",
-  //       gender: "ชาย",
-  //       age:"23",
-  //     },
-  //     {
-  //       path: './user.png',
-  //       freelancerName:"กานต์รวี วารินทร์ศิริกุล",
-  //       rating: "4.8",
-  //       gender: "ชาย",
-  //       age:"22",
-  //     },
-  //     {
-  //       path: './user.png',
-  //       freelancerName:"พีรพัฒน์ จิตรเจริญวีรกุล",
-  //       rating: "5.0",
-  //       gender: "หญิง",
-  //       age:"21",
-  //     }],
-
-  //     title: "พาน้องหมาไปเดินเล่น 10 ตัว",
-      
-  //     job_images:[
-  //       {
-  //         dog: "./dog_walking_1.jpg"
-  //       },
-  //       {
-  //         dog: "./dog_walking_2.jpg"
-  //       },
-  //               {
-  //         dog: "./dog_walking_3.jpg"
-  //       },
-
-
-  //     ]
-    // };
-  // },  
-
-  async created() {
-
-
-  }
 }
 </script>
 
 <style>
-
 </style>

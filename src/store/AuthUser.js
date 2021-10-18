@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios';
 
 import AuthService from '../services/Authservice';
 
@@ -11,7 +12,8 @@ let auth = JSON.parse(localStorage.getItem(auth_key))
 const initialState = {
     user: auth ? auth.user : "",
     jwt: auth ? auth.jwt : "",
-    isAuthen :auth ? true : false,
+    isAuthen: auth ? true : false,
+    isActivate: auth ? true : false,
     isAdmin: auth ? auth.user.role === "ADMIN" : false,
 }
 
@@ -26,10 +28,10 @@ export default new Vuex.Store({
     },
 
     mutations: {
-        loginSuccess(state, user, jwt){
+        loginSuccess(state, { user, jwt }) {
+          state.isAuthen = true
           state.user = user
           state.jwt = jwt
-          state.isAuthen = true
           state.isAdmin = state.user.role === "ADMIN"
         },
         logoutSuccess(state){
@@ -42,22 +44,48 @@ export default new Vuex.Store({
     actions: {
         async login({ commit }, { email, password }) {
             let res = await AuthService.login({ email,password })
+
             if (res.success) {
-                commit('loginSuccess', res.user, res.jwt); // type true=admin false=user
+                let body = {
+                    user: res.user,
+                    jwt: res.jwt
+                }
+                commit('loginSuccess', body); // type true=admin false=user
             }
             return res
         },
-        async logout({ commit }){
+        async logout({ commit }) {
             AuthService.logout()
             commit('logoutSuccess')
         },
-        async register(payload){
-            let res = await AuthService.register(payload)
-            // if(res.success){
-            //     commit("loginSuccess", res.user, res.jwt, res.role)
-            // }
+        async register({ commit }, body){
+            let res = await AuthService.register(body)
             return res;
         },
+        async firstRegister({ commit }, body) {
+            try {
+                let res = await axios.post(`http://localhost:8000/api/users/${this.state.user.id}/first-register`, body, {
+                    headers: {
+                        'Authorization': `Bearer ${this.state.jwt}`
+                    }
+                })
+                if (res.status === 201) {
+                    console.log('first register successfully!')
+                    return {
+                        success: true
+                    }
+                }
+            } catch (e) {
+                if (e.response.status === 404) {
+                    return {
+                        success: false,
+                        message: "fail"
+                    }
+                }
+            
+                //console.log(e)
+            }
+        }
     },
 
 });
