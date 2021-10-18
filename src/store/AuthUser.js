@@ -1,6 +1,6 @@
 import Vue from 'vue'
-import axios from 'axios'
 import Vuex from 'vuex'
+import axios from 'axios';
 
 import AuthService from '../services/Authservice';
 
@@ -71,9 +71,19 @@ export default new Vuex.Store({
                 })
                 if (res.status === 201) {
                     console.log('first register successfully!')
+                    return {
+                        success: true
+                    }
                 }
             } catch (e) {
-                console.log(e)
+                if (e.response.status === 404) {
+                    return {
+                        success: false,
+                        message: "fail"
+                    }
+                }
+            
+                //console.log(e)
             }
         }
     },

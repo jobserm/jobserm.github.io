@@ -94,14 +94,10 @@ export default {
             
             let res = await Axios.post(`${api_endpoint}/api/auth/register`, body);
             //console.log(res);
-            if (res.status === 201) {
-                let autoLogin = await AuthUser.dispatch('login', body)
-                console.log(autoLogin.jwt)
-                
+            if (res.status === 201) {     
                 return {
                     success: true,
                     user: res.data.user,
-                    jwt: autoLogin.jwt,
                 };
             }
         } catch (e) {

@@ -44,8 +44,14 @@ export default {
             this.lastname = lastname
         },
         async register(value) {
-            await AuthUser.dispatch('firstRegister', value)
-            this.$swal("ลงทะเบียนสำเร็จ", "success")
+            let res = await AuthUser.dispatch('firstRegister', value)
+            if (res.success) {
+                this.$swal("ลงทะเบียนสำเร็จ", `ขอบคุณที่ให้ความสนใจ`, "success")
+                this.$router.push("/login")
+            } else {
+                this.$swal("ลงทะเบียนไม่สำเร็จ", res.message, "error")
+            }
+            
         }
     }
 }
