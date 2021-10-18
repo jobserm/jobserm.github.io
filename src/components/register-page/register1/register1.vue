@@ -137,11 +137,11 @@ export default {
           console.log(this.form)
           if (this.form.name !== "" && this.form.email !== "" && this.form.password !== "" && this.form.lastname !== "" && this.form.phone !== "" && this.form.username !== "" && this.form.email !== "") {
             if(this.form.password === this.form.password_confirmation){
-                let res = await AuthUser.dispatch('register',this.form)
+                let res = await AuthUser.dispatch('register', this.form)
                 console.log(res)
                 if(res.success){
                     this.$swal("ลงทะเบียนสำเร็จ", `Welcome ${res.user.email}`, "success")
-                    this.$router.push("/new-user")
+                    this.$router.push("/newuser")
                 } 
                 else {
                     this.$swal("ลงทะเบียนไม่สำเร็จ", res.message, "error")

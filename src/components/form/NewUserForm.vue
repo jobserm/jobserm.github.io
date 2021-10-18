@@ -27,22 +27,33 @@
             <c-input disabled id="name" placeholder="ชื่อจริง" v-model="firstname"/>
           </c-box>
           <c-box>
+            <c-form-label for="lastname" color="gray.600">{{
+              "นามสกุล"
+            }}</c-form-label>
+            <c-input disabled id="lastname" placeholder="นามสกุล" v-model="lastname"/>
+          <c-box>
             <c-form-label for="birthdate" color="gray.600">{{
               "วัน/เดือน/ปีเกิด"
             }}</c-form-label>
             <c-input type="date" id="birthdate" placeholder="วัน/เดือน/ปีเกิด" v-model="form.birthdate" />
           </c-box>
-          <c-box>
-            <c-form-label for="lastname" color="gray.600">{{
-              "นามสกุล"
-            }}</c-form-label>
-            <c-input disabled id="lastname" placeholder="นามสกุล" v-model="lastname"/>
           </c-box>
-          <c-box pb="3vh">
+          <c-box>
             <c-form-label for="address" color="gray.600">{{
               "ที่อยู่"
             }}</c-form-label>
             <c-textarea placeholder="ที่อยู่" v-model="form.address"/>
+          </c-box>
+          <c-box pb="3vh">
+            <c-form-label for="address" color="gray.600">{{
+              "เพศ"
+            }}</c-form-label>
+            <c-select disabled v-model="form.gender">
+              <option value="" style="display:none;">เพศ</option>
+              <option value="male">ชาย</option>
+              <option value="female">หญิง</option>
+              <option value="others">อื่น ๆ</option>
+            </c-select>
           </c-box>
 
           <!-- section II -->
@@ -90,11 +101,16 @@
             }}</c-form-label>
             <c-textarea placeholder="แนะนำเกี่ยวกับตนเอง" v-model="form.about_me"/>
           </c-box>
-          <c-box pb="3vh">
+          <c-box>
             <c-form-label for="skills" color="gray.600">{{
               "ทักษะและความสามารถ"
             }}</c-form-label>
-            <c-textarea placeholder="ทักษะและความสามารถ" v-model="form.skills"/>
+            <c-textarea placeholder="ทักษะและความสามารถ" v-model="form.skill"/>
+          </c-box>
+          <c-box pb="3vh">
+            <c-checkbox
+            @change="(val, $e) => { form.is_publish = $e.target.checked === true ? 1 : 0 }"
+            >ต้องการให้ข้อมูลของคุณแสดงบนหน้ารวม Freelancer</c-checkbox>
           </c-box>
         </c-stack>
     </c-box>
@@ -125,7 +141,9 @@ export default {
         facebook: "",
         line: "",
         about_me: "",
-        skills: ""
+        skill: "",
+        is_publish: 0,
+        // gender: "",
       }
     }
   },

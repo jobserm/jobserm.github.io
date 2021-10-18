@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import axios from 'axios'
 import Vuex from 'vuex'
 
 import AuthService from '../services/Authservice';
@@ -61,6 +62,20 @@ export default new Vuex.Store({
             let res = await AuthService.register(body)
             return res;
         },
+        async firstRegister({ commit }, body) {
+            try {
+                let res = await axios.post(`http://localhost:8000/api/users/${this.state.user.id}/first-register`, body, {
+                    headers: {
+                        'Authorization': `Bearer ${this.state.jwt}`
+                    }
+                })
+                if (res.status === 201) {
+                    console.log('first register successfully!')
+                }
+            } catch (e) {
+                console.log(e)
+            }
+        }
     },
 
 });

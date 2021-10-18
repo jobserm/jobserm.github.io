@@ -16,26 +16,36 @@
 
 <script>
 import NewUserForm from "../components/form/NewUserForm.vue";
+import AuthUser from "../store/AuthUser";
 export default {
     components: {
         NewUserForm,
     },
     data() {
         return {
-            email: "p.patisxx@outlook.com",
-            phone: "0955347386",
-            firstname: "Patipan",
-            lastname: "Boonsimma",
+            email: "",
+            phone: "",
+            firstname: "",
+            lastname: "",
         }
     },
+    created() {
+        this.initialize()
+    },
     methods: {
-        register(value) {
+        initialize() {
             // get user data from API and assign to data.value
-            value.email = this.email
-            value.phone = this.phone
-            value.firstname = this.firstname
-            value.lastname = this.lastname
-            console.log(value)
+            let user = AuthUser.getters.user
+            console.log(user)
+            let { email, phone, name, lastname } = AuthUser.getters.user
+            this.email = email
+            this.phone = phone
+            this.firstname = name
+            this.lastname = lastname
+        },
+        async register(value) {
+            await AuthUser.dispatch('firstRegister', value)
+            this.$swal("ลงทะเบียนสำเร็จ", "success")
         }
     }
 }
