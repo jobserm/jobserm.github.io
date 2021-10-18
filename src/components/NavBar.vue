@@ -36,6 +36,7 @@
         </div>
       </c-flex>
 
+
       <c-flex
         wrap="wrap"
         align="center"
@@ -47,17 +48,34 @@
         </router-link>
       </c-flex>
 
+     
+
       <c-flex wrap="wrap" :direction="['column', 'row', 'row', 'row']">
+
+         <c-flex align="center" w="30%" d="inline-grid" v-if="isAuthen() && isAdmin()">
+            <c-menu>
+                <c-menu-button 
+                justifyContent="space-around"
+                py=1.8rem
+                >
+                    <c-avatar size="md"/>
+                    <c-flex flexDirection="column">
+                        <c-heading size="sm">{{ user.name }}</c-heading>
+                        <c-text>Admin</c-text>
+                    </c-flex>
+                </c-menu-button>
+            </c-menu>
+        </c-flex>
         <div v-if="!isAuthen()">
           <button-secondary :text="`เข้าสู่ระบบ`" :url="`/login`" mx="4" />
         </div>
 
-        <div v-if="isAuthen()">
+        <div v-if="isAuthen() && !isAdmin()">
           <button-primary :url="`/profiles`" :text="`โปรไฟล์`" mx="4" />
         </div>
 
         <div v-if="isAuthen()">
-          <button-secondary :text="`ออกจากระบบ`" :url="`/logout`" mx="4" />
+          <button-secondary :text="`ออกจากระบบ`" :url="`/logout`" mx="12" />
         </div>
         
         <div v-if="!isAuthen()">
@@ -87,16 +105,21 @@ export default {
     };
   },
 
+  created() {
+    this.getUser()
+  },
+
   methods: {
     isAuthen() {
       return AuthUser.getters.isAuthen
     },
 
-    logout() {
-      AuthUser.dispatch("logout");
-      if (this.$router.currentRoute.path != "/") {
-        this.$router.push("/");
-      }
+    isAdmin() {
+      return AuthUser.getters.isAdmin
+    },
+
+    getUser() {
+      this.user = AuthUser.getters.user
     }
   },
 };

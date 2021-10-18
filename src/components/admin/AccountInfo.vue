@@ -1,6 +1,6 @@
 <template>
   <div>
-      <c-stack w="100%">
+      <c-stack w="100%" my="5rem">
           <c-text fontSize="4xl" textAlign="center">ข้อมูลผู้ใช้</c-text>
           <c-flex ml="2rem">
             <c-avatar v-if="user.name === undefined || user.lastname === undefined" size="2xl"/>
@@ -18,9 +18,9 @@
               <c-text>Email: {{ user.email || "-" }}</c-text>
               <c-text>
                 Activation Status: 
-                <c-badge v-if="user.activation == undefined" mx="2">{{ "-" }}</c-badge>
-                <c-badge v-if="user.activation == 1" mx="2" variant-color="green">{{ "activated" }}</c-badge>
-                <c-badge v-if="user.activation == 0" mx="2" variant-color="red">{{ "deactivated" }}</c-badge>
+                <c-button v-if="user.activation == undefined" mx="2">{{ "-" }}</c-button>
+                <c-button v-if="user.activation == 1" mx="2" variant-color="green" height="30px" width="100px" @click="activationStatus()">{{ "ACTIVATED" }}</c-button>
+                <c-button v-if="user.activation == 0" mx="2" variant-color="red" height="30px" width="100px" @click="activationStatus()">{{ "DEACTIVATED" }}</c-button>
               </c-text>
             </c-stack>
           </c-flex>
@@ -29,8 +29,20 @@
 </template>
 
 <script>
+import AuthUser from '../../store/AuthUser';
+import Axios from 'axios';
 export default {
-  props: ['user']
+  props: ['user', 'id'],
+
+  method: {
+    async activationStatus() {
+      let headers = {
+        'Authorization': `Bearer ${AuthUser.getters.jwt}`
+      }
+
+      await Axios.get(`http://localhost:8000/api/users/${id}/toggle-activation`, headers);
+    }
+  }
 }
 </script>
 
