@@ -40,7 +40,7 @@ export default {
         'Authorization': `Bearer ${AuthUser.getters.jwt}`
       }
 
-      await Axios.get(`http://localhost:8000/api/users/${id}/toggle-activation`, headers);
+      //await Axios.get(`http://localhost:8000/api/users/${id}/toggle-activation`, headers); คอมเม้นไว้เพราะมันแดง
     }
   }
 }
