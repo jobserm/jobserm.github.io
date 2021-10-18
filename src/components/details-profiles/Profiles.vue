@@ -48,20 +48,7 @@ export default {
  data() {
      return {
         jobs:{
-            data:{
-                users:{
-                    name: "",
-                    lastname:"" ,
-                    email:"",
-                    birthdate:"",
-                    gender:"",
-                    phone:"",
-                    address:"",
-                    facebook:"",
-                    line:"",
-                    activation:"",
-                }
-            }
+            
         },
      }
  },
