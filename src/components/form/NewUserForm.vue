@@ -31,12 +31,12 @@
               "นามสกุล"
             }}</c-form-label>
             <c-input disabled id="lastname" placeholder="นามสกุล" v-model="lastname"/>
+          </c-box>
           <c-box>
             <c-form-label for="birthdate" color="gray.600">{{
               "วัน/เดือน/ปีเกิด"
             }}</c-form-label>
             <c-input type="date" id="birthdate" placeholder="วัน/เดือน/ปีเกิด" v-model="form.birthdate" />
-          </c-box>
           </c-box>
           <c-box>
             <c-form-label for="address" color="gray.600">{{
@@ -85,7 +85,7 @@
             <c-form-label for="line" color="gray.600">{{
               "Line ID"
             }}</c-form-label>
-            <c-input id="line" placeholder="Lind ID" v-model="form.line"/>
+            <c-input id="line" placeholder="Line ID" v-model="form.line"/>
           </c-box>
 
           <!-- section III -->
@@ -107,10 +107,19 @@
             }}</c-form-label>
             <c-textarea placeholder="ทักษะและความสามารถ" v-model="form.skill"/>
           </c-box>
+
+          <c-box>
+            <c-text fontSize="2xl">{{ "การนำข้อมูลไปแสดงในหน้าผู้ที่ต้องการหางาน" }}</c-text>
+            <c-text fontSize="md" color="gray.400">{{
+              "Permission to perform your information in freelancer page"
+            }}</c-text>
+          </c-box>
           <c-box pb="3vh">
             <c-checkbox
             @change="(val, $e) => { form.is_publish = $e.target.checked === true ? 1 : 0 }"
-            >ต้องการให้ข้อมูลของคุณแสดงบนหน้ารวม Freelancer</c-checkbox>
+            color="gray.600"
+            size="md" variant-color="green"
+            >อนุญาต</c-checkbox>
           </c-box>
         </c-stack>
     </c-box>

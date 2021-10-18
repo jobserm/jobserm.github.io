@@ -171,7 +171,6 @@ const routes = [
     name: "new user",
     meta: {
       layout: "Main",
-      requiresAuth: true,
     },
     component: () => import("../views/NewUser.vue")
   },
