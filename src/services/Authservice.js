@@ -1,7 +1,7 @@
 import Axios from "axios";
 import AuthUser from "../store/AuthUser";
 
-const auth_key = process.env.VUE_APP_AUTH_KEY;
+const auth_key = process.env.VUE_APP_AUTH_KEY || 'auth-jobserm';
 let auth = JSON.parse(localStorage.getItem(auth_key));
 const user = auth ? auth.user : "";
 const jwt = auth ? auth.jwt : "";
