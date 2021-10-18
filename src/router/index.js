@@ -45,6 +45,7 @@ const routes = [
   {
     path: '/job',
     name: 'Job',
+    props: true,
     meta: {
       layout: "Main",
       requiresAuth: true,
@@ -182,6 +183,11 @@ const routes = [
       requiresAuth: true,
     },
     component: () => import("../views/Review.vue")
+  },
+  {
+    path: "/review-form",
+    name: "ReviewForm",
+    component: () => import("../views/ReviewForm.vue")
   },
   {
     path: '/admin/accountsetting',
