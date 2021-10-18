@@ -17,7 +17,7 @@
 
                 <c-flex justify="right" w="120%" m="auto">
                 <router-link to="/review-form" >
-                  <c-button  color="blue" width="150px" bgColor="#D3EDED "  mt="1.5rem" >
+                  <c-button @click="finish"  color="blue" width="150px" bgColor="#D3EDED "  mt="1.5rem" >
                       จบงาน
                   </c-button>
                 </router-link>
@@ -70,6 +70,7 @@ export default {
        job:[ { "id": 2, "compensation": 15304, "description": "Adipisci saepe perspiciatis rerum nobis neque libero. Natus quaerat quia nulla ipsam quo. Omnis est voluptates ratione.", "requirement": "Et expedita voluptas cupiditate eos veritatis repellendus. Iure autem quia dolorum non.", "province": "North Adeline", "title": "Government", "created_at": "2021-10-02T18:44:39.000000Z", "updated_at": "2021-10-02T18:44:39.000000Z" } ],
        id:0,
        jobId:[],
+       userToReview:[],
     }
   },
   async created(){
@@ -98,6 +99,11 @@ export default {
     //   this.job = JobApi.getters.job_filtered
     //   console.log("jobfill",this.job)
     // }
+    async finish(){
+      this.userToReview = JobApi.getters.getUserFinish
+      console.log("userToReview", this.userToReview)
+      localStorage.setItem("userToReview" , JSON.stringify(this.userToReview))
+    }
   }
 }
 </script>
