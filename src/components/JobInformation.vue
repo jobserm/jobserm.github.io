@@ -46,6 +46,9 @@
         <c-text fontSize="4xl">loading</c-text>
      </div> -->
     <!-- {{ jobId}} -->
+     </div>
+    {{ jobId}}
+    <JobCard></JobCard>
       
   <!-- </div> -->
   <div>
@@ -106,6 +109,7 @@
 
 <script>
 import JobApi from "@/store/JobApi.js"
+import JobCard from "../components/card/job_card_info_page.vue"
 
 export default {
   computed: {
@@ -115,7 +119,7 @@ export default {
       // (depends on your design decisions).
     }
   },
-  components:{  },
+  components:{ JobCard  },
   data() {
     return {
        job:[ { "id": 2, "compensation": 15304, "description": "Adipisci saepe perspiciatis rerum nobis neque libero. Natus quaerat quia nulla ipsam quo. Omnis est voluptates ratione.", "requirement": "Et expedita voluptas cupiditate eos veritatis repellendus. Iure autem quia dolorum non.", "province": "North Adeline", "title": "Government", "created_at": "2021-10-02T18:44:39.000000Z", "updated_at": "2021-10-02T18:44:39.000000Z" } ],

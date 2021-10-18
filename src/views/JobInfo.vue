@@ -14,10 +14,6 @@
         </c-flex>
       </c-flex>
       <JobCard></JobCard>
-
-      <p> {{ jobs }}</p>
-      
-      
   </div>
 </template>
 

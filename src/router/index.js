@@ -155,11 +155,11 @@ const routes = [
   {
     path: "/admin",
     name: "admin",
-    meta: {
-      layout: "Main",
-      requiresAuth: true,
-      requiresAdmin: true,
-    },
+    // meta: {
+    //   layout: "Main",
+    //   requiresAuth: true,
+    //   requiresAdmin: true,
+    // },
     component: () => import("../views/admin/index.vue"),
   },
   {
@@ -192,31 +192,31 @@ const routes = [
   {
     path: '/admin/accountsetting',
     name: "account setting",
-    meta: {
-      layout: "Main",
-      requiresAuth: true,
-      requiresAdmin: true,
-    },
+    // meta: {
+    //   layout: "Main",
+    //   requiresAuth: true,
+    //   requiresAdmin: true,
+    // },
     component: () => import("../views/admin/AccountSetting.vue")
   },
   {
     path: '/admin/jobs',
     name: "jobs setting",
-    meta: {
-      layout: "Main",
-      requiresAuth: true,
-      requiresAdmin: true,
-    },
+    // meta: {
+    //   layout: "Main",
+    //   requiresAuth: true,
+    //   requiresAdmin: true,
+    // },
     component: () => import("../views/admin/Jobs.vue")
   },
   {
     path: '/admin/review',
     name: "review setting",
-    meta: {
-      layout: "Main",
-      requiresAuth: true,
-      requiresAdmin: true,
-    },
+    // meta: {
+    //   layout: "Main",
+    //   requiresAuth: true,
+    //   requiresAdmin: true,
+    // },
     component: () => import("../views/admin/Review.vue")
   },
 ];
