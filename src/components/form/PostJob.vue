@@ -1,5 +1,9 @@
 <template>
   <div>
+    {{provinces.data}}
+    <div v-for="index in provinces.data" :key="index.id">
+        {{ index.province }}
+    </div>
     <c-text fontSize="4xl" textAlign="center">{{ "ลงประกาศงานใหม่" }}</c-text>
     <c-text fontsize="md" color="gray.400">{{
       `Fill in the data to post new job`
@@ -44,10 +48,10 @@
               "เลือกประเภทงาน"
             }}</c-form-label>
 
-            <c-select id="type" placeholder="ประเภทงาน" v-model="form.category">
-              <div v-for="category in categories" :key="category.id">
-                <option>{{ category.category_name }}</option>
-              </div>
+            <c-select id="type" v-model="form.category">
+              <option value="" style="display:none;" >ประเภทงาน</option>
+              <option v-for="index in categories" :key="index.id">{{ index.category_name }}</option>
+                
             </c-select>
 
           </c-box>
@@ -55,10 +59,10 @@
             <c-form-label for="province" color="gray.600">{{
               "จังหวัด"
             }}</c-form-label>
-              <c-select id="province" placeholder="จังหวัด" v-model="form.province">
-                <div v-for="province in provinces" :key="province">
-                  <option>{{ province }}</option>
-                </div>
+              <c-select id="province" v-model="form.province">
+                <option value="" style="display:none;" >จังหวัด</option>
+                <option v-for="index in provinces.data" :key="index.id">{{ index.province }}</option>
+                
               </c-select>
           </c-box>
           <c-box pb="3vh">
@@ -115,7 +119,7 @@ export default {
       async getProvince() {
         let res = await Axios.get(`https://thaiaddressapi-thaikub.herokuapp.com/v1/thailand/provinces`);
         this.provinces = res.data;
-        console.log(this.provinces)
+        console.log(this.provinces.data)
       }
     }
 };

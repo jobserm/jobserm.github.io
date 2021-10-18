@@ -10,16 +10,21 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         data: [],
+        postsReview: []
     },
 
     getters: {
         reviews: (state) => state.data,
+        getReviews: (state) => state.postsReview
     },
 
     mutations: {
         setData(state, res) {
             state.data = res;
         },
+        setReview(state, res) {
+            state.data = res
+        }
     },
 
     actions: {
@@ -29,8 +34,14 @@ export default new Vuex.Store({
             commit("setData", res)
         },
         async addReview({ commit }, payload) {
-            let res = await Axios.post(`${api_endpoint}/api/reviews`, payload);
-            commit("addReview", res.data); 
+            let body = {
+                comment: payload.comment,
+                rating: payload.rating,
+                id: payload.id
+            }
+            let res = await Axios.post(`${api_endpoint}/api/reviews`, body);
+            console.log("-----------", res)
+            commit("setReview", res.data); 
             return res;
         },
         // async addReview({ commit }, id) {

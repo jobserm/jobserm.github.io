@@ -5,7 +5,6 @@ import Axios from 'axios'
 import Authservice from '../services/Authservice';
 
 let api_endpoint = process.env.VUE_APP_JOBSERM_ENDPOINT || "http://localhost:8000/api";
-
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -14,6 +13,7 @@ export default new Vuex.Store({
         data:[],
         JobById:[],
         allJobs: [],
+        JobSuggest:[],
         fetchRemark: [],
         fetchUserFinish: []
     },
@@ -24,6 +24,7 @@ export default new Vuex.Store({
             return state.JobById
         },
         getAllJobs: (state) => state.allJobs,
+        getJobSuggest: (state) => state.JobSuggest,
         getUserFinish: (state) => state.fetchUserFinish
     },
     mutations: {
@@ -32,6 +33,9 @@ export default new Vuex.Store({
         },
         async fetchById(state,{res}){
             state.JobById = (await res).data
+        },
+        async fetchSuggest(state,{res}){
+            state.JobSuggest = (await res).data
         },
         addPost(state, post) {
             state.posts.unshift(post); 
@@ -54,6 +58,17 @@ export default new Vuex.Store({
         }
     },
     actions: {
+        async fetchJobSuggest({ commit },id){
+            console.log("fetchJobSuggest")
+            console.log("---id---",id)
+            let body = {
+                id:id
+            }
+            let res = await Axios.post(`${api_endpoint}/jobs/${id}/get-rand-jobs`,body)
+            console.log("JobSuggest",(await res).data )
+            console.log("fetchJobSuggest")
+            commit("fetchSuggest",{ res })
+        },
         async fetchData({ commit }) {
             let header = Authservice.getApiHeader();
             let res = await Axios.get(`${api_endpoint}/jobs`, header);
@@ -66,7 +81,6 @@ export default new Vuex.Store({
             return res;
         },
         async fetchJob({ commit }){
-            console.log("api")
             let res = Axios.get(api_endpoint + "/jobs")
             console.log((await res).data)
             console.log("api")
@@ -81,7 +95,7 @@ export default new Vuex.Store({
             commit("fetch",{ res })
         },
         async getJobByID(id) {
-            let res = await Axios.get(`${api_endpoint}/api/jobs/${id}`);
+            let res = await Axios.get(`${api_endpoint}/jobs/${id}`);
             let body = res.data;
             return body;
         },
@@ -119,6 +133,7 @@ export default new Vuex.Store({
         },
         async fetchUserFinish({ commit }, id){
             let res = await Axios.get(`${api_endpoint}/jobs/${id}/finish-job`);
+            console.log("fetchUserFinish", res)
             commit("fetchUserFinishJob", res)
         },
     }

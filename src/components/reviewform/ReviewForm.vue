@@ -18,22 +18,19 @@
             </c-flex>
 
             <c-flex justify="center">
-                <c-text>"{{ "jobUser.username" }}"</c-text>
+                <c-text>{{ jobUser.name }} {{ jobUser.lastname }}</c-text>
             </c-flex>
         </c-stack>
 
         <c-stack mt="2rem" :spacing="3">
-                <form action="submit">
-                  <AwesomeVueStarRating 
-                      v-on:click.native="handleClickStar()"
-                  />
-                  <!-- <b-form-rating v-model="value"></b-form-rating>
-                  <p class="mt-2">Value: {{ value }}</p> -->
-                </form>
+          <form action="submit">
+            <AwesomeVueStarRating 
+                v-on:click.native="handleClickStar()"
+            />
+          </form>
         </c-stack>
 
         <!-- section II -->
-
         <c-box
             mt="2rem"
             border="solid"
@@ -52,18 +49,18 @@
             </c-box>
 
             <c-box>
-                <c-textarea  focus-border-color="pink.400" v-model="form.comment"/>
+                <c-textarea focus-border-color="pink.400" v-model="form.comment"/>
             </c-box>
         </c-box>
         </c-box>
 
         <c-flex justify="space-between" w="25%" m="auto" mb="2rem">
             <router-link to="/" >
-                <c-button  color="blue" width="150px" bgColor="#D3EDED "  mt="1.5rem" >
+                <c-button color="blue" width="150px" bgColor="#D3EDED" mt="1.5rem" >
                     ย้อนกลับ
                 </c-button>
             </router-link>
-            <c-button  width="150px"  variant-color="blue" mt="1.5rem" @click="saveInfo">
+            <c-button width="150px" variant-color="blue" mt="1.5rem" @click="saveInfo">
                 ยืนยัน
             </c-button>
         </c-flex>
@@ -86,6 +83,7 @@ export default {
     return {
         user: {},
         jobs: {},
+        score: 1,
       form: {
         comment: '',
         job: [],
@@ -95,8 +93,6 @@ export default {
         {
           text: "Poor",
           class: "star-poor",
-          // default: 0,
-          // type: Number
         },
         {
           text: "Below Average",
@@ -127,21 +123,21 @@ export default {
   async created() {
     this.job = JSON.parse(localStorage.getItem('YourItem'));
     console.log(this.job)
-
-    // this.jobUser = JSON.parse(localStorage.getItem('FreelanceItem'));
-    // console.log(this.jobUser)
+    // รับ user คนที่ถูกรีวิวมาเงอะ
+    this.jobUser = JSON.parse(localStorage.getItem('userToReview'));
+    console.log("this.jobUser", this.jobUser)
   },
   async mounted() {
     this.user = await AuthUser.getters.user;
   },
   methods:{
     async saveInfo() {
+      console.log("star", this.score)
       let payload = {
+          rating: this.score,
           id: this.user.id,
           comment: this.form.comment
       }
-      // console.log("payload.id---", payload.id)
-      // console.log("payload.comment---", payload.comment)
       await ReviewApi.dispatch("addReview", payload)
     },
     // async getUser
@@ -150,21 +146,27 @@ export default {
       let rating = div[0].innerText.split('\n')[0]
       switch (rating) {
         case 'Poor':
+          this.score = 1
           console.log(1)
           break
         case 'Below Average':
+          this.score = 2
           console.log(2)
           break
         case 'Average':
+          this.score = 3
           console.log(3)
           break
         case 'Good':
+          this.score = 4
           console.log(4)
           break
         case 'Excellent':
+          this.score = 5
           console.log(5)
           break
         default:
+          this.score = 0
           console.log(0)
           break
       }
