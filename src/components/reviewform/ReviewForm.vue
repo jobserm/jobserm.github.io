@@ -25,7 +25,7 @@
         <c-stack mt="2rem" :spacing="3">
                 <form action="submit">
                   <AwesomeVueStarRating 
-                      
+                      v-on:click.native="handleClickStar()"
                   />
                   <!-- <b-form-rating v-model="value"></b-form-rating>
                   <p class="mt-2">Value: {{ value }}</p> -->
@@ -145,6 +145,30 @@ export default {
       await ReviewApi.dispatch("addReview", payload)
     },
     // async getUser
+    handleClickStar() {
+      let div = document.getElementsByClassName('rating')
+      let rating = div[0].innerText.split('\n')[0]
+      switch (rating) {
+        case 'Poor':
+          console.log(1)
+          break
+        case 'Below Average':
+          console.log(2)
+          break
+        case 'Average':
+          console.log(3)
+          break
+        case 'Good':
+          console.log(4)
+          break
+        case 'Excellent':
+          console.log(5)
+          break
+        default:
+          console.log(0)
+          break
+      }
+    }
   }
 };
 </script>
