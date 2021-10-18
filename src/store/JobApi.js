@@ -13,6 +13,7 @@ export default new Vuex.Store({
         posts: [],
         data:[],
         JobById:[]
+        allJobs: [],
     },
     getters: {
         posts: (state) => state.posts,
@@ -20,6 +21,7 @@ export default new Vuex.Store({
         job_filtered: (state) => {
             return state.JobById
         },
+        getAllJobs: (state) => state.allJobs,
     },
     mutations: {
         async fetch(state,{res}){
@@ -37,7 +39,10 @@ export default new Vuex.Store({
                     
         //         }
         //     })
-        // }
+        // },
+        setAllJobs(state, data) {
+            state.allJobs = data;
+        }
     },
     actions: {
         async fetchData({ commit }) {
@@ -95,5 +100,14 @@ export default new Vuex.Store({
             return res;
         },
 
+        async fetchAllJobs ({ commit }) {
+            try {
+                let res = await Axios.get(`${api_endpoint}/get-all-jobs`);
+                console.log(`line 82`, res.data)
+                commit("setAllJobs", res.data)
+            } catch (e) {
+                console.log(e)
+            }
+        }
     }
 })
