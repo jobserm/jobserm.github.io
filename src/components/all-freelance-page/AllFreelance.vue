@@ -39,30 +39,22 @@
 <script>
 import info from "./Info.vue"
 import Job from "../../store/JobApi"
-
 export default {
     components: { info },
     name: "Info",
-
     data() {
       return {
         id: '',
         job: {},
       }
     },
-
     // async created() {
     //   this.id = this.$route.params.id;
     //   this.job = await Job.dispatch("getByJobID", id);
     // },
-
     methods: {
-
     },
     
-
-
-
   // data() {
   //   return {
   //     users: [
@@ -94,7 +86,6 @@ export default {
   //       gender: "หญิง",
   //       age:"21",
   //     }],
-
   //     title: "พาน้องหมาไปเดินเล่น 10 ตัว",
       
   //     job_images:[
@@ -107,16 +98,11 @@ export default {
   //               {
   //         dog: "./dog_walking_3.jpg"
   //       },
-
-
   //     ]
   //   };
   // },  
-
-
 }
 </script>
 
 <style>
-
 </style>

@@ -109,8 +109,11 @@ const routes = [
   {
     path: "/profiles",
     name: "profiles",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/DetailForm.vue"),
+    meta: {
+      layout: "Main",
+      requiresAuth: true,
+    },
+    component: () => import("../views/DetailForm.vue"),
   },
   {
     path: "/personalinformation",
