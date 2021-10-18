@@ -38,7 +38,7 @@
 
       <c-input
           pr="4.5rem"
-          placeholder="username"
+          placeholder="ชื่อผู้ใช้"
           v-model="form.username"
       />
 
