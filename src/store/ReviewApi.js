@@ -28,12 +28,16 @@ export default new Vuex.Store({
             let res = await Axios.get(`${api_endpoint}/api/reviews`, header);
             commit("setData", res)
         },
-
         async addReview({ commit }, payload) {
             let res = await Axios.post(`${api_endpoint}/api/reviews`, payload);
             commit("addReview", res.data); 
             return res;
         },
+        // async addReview({ commit }, id) {
+        //     let res = await Axios.get(`${api_endpoint}/api/jobs/${id}/finish-job`);
+        //     commit("addReview", res.data); 
+        //     return res;
+        // },
         async paginate({ commit }, route){
             let res = Axios.get(route)
             commit("fetch", { res })
