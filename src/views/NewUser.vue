@@ -47,7 +47,7 @@ export default {
             let res = await AuthUser.dispatch('firstRegister', value)
             if (res.success) {
                 this.$swal("ลงทะเบียนสำเร็จ", `ขอบคุณที่ให้ความสนใจ`, "success")
-                this.$router.push("/login")
+                this.$router.push("/")
             } else {
                 this.$swal("ลงทะเบียนไม่สำเร็จ", res.message, "error")
             }

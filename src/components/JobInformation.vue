@@ -1,19 +1,28 @@
 <template>
   <div class="job infomation">
-
-
-
      <div v-if="job.length > 0 ">
          <div class="title_container">
             <c-text fontSize="4xl">{{ jobId.title }}</c-text>
             <c-flex class="btn">
                 <c-text color="indigo.400" fontSize="2xl">ชั่วโมงละ {{jobId.compensation }} บาท</c-text>
                 <c-box class="button">
-                <c-button right-icon="arrow-forward" variant-color="blue" variant="outline">
-                    สนใจงานนี้
-                </c-button>
+                <c-flex justify="right" w="120%" m="auto">
+
+                <router-link to="/additionals" >
+                  <c-button right-icon="arrow-forward" fontWeight="sm" variant-color="blue">
+                      สนใจงานนี้
+                  </c-button>
+                </router-link>
+                </c-flex>
+
+                <c-flex justify="right" w="120%" m="auto">
+                <router-link to="/review-form" >
+                  <c-button  color="blue" width="150px" bgColor="#D3EDED "  mt="1.5rem" >
+                      จบงาน
+                  </c-button>
+                </router-link>
+                </c-flex>
                 </c-box>
-                
 
             </c-flex>
          </div>
@@ -60,7 +69,7 @@ export default {
     return {
        job:[ { "id": 2, "compensation": 15304, "description": "Adipisci saepe perspiciatis rerum nobis neque libero. Natus quaerat quia nulla ipsam quo. Omnis est voluptates ratione.", "requirement": "Et expedita voluptas cupiditate eos veritatis repellendus. Iure autem quia dolorum non.", "province": "North Adeline", "title": "Government", "created_at": "2021-10-02T18:44:39.000000Z", "updated_at": "2021-10-02T18:44:39.000000Z" } ],
        id:0,
-       jobId:[]
+       jobId:[],
     }
   },
   async created(){
@@ -114,6 +123,5 @@ export default {
     .btn{
         justify-content: space-between;
     }
-
     
 </style>

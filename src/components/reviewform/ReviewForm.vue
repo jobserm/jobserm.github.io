@@ -18,19 +18,18 @@
             </c-flex>
 
             <c-flex justify="center">
-                <c-text>"{{"form.username"}}"</c-text>
+                <c-text>"{{ "jobUser.username" }}"</c-text>
             </c-flex>
         </c-stack>
 
         <c-stack mt="2rem" :spacing="3">
-                <form action="submit"></form>
-                <AwesomeVueStarRating 
-                    :star="this.star"
-                    :starsize="this.starsize"
-                    :hasresults="this.hasresults"
-                    :hasdescription="this.hasdescription"
-                    :ratingdescription="this.ratingdescription"
-                />
+                <form action="submit">
+                  <AwesomeVueStarRating 
+                      
+                  />
+                  <!-- <b-form-rating v-model="value"></b-form-rating>
+                  <p class="mt-2">Value: {{ value }}</p> -->
+                </form>
         </c-stack>
 
         <!-- section II -->
@@ -68,6 +67,7 @@
                 ยืนยัน
             </c-button>
         </c-flex>
+        {{ jobId }}
   </div>
 </template>
 
@@ -75,6 +75,7 @@
 import AwesomeVueStarRating from "awesome-vue-star-rating";
 import AuthUser from "@/store/AuthUser";
 import JobApi from "@/store/JobApi";
+import ReviewApi from "@/store/ReviewApi"
 
 export default {
   name: "App",
@@ -83,16 +84,19 @@ export default {
   },
   data() {
     return {
-      form: {
         user: {},
         jobs: {},
+      form: {
         comment: '',
+        job: [],
 
         star: 5, // default star
         ratingdescription: [
         {
           text: "Poor",
           class: "star-poor",
+          // default: 0,
+          // type: Number
         },
         {
           text: "Below Average",
@@ -114,9 +118,18 @@ export default {
       hasresults: true,
       hasdescription: true,
       starsize: "lg", //xs/6x
+      maxstars: 5,
+      disabled: false
       },
 
     };
+  },
+  async created() {
+    this.job = JSON.parse(localStorage.getItem('YourItem'));
+    console.log(this.job)
+
+    // this.jobUser = JSON.parse(localStorage.getItem('FreelanceItem'));
+    // console.log(this.jobUser)
   },
   async mounted() {
     this.user = await AuthUser.getters.user;
@@ -129,8 +142,9 @@ export default {
       }
       // console.log("payload.id---", payload.id)
       // console.log("payload.comment---", payload.comment)
-      await JobApi.dispatch("addReview", payload)
-    }
+      await ReviewApi.dispatch("addReview", payload)
+    },
+    // async getUser
   }
 };
 </script>

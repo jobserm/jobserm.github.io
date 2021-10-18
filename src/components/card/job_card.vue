@@ -1,9 +1,9 @@
 <template>
     <div>
         <body>
+            {{jobs.data}}
             <div class="cards">
                 <div class="services" v-for="index in jobs.data" :key="index.id">
-                    
                     <div class="content">
                         <c-image class="pic" src="https://static.toiimg.com/photo/msid-67586673/67586673.jpg?3918697" />
                         <div>
@@ -48,7 +48,7 @@ export default {
     async created(){
         console.log("fetch=================")
         await this.fetchJobs()
-        console.log("fetch=================")
+        console.log("fetch=================",this.jobs.data)
     },
     methods:{
         async fetchJobs(){

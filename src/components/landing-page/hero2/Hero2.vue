@@ -1,6 +1,6 @@
 <template>
   <c-box pb="16" v-bind="[$props, $attrs]">
-    <c-heading pb="8">เว็บเรามีอะไร ไม่รู้ววว....</c-heading>
+    <c-heading pb="8">เว็บเรามีอะไร</c-heading>
     <c-simple-grid :columns="[1, 1, 1, 2]" spacing="16">
       <hero-2-item
         :icon="require('./1.svg')"

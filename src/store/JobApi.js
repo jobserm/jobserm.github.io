@@ -14,7 +14,9 @@ export default new Vuex.Store({
         data:[],
         JobById:[],
         allJobs: [],
-        JobSuggest:[]
+        JobSuggest:[],
+        fetchRemark: [],
+        fetchUserFinish: []
     },
     getters: {
         posts: (state) => state.posts,
@@ -23,7 +25,8 @@ export default new Vuex.Store({
             return state.JobById
         },
         getAllJobs: (state) => state.allJobs,
-        getJobSuggest: (state) => state.JobSuggest
+        getJobSuggest: (state) => state.JobSuggest,
+        getUserFinish: (state) => state.fetchUserFinish
     },
     mutations: {
         async fetch(state,{res}){
@@ -47,6 +50,12 @@ export default new Vuex.Store({
         // },
         setAllJobs(state, data) {
             state.allJobs = data;
+        },
+        addRemark(state, data) {
+            state.fetchRemark = data
+        },
+        fetchUserFinishJob(state, data) {
+            state.fetchUserFinish = data
         }
     },
     actions: {
@@ -100,7 +109,7 @@ export default new Vuex.Store({
             console.log("fetchById")
             commit("fetchById",{ res })
         },
-        async addRemark({ commit }, payload) {
+        async addRemarks({ commit }, payload) {
             let header = Authservice.getApiHeader();
             console.log("payload.id---", payload.id)
             console.log("payload.remark---", payload.remark)
@@ -112,10 +121,9 @@ export default new Vuex.Store({
             console.log("body.id---", body.id)
             console.log("body.remark---", body.remark)
             let res = await Axios.post(`${api_endpoint}/jobs/${payload.id}/apply-job`, body, header);
-            commit("addRemark", res.message)
+            commit("addRemark", {res})
             return res;
         },
-
         async fetchAllJobs ({ commit }) {
             try {
                 let res = await Axios.get(`${api_endpoint}/get-all-jobs`);
@@ -124,6 +132,10 @@ export default new Vuex.Store({
             } catch (e) {
                 console.log(e)
             }
-        }
+        },
+        async fetchUserFinish({ commit }, id){
+            let res = await Axios.get(`${api_endpoint}/jobs/${id}/finish-job`);
+            commit("fetchUserFinishJob", res)
+        },
     }
 })

@@ -49,19 +49,6 @@
                     fontWeight="normal"
                     lineHeight="1.7"
                     white-space="pre-line"
-                    pr="3"
-                    >เพศ : {{ gender }}
-                </c-text>
-
-
-                <c-text
-                    as="h2"
-                    size="md"
-                    color="primary.800"
-                    opacity="0.8"
-                    fontWeight="normal"
-                    lineHeight="1.7"
-                    white-space="pre-line"
                     >อายุ : {{ age }}
                 </c-text>
             </c-flex>
@@ -74,7 +61,7 @@
 <script>
 export default {
     name:"Info",
-    props: ["image", "freelancerName", "star", "rating", "gender", "age"]
+    props: ["image", "freelancerName", "star", "rating", "age"]
 }
 </script>
 
