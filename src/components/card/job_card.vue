@@ -3,7 +3,6 @@
         <body>
             <div class="cards">
                 <div class="services" v-for="index in jobs.data" :key="index.id">
-                    
                     <div class="content">
                         <c-image class="pic" src="https://static.toiimg.com/photo/msid-67586673/67586673.jpg?3918697" />
                         <c-box>
@@ -14,10 +13,6 @@
                             <br>
                             <a @click='value(index.id)' :href="'#/job'" v-bind="index">รายละเอียดงาน</a>
                         </c-box>
-                        
-                    
-                        
-
                     </div>
                 </div>
             </div>

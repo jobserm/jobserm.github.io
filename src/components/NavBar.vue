@@ -3,7 +3,7 @@
     <c-simple-grid
       :columns="3"
       as="nav"
-      px="15vw"
+      px="5vw"
       py="4"
       w="100%"
       alignItems="center"
@@ -22,6 +22,18 @@
         <router-link to="/contact">
           <c-text mx="4">ติดต่อเรา</c-text></router-link
         >
+
+        <div v-if="isAuthen()">
+          <router-link to="/postjob">
+            <c-text ms="80">โพสต์งาน</c-text></router-link
+          >
+        </div>
+
+        <div v-if="isAuthen()">
+          <router-link to="/freelance">
+            <c-text ms="5">เริ่มหาฟรีแลนซ์</c-text></router-link
+          >
+        </div>
       </c-flex>
 
       <c-flex
@@ -38,6 +50,10 @@
       <c-flex wrap="wrap" :direction="['column', 'row', 'row', 'row']">
         <div v-if="!isAuthen()">
           <button-secondary :text="`เข้าสู่ระบบ`" :url="`/login`" mx="4" />
+        </div>
+
+        <div v-if="isAuthen()">
+          <button-primary :url="`/profiles`" :text="`โปรไฟล์`" mx="4" />
         </div>
 
         <div v-if="isAuthen()">
