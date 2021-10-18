@@ -72,5 +72,21 @@ export default new Vuex.Store({
             console.log("api")
             commit("fetch",{ res })
         },
+        async addRemark({ commit }, payload) {
+            let header = Authservice.getApiHeader();
+            console.log("payload.id---", payload.id)
+            console.log("payload.remark---", payload.remark)
+            let body = {
+                id: payload.id,
+                remark: payload.remark
+            }
+
+            console.log("body.id---", body.id)
+            console.log("body.remark---", body.remark)
+            let res = await Axios.post(`${api_endpoint}/jobs/${payload.id}/apply-job`, body, header);
+            commit("addRemark", res.message)
+            return res;
+        },
+
     }
 })
