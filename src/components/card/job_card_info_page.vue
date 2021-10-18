@@ -1,10 +1,14 @@
 <template>
     <div>
+        
         <body>
             <div class="cards">
-                <div class="services" v-for="index in jobs.data" :key="index.id">
+                
+                <div class="services" v-for="index in jobs.slice(0,3)" :key="index.id">
+                    
                     
                     <div class="content">
+                        
                         <c-image class="pic" src="https://static.toiimg.com/photo/msid-67586673/67586673.jpg?3918697" />
                         <div>
                             <c-text  fontSize="2xl">{{ index.title }}</c-text>
@@ -21,11 +25,10 @@
                     </div>
                 </div>
             </div>
-            <div class="paginate">
-                <ve-pagination :total="count_job" :page-size="4" :layout="['total', 'prev', 'pager', 'next', 'jumper']" @on-page-number-change="pageNumberChange"></ve-pagination>
-            </div>
             
         </body>
+
+        
         
     </div>
 </template>
@@ -42,40 +45,39 @@ export default {
             jobs:{},
             count_job:0,
             payload_url:"",
-            job_id:0
+            job_id:0,
+            jobId:[],
+            id:0
         }
     },
     async created(){
-        console.log("fetch=================")
-        await this.fetchJobs()
-        console.log("fetch=================")
+        this.jobId = JSON.parse(localStorage.getItem('YourItem'));
+        console.log("created jobId",this.jobId.id)
+         await this.fetchJobs(this.jobId.id)
     },
     methods:{
-        async fetchJobs(){
-        await JobApi.dispatch("fetchJob")
-        this.jobs = JobApi.getters.jobs
-        this.count_job = this.jobs.meta.total
-        // console.log("this.jobs")
-        // console.log(this.jobs.data)
-        // console.log("count_job")
-        // console.log(this.count_job)
+        async fetchJobs(id){
+            await JobApi.dispatch("fetchJobSuggest",id)
+            this.jobs = JobApi.getters.getJobSuggest
+            console.log("this.getJobSuggest")
+            console.log(this.jobs)
         },
-        async pageNumberChange(pageIndex) {
-            console.log(pageIndex)
-            this.payload_url = this.jobs.meta.links[pageIndex].url
-            await JobApi.dispatch("paginate" ,  this.payload_url )
-            console.log("payload_url")
-            console.log(this.payload_url)
-            this.jobs = JobApi.getters.jobs
-            this.count_job = this.jobs.meta.total
-            this.$forceUpdate();
+        // async pageNumberChange(pageIndex) {
+        //     console.log(pageIndex)
+        //     this.payload_url = this.jobs.meta.links[pageIndex].url
+        //     await JobApi.dispatch("paginate" ,  this.payload_url )
+        //     console.log("payload_url")
+        //     console.log(this.payload_url)
+        //     this.jobs = JobApi.getters.jobs
+        //     this.count_job = this.jobs.meta.total
+        //     this.$forceUpdate();
 
-        },
-        async value(id){
-            await JobApi.dispatch("fetchJobById" ,  id )
-            // console.log("id")
-            // console.log(id)
-        }
+        // },
+        // async value(id){
+        //     await JobApi.dispatch("fetchJobById" ,  id )
+        //     console.log("id")
+        //     console.log(id)
+        // }
         // async value(id){
         //     await JobApi.dispatch("fetchJobById" ,  id )
         //     console.log("id")
@@ -156,8 +158,8 @@ export default {
         color: #8C30F5;
         
     }
-    .content > *{
+    /* .content > *{
         flex: 1 1 100%;
-    }
+    } */
 
 </style>
