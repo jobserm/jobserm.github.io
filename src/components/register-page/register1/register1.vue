@@ -38,7 +38,7 @@
 
       <c-input
           pr="4.5rem"
-          placeholder="username"
+          placeholder="ชื่อผู้ใช้"
           v-model="form.username"
       />
 
@@ -141,7 +141,7 @@ export default {
                 console.log(res)
                 if(res.success){
                     this.$swal("ลงทะเบียนสำเร็จ", `Welcome ${res.user.email}`, "success")
-                    this.$router.push("/new-user")
+                    this.$router.push("/newuser")
                 } 
                 else {
                     this.$swal("ลงทะเบียนไม่สำเร็จ", res.message, "error")
