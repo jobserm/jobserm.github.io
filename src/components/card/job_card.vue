@@ -21,11 +21,11 @@
                     </div>
                 </div>
             </div>
-            <div class="paginate">
-                <ve-pagination :total="count_job" :page-size="4" :layout="['total', 'prev', 'pager', 'next', 'jumper']" @on-page-number-change="pageNumberChange"></ve-pagination>
-            </div>
             
-        </body>
+        </body> 
+        <div class="paginate">
+            <ve-pagination :total="count_job" :page-size="4" :layout="['total', 'prev', 'pager', 'next', 'jumper']" @on-page-number-change="pageNumberChange"></ve-pagination>
+        </div>
         
     </div>
 </template>
@@ -92,7 +92,7 @@ export default {
     .paginate{
         display: flex;
         flex-direction: row-reverse;
-        margin-top: 50px;
+        /* margin-top: 50px; */
     }
     .compensation{
         margin-top: 20px;
