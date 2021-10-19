@@ -31,6 +31,7 @@ export default {
             columns: [
                 { field: "id", key: "a", title: "ID", align: "center" },
                 { field: "category_name", key: "b", title: "Category Name", align: "left" },
+                { field: "job_count", key: "c", title: "จำนวนงานในหมวดหมู่", align: "left" },
             ],
             // loading: true,
             rawData: [],

@@ -44,11 +44,6 @@
             }}</c-form-label>
             <c-textarea placeholder="ที่อยู่" v-model="form.address"/>
           </c-box>
-          <c-box pb="3vh">
-            <c-form-label for="image" color="gray.600">{{
-              "อัปโหลดรูปโปรไฟล์"
-            }}</c-form-label>
-          </c-box>
 
           <!-- section II -->
           <c-box>

@@ -23,13 +23,13 @@
           <c-text mx="4">ติดต่อเรา</c-text></router-link
         >
 
-        <div v-if="isAuthen()">
+        <div v-if="isAuthen() && !isAdmin()">
           <router-link to="/postjob">
             <c-text ms="80">โพสต์งาน</c-text></router-link
           >
         </div>
 
-        <div v-if="isAuthen()">
+        <div v-if="isAuthen() && !isAdmin()">
           <router-link to="/freelance">
             <c-text ms="5">เริ่มหาฟรีแลนซ์</c-text></router-link
           >
@@ -66,16 +66,18 @@
                 </c-menu-button>
             </c-menu>
         </c-flex>
-        <div v-if="!isAuthen()">
-          <button-secondary :text="`เข้าสู่ระบบ`" :url="`/login`" mx="4" />
-        </div>
-
         <div v-if="isAuthen() && !isAdmin()">
-          <button-primary :url="`/profiles`" :text="`โปรไฟล์`" mx="4" />
+          <button-secondary :text="`โพสต์ของคุณ`" :url="`/login`" mx="4" />
+        </div>
+        <div v-if="isAuthen() && !isAdmin()">
+          <button-secondary :text="`งานที่คุณสนใจ`" :url="`/login`" mx="4" />
+        </div>
+        <div v-if="!isAuthen()">
+          <button-primary :text="`เข้าสู่ระบบ`" :url="`/login`" mx="4" />
         </div>
 
         <div v-if="isAuthen()">
-          <button-secondary :text="`ออกจากระบบ`" :url="`/logout`" mx="12" />
+          <button-primary :text="`ออกจากระบบ`" :url="`/logout`" mx="12" />
         </div>
         
         <div v-if="!isAuthen()">

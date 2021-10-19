@@ -29,6 +29,7 @@ export default new Vuex.Store({
         getJobSuggest: (state) => state.JobSuggest,
         getUserFinish: (state) => state.fetchUserFinish,
         getJobByUser: (state) => state.jobByUser,
+        getJobById: (state) => state.JobById,
     },
     mutations: {
         async fetch(state,{res}){
@@ -62,6 +63,12 @@ export default new Vuex.Store({
         },
         fetchUserFinishJob(state, data) {
             state.fetchUserFinish = data
+        },
+        setJobById(state, data) {
+            state.JobById = data
+        },
+        removeJob(state, data) {
+            state.allJobs = state.allJobs.map(job => job.id != data.id)
         }
     },
     actions: {
@@ -117,7 +124,7 @@ export default new Vuex.Store({
             console.log((await res).data)
             commit("fetch",{ res })
         },
-        async getJobByID(id) {
+        async getJobByID({ commit }, id) {
             let res = await Axios.get(`${api_endpoint}/jobs/${id}`);
             let body = res.data;
             return body;
@@ -125,10 +132,14 @@ export default new Vuex.Store({
         async fetchJobById({ commit },id){
             console.log("---id---")
             console.log(id)
-            let res = await Axios.get(`${api_endpoint}/jobs/${id}`)
-            console.log((await res).data)
+            try {
+                let res = await Axios.get(`${api_endpoint}/jobs/${id}`)
+                commit("fetchById",{ res })
+                console.log((await res).data)
+            } catch (e) {
+                console.log(e.message)
+            }
             console.log("fetchById")
-            commit("fetchById",{ res })
         },
         async fetchJobUserId({ commit },id){
             console.log("---id---")
@@ -159,7 +170,12 @@ export default new Vuex.Store({
         },
         async fetchAllJobs ({ commit }) {
             try {
-                let res = await Axios.get(`${api_endpoint}/get-all-jobs`);
+                let jwt = JSON.parse(localStorage.getItem(auth_key))
+                let res = await Axios.get(`${api_endpoint}/get-all-jobs`, { 
+                    headers: {
+                        'Authorization': `Bearer ${jwt.access_token}`
+                    }
+                });
                 console.log(`line 82`, res.data)
                 commit("setAllJobs", res.data)
             } catch (e) {
@@ -170,5 +186,26 @@ export default new Vuex.Store({
             let res = await Axios.get(`${api_endpoint}/jobs/${id}/finish-job`);
             commit("fetchUserFinishJob", res)
         },
+        async fetchJobByID({ commit }, { headers, id }) {
+            try {
+                let res = await Axios.get(`${api_endpoint}/jobs/${id}`, {
+                    headers: headers
+                })
+                commit('setJobById', res.data)
+            } catch (e) {
+                console.log(e.message)
+            }
+        },
+        async removeJob({ commit }, { headers, id }) {
+            try {
+                let res = await Axios.delete(`${api_endpoint}/jobs/${id}`, {
+                    headers: headers
+                })
+
+                commit('removeJob', res.data)
+            } catch (e) {
+                console.log(e.message)
+            }
+        }
     }
 })

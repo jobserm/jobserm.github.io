@@ -8,29 +8,14 @@
 
         </c-box>
         <c-flex>
-            <c-stack
-                px="10" w="50%" 
-                wrap="wrap"
-                rounded="0.5rem"
-                p="5"
-                bgColor="brand.400" 
-                shadow="xl" 
-                size="400"
-                border-width="1px"
-                align="center"
-                justify="center"
-                >
-                
-                <c-box justify="center">
-                    <c-image v-bind:src="require('./user.png')" 
-                            w="15rem" 
-                            borderRadius="50%" 
-                            marginTop="auto"
-                            py="2"/>
-                </c-box>
-            </c-stack>
-            <c-stack  px="10" w="50%" align="center">
-                <info-profile></info-profile>
+            
+            <c-stack  px="10" w="70%" align="center">
+                <div>
+                    <info-profile
+                    :star="require(`./star.png`)"
+                    
+                    />
+                </div>
             </c-stack>
         </c-flex>
 
@@ -40,43 +25,39 @@
 <script>
 import InfoProfile from "./InfoProfile.vue"
 import JobApi from "@/store/JobApi.js"
-
 export default {
     components: {
         InfoProfile
     },
  data() {
      return {
-        job:{},
+         id:'',
+         user:[],
      }
  },
 
  async created() {
-     await this.fetchJobs()
+     console.log("--created-------")
+     this.user = JSON.parse(localStorage.getItem("user"))
  },
 
  methods: {
-     async fetchJobs(){
-         await JobApi.dispatch("fetchJob")
-         this.jobs = JobApi.getters.jobs
-        let {         
-            name,
-            lastname ,
-            email,
-            birthdate,
-            gender,
-            phone,
-            address,
-            facebook,
-            line,
-            activation,
-            }=this.jobs.data[0].users[0]
-            console.log(name)
-        },
+      
+        // let {         
+        //     name,
+        //     lastname ,
+        //     email,
+        //     birthdate,
+        //     gender,
+        //     phone,
+        //     address,
+        //     facebook,
+        //     line,
+        //     activation,
+        //     }=this.jobs.data[0].users[0]
+        //     console.log(name)
+        // },
      },
-     async value(id){
-         await JobApi.dispatch("fetchJobById", id)
-        },
 }
 </script>
 
