@@ -1,5 +1,6 @@
 <template>
    <c-box px="20" py="10">
+     {{jobId}}
       <c-stack>
           <c-heading py="12">ผู้ที่สนใจ <br> {{ job.title }}</c-heading>
       </c-stack>
@@ -16,8 +17,9 @@
       </c-flex>
 
       <c-simple-grid :columns="[1, 1, 1, 5]" spacing="8" align="center" py="16">
-        <div v-for="user in job.users" :key="user.id">
-            <div @click="freelancerInfo()">   
+        <div v-for="user in jobId.users" :key="user.id">
+          <router-link to="/profiles" >
+            <div @click="freelancerInfo(user)">   
               <info
                 image="require(`${user.path}`)"
                 v-bind:freelancerName="user.name + user.lastname"
@@ -26,6 +28,7 @@
                 :star="require(`./star.png`)"
               />
             </div>
+            </router-link>
         </div>
       </c-simple-grid>
 
@@ -43,12 +46,33 @@ export default {
       return {
         id: '',
         job: {},
+        jobs:[],
+        jobId:[]
       }
     },
 
-    created() {
-      // this.job = JSON.parse(localStorage.getItem('JobInfo'));
-      this.getEsaaa()
+    async created() {
+      console.log("created")
+
+      await JobApi.watch(
+        (state) => {
+          return JobApi.getters.job_filtered
+        },
+        (newValue, oldValue) => {
+          this.jobs.push(newValue)
+          localStorage.setItem('YourItem',JSON.stringify(newValue))
+          this.jobId = JSON.parse(localStorage.getItem('YourItem'));
+          console.log("this.jobId" ,this.jobId)
+          console.log(localStorage)
+          console.log("this.newValue" ,newValue)
+          console.log("this.job" ,this.jobs)
+        }
+      )
+      this.jobId = JSON.parse(localStorage.getItem('YourItem'));
+      console.log("this.jobId" ,this.jobId)
+      console.log("created")
+
+      // this.getEsaaa()
     },
 
     methods: {
@@ -63,7 +87,11 @@ export default {
           }
           return item
         })
-      }
+      },
+      freelancerInfo(user){
+        localStorage.setItem('user',JSON.stringify(user))
+        
+      },
     },
     
 }

@@ -15,7 +15,8 @@ export default new Vuex.Store({
         JobById:[],
         allJobs: [],
         fetchRemark: [],
-        fetchUserFinish: []
+        fetchUserFinish: [],
+        jobByUser:[]
     },
     getters: {
         posts: (state) => state.posts,
@@ -24,7 +25,9 @@ export default new Vuex.Store({
             return state.JobById
         },
         getAllJobs: (state) => state.allJobs,
-        getUserFinish: (state) => state.fetchUserFinish
+        getJobSuggest: (state) => state.JobSuggest,
+        getUserFinish: (state) => state.fetchUserFinish,
+        getJobByUser: (state) => state.jobByUser,
     },
     mutations: {
         async fetch(state,{res}){
@@ -32,6 +35,15 @@ export default new Vuex.Store({
         },
         async fetchById(state,{res}){
             state.JobById = (await res).data
+        },
+        async fetchSuggest(state,{res}){
+            state.JobSuggest = (await res).data
+        },
+        async fetchByUser(state,{res}){
+            state.jobByUser = (await res).data
+        },
+        addPost(state, post) {
+            state.posts.unshift(post); 
         },
 
         // updatePost(state, res) {
@@ -105,6 +117,18 @@ export default new Vuex.Store({
             console.log((await res).data)
             console.log("fetchById")
             commit("fetchById",{ res })
+        },
+        async fetchJobUserId({ commit },id){
+            console.log("---id---")
+            console.log(id)
+            let body={
+                id:id
+            }
+            let res = await Axios.post(`${api_endpoint}/get-job-by-user-id`,body)
+            console.log((await res).data)
+            console.log("fetchByUser")
+            commit("fetchByUser",{ res })
+            console.log("fetchByUser",)
         },
         async addRemarks({ commit }, payload) {
             let header = Authservice.getApiHeader();
