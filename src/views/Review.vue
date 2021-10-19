@@ -19,11 +19,11 @@ export default {
     }
   },
   async created() {
-    await this.fethDataReview()
+    await this.fetchDataReview()
   },
   methods: {
-    async fethDataReview() {
-      await ReviewApi.dispatch("fethData")
+    async fetchDataReview() {
+      await ReviewApi.dispatch("fetchData")
       this.reviews = ReviewApi.getters.reviews
     }
   }

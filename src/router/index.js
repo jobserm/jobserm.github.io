@@ -136,7 +136,7 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/PersonalForm.vue"),
+      import(/* webpackChunkName: "about" */ "../views/PersonalInfo.vue"),
   },
   {
     path: "/postjob",
@@ -227,6 +227,11 @@ const routes = [
     //   requiresAdmin: true,
     // },
     component: () => import("../views/admin/Review.vue")
+  },
+  {
+    path: '/testupload',
+    name: "test upload",
+    component: () => import("../views/testUpload.vue")
   },
 ];
 

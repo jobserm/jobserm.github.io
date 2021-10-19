@@ -38,11 +38,16 @@
             }}</c-form-label>
             <c-input type="date" id="birthdate" placeholder="วัน/เดือน/ปีเกิด" v-model="form.birthdate" />
           </c-box>
-          <c-box pb="3vh">
+          <c-box>
             <c-form-label for="address" color="gray.600">{{
               "ที่อยู่"
             }}</c-form-label>
             <c-textarea placeholder="ที่อยู่" v-model="form.address"/>
+          </c-box>
+          <c-box pb="3vh">
+            <c-form-label for="image" color="gray.600">{{
+              "อัปโหลดรูปโปรไฟล์"
+            }}</c-form-label>
           </c-box>
 
           <!-- section II -->
