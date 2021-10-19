@@ -104,17 +104,18 @@ export default {
         //     // this.$router.push("/");
         // }
         async saveInfo() {
-            let payload = {
+            if(this.form.remark !== "") {
+                let payload = {
                 id: this.user.id,
                 remark: this.form.remark
             }
-            try{
+            try {
                 await JobApi.dispatch("addRemarks", payload)
             } catch(error) {
                 this.$swal("สมัครไปแล้ว",'',"error")
             }
             
-            
+            }
         }
     }
 }
