@@ -43,6 +43,15 @@ const routes = [
     component: () => import('../views/JobInfo.vue')
   },
   {
+    path: '/userJob',
+    name: 'userJob',
+    meta: {
+      layout: "Main",
+      requiresAuth: true,
+    },
+    component: () => import('../views/userJob.vue')
+  },
+  {
     path: '/job',
     name: 'Job',
     props: true,
