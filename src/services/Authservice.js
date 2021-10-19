@@ -17,7 +17,7 @@ export default {
         if (this.jwt !== "" && this.jwt !== undefined) {
             return {
                 headers: {
-                    Authorization: `Bearer ${this.jwt}`,
+                    'Authorization': `Bearer ${this.jwt}`,
                 },
             }
         }
