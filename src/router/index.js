@@ -95,6 +95,15 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/Register.vue"),
   },
   {
+    path: "/allusers",
+    name: "allusers",
+    meta: {
+      layout: "Main",
+      requiresAuth: true,
+    },
+    component: () => import("../views/AllUserForm.vue"),
+  },
+  {
     path: "/freelance",
     name: "Freelance",
     meta: {

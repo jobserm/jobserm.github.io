@@ -35,7 +35,7 @@
 
 <script>
 import info from "./Info.vue"
-import Job from "../../store/JobApi"
+import JobApi from "../../store/JobApi"
 export default {
     components: { info },
     name: "Info",

@@ -1,8 +1,24 @@
 <template>
 <c-box px="20" py="10">
     <c-flex>
-      <c-box px="10" align="center">
-          <c-stack>
+      <c-box>
+          <c-stack 
+                wrap="wrap"
+                rounded="0.5rem"
+                p="5"
+                bgColor="brand.400" 
+                shadow="xl" 
+                size="400"
+                border-width="1px"
+                >
+
+                <c-box w="250px" justify="center">
+                    <c-image v-bind:src="require('./user.png')" 
+                            w="15rem" l="" 
+                            borderRadius="50%" 
+                            marginTop="auto"
+                            py="2"/>
+                </c-box>
 
             <c-heading size="md" pb="2">{{ ProfileName }} </c-heading>
 
