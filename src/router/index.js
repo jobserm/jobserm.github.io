@@ -211,11 +211,11 @@ const routes = [
   {
     path: '/admin/jobs',
     name: "jobs setting",
-    // meta: {
-    //   layout: "Main",
-    //   requiresAuth: true,
-    //   requiresAdmin: true,
-    // },
+    meta: {
+      layout: "Main",
+      requiresAuth: true,
+      requiresAdmin: true,
+    },
     component: () => import("../views/admin/Jobs.vue")
   },
   {

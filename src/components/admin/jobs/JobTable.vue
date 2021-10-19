@@ -26,16 +26,41 @@
 </template>
 
 <script>
+import axios from "axios";
 import JobApi from "../../../store/JobApi"
+import AuthUser from "../../../store/AuthUser";
 
 export default {
     data() {
         return {
             columns: [
                 { field: "id", key: "a", title: "ID", align: "center" },
-                { field: "title", key: "b", title: "Job Name", align: "left" },
-                { field: "job_owner", key: "c", title: "Job Owner", align: "left" },
-                { field: "report", key: "d", title: "Report", align: "left" },
+                { field: "title", key: "b", title: "Job Name", align: "left",
+                renderBodyCell: ({ row, column, rowIndex }, h) => {
+                    const text = row[column.field];
+                    return (
+                        <span>
+                            <a
+                                class="test-text"
+                                onClick={() => this.getJobByID(row['id'])}
+                                style="color:#1890ff;cursor:pointer;"
+                            >
+                                {text}
+                            </a>
+                        </span>
+              );
+          }, },
+                { field: "job_owner[0].name", key: "c", title: "ผู้ว่าจ้าง", align: "left",
+                renderBodyCell: ({ row, column, rowIndex }, h) => {
+                    const text = row['job_owner'][0];
+                    return (
+                    <span>
+                          {text.name}
+                    </span>
+                );
+          },
+                },
+                { field: "report", key: "d", title: "รายงานความไม่เหมาะสม", align: "left" },
             ],
             // loading: true,
             rawData: [],
@@ -43,6 +68,7 @@ export default {
             pageSize: 10,
             loading: true,
             dataEmpty: true,
+            id: ''
         }
     },
 
@@ -77,6 +103,19 @@ export default {
              }
              this.loading = false
         },
+        async getJobByID(id) {
+            let headers = {
+                'Authorization': `Bearer ${AuthUser.getters.jwt}`
+            }
+            this.id = id;
+            let body = {
+                id: this.id,
+                headers: headers 
+            }
+            await JobApi.dispatch('fetchJobByID', body)
+            let job = JobApi.getters.getJobById
+            this.$emit('parentGetJobById', job)
+        }
     },
 
 

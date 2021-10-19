@@ -9,9 +9,9 @@
           px="7rem"
           borderRadius="0.5rem"
           box-shadow="lg">
-              <c-text fontSize="3xl">{{ header }}</c-text>
+              <c-text fontSize="4xl">{{ header }}</c-text>
               <c-text fontSize="2xl">{{ amount }}</c-text>
-              <c-text fontSize="xl">{{ remark }}</c-text>
+              <!-- <c-text fontSize="xl">{{ remark }}</c-text> -->
           </c-box>
       </c-flex>
   </div>
