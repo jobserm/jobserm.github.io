@@ -98,11 +98,6 @@ export default {
         console.log(this.jobId)
     },
     methods: {
-        // saveInfo () {
-        //     this.$emit('saveInfo', this.form)
-        //     console.log("this.remark", this.user.id)
-        //     // this.$router.push("/");
-        // }
         async saveInfo() {
             let payload = {
                 user_id: this.user.id,
