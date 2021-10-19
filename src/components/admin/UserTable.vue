@@ -28,6 +28,7 @@ import Authservice from "../../services/Authservice";
 import axios from 'axios'
 import { CBadge } from '@chakra-ui/vue';
 import AuthUser from '../../store/AuthUser';
+import JobApi from '../../store/JobApi';
 
 export default {
   data() {
@@ -126,6 +127,14 @@ export default {
   },
   async created() {
     await this.fetchUsers()
+    UserStore.watch(
+      (state) => {
+        return UserStore.getters.getUsers
+      },
+      (newValue, oldValue) => {
+        this.rawData = newValue
+      }
+    )
   },
   methods: {
     async fetchUsers() {      
@@ -152,6 +161,7 @@ export default {
     async getUserByID(id) {
       this.id = id;
       let user = await Authservice.getUserById(id)
+      user.id = this.id
       this.$emit('parentGetUserByID', user)
     },
   }

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Loading v-if="loading" />
       <c-stack w="100%" my="5rem">
           <c-text fontSize="4xl" textAlign="center">ข้อมูลผู้ใช้</c-text>
           <c-flex ml="2rem">
@@ -19,8 +20,8 @@
               <c-text>
                 Activation Status: 
                 <c-button v-if="user.activation == undefined" mx="2">{{ "-" }}</c-button>
-                <c-button v-if="user.activation == 1" mx="2" variant-color="green" height="30px" width="100px" @click="activationStatus()">{{ "ACTIVATED" }}</c-button>
-                <c-button v-if="user.activation == 0" mx="2" variant-color="red" height="30px" width="100px" @click="activationStatus()">{{ "DEACTIVATED" }}</c-button>
+                <c-button v-if="user.activation == 0" mx="2" variant-color="green" height="30px" width="100px" @click="activationStatus">{{ "ACTIVATED" }}</c-button>
+                <c-button v-if="user.activation == 1" mx="2" variant-color="red" height="30px" width="100px" @click="activationStatus">{{ "DEACTIVATED" }}</c-button>
               </c-text>
             </c-stack>
           </c-flex>
@@ -31,16 +32,41 @@
 <script>
 import AuthUser from '../../store/AuthUser';
 import Axios from 'axios';
-export default {
-  props: ['user', 'id'],
+import Loading from '../../components/miscellaneous/Loading.vue'
+import UserStore from '../../store/UserStore';
 
-  method: {
+export default {
+  components: {
+    Loading,
+  },
+  props: ['user'],
+  data() {
+    return {
+      loading: false,
+      toggleStatus: ""
+    }
+  },
+  methods: {
     async activationStatus() {
+      this.toggleStatus = this.user.activation
+      console.log(this.toggleStatus)
       let headers = {
         'Authorization': `Bearer ${AuthUser.getters.jwt}`
       }
-
-      //await Axios.get(`http://localhost:8000/api/users/${id}/toggle-activation`, headers); คอมเม้นไว้เพราะมันแดง
+      try {
+        this.loading = true
+        let res = await Axios.get(`http://localhost:8000/api/users/${this.user.id}/toggle-activation`, {
+          headers: headers
+        });
+        if (res.status === 200) {
+          await UserStore.dispatch('fetchUsers', headers)
+          this.toggleStatus = this.toggleStatus === 1 ? 0 : 1
+          console.log(this.user.activation)
+          this.loading = false
+        }
+      } catch (e) {
+        console.log(e.message)
+      }
     }
   }
 }

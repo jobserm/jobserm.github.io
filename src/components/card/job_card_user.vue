@@ -13,7 +13,9 @@
                             <c-text>{{ index.requirement }}</c-text>
                             <c-text fontSize="xl">ค่าจ้าง {{ index.compensation }} บาท/ชม</c-text>
                             <br>
-                            <a @click='value(index.id)' :href="'#/job'" v-bind="index">รายละเอียดงาน</a>
+                            <a @click='value(index.id)' :href="'#/job'" v-bind="index" >รายละเอียดงาน</a>
+                            
+                            <a @click='Freelance(index.id)' :href="'#/freelance'" v-bind="index">ผู้ที่สนใจงาน</a>
                         </div>
                         
                     
@@ -81,6 +83,11 @@ export default {
 
         },
         async value(id){
+            await JobApi.dispatch("fetchJobById" ,  id )
+            // console.log("id")
+            // console.log(id)
+        },
+        async Freelance(id){
             await JobApi.dispatch("fetchJobById" ,  id )
             // console.log("id")
             // console.log(id)

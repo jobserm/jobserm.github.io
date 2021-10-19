@@ -1,9 +1,5 @@
 <template>
   <div>
-    {{provinces.data}}
-    <div v-for="index in provinces.data" :key="index.id">
-        {{ index.province }}
-    </div>
     <c-text fontSize="4xl" textAlign="center">{{ "ลงประกาศงานใหม่" }}</c-text>
     <c-text fontsize="md" color="gray.400">{{
       `Fill in the data to post new job`
@@ -32,10 +28,10 @@
             <c-input id="title" placeholder="งาน" v-model="form.title"/>
           </c-box>
           <c-box>
-            <c-form-label for="detail" color="gray.600">{{
+            <c-form-label for="description" color="gray.600">{{
               "รายละเอียด"
             }}</c-form-label>
-            <c-textarea id="detail" placeholder="รายละเอียดงาน" v-model="form.detail"/>
+            <c-textarea id="description" placeholder="รายละเอียดงาน" v-model="form.description"/>
           </c-box>
           <c-box>
             <c-form-label for="requirement" color="gray.600">{{
@@ -89,7 +85,7 @@ export default {
         return {
             form: {
                 title: "",
-                detail: "",
+                description: "",
                 requirement: "",
                 category: "",
                 province: "",
@@ -114,12 +110,10 @@ export default {
         //console.log("eiei")
         await CategoryStore.dispatch('fetchData')
         this.categories = CategoryStore.getters.getCategories
-       console.log(this.categories)
       },
       async getProvince() {
         let res = await Axios.get(`https://thaiaddressapi-thaikub.herokuapp.com/v1/thailand/provinces`);
         this.provinces = res.data;
-        console.log(this.provinces.data)
       }
     }
 };

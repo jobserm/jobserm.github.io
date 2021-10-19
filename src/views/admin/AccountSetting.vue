@@ -34,6 +34,7 @@ export default {
   methods: {
     getUserByID(value) {
       this.user = value
+      console.log(this.user)
     }
   }
 }
