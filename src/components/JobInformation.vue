@@ -1,56 +1,4 @@
 <template>
-  <!-- <div class="job infomation">
-     <div v-if="job.length > 0 ">
-         <div class="title_container">
-
-            <c-text fontSize="4xl" ml="10rem" mt="2rem">{{ jobId.title }}</c-text>
-            <c-flex class="btn">
-                <c-text color="indigo.400" fontSize="2xl" ml="10rem">ชั่วโมงละ {{jobId.compensation }} บาท</c-text>
-                <c-box class="button">
-
-                <c-flex justify="space-between"  mr="10rem" w="100%" m="auto">
-                <router-link to="/additionals" >
-                  <c-button  right-icon="arrow-forward"  mt="5rem" fontWeight="sm" variant-color="blue">
-                      สนใจงานนี้
-                  </c-button>
-                </router-link>
-
-                <router-link to="/review-form" >
-                  <c-button  color="blue"  mr="5rem" width="150px" bgColor="#D3EDED "  mt="5rem" >
-                      จบงาน
-                  </c-button>
-                </router-link>
-                </c-flex>
-                </c-box>
-
-            </c-flex>
-         </div>
-         <div class="information_container">
-            <c-box class="compensation">
-                <c-text fontSize="2xl" ml="10rem">อัตราค่าจ้าง</c-text>
-                <c-text ml="10rem"> - ชั่วโมงละ {{jobId.compensation }} บาท </c-text>
-            </c-box>
-            <c-box class="description">
-                <c-text fontSize="2xl" ml="10rem">รายละเอียดงาน</c-text>
-                <c-text ml="10rem"> - {{jobId.description }} </c-text>
-            </c-box>
-            <c-box class="requirement">
-                <c-text fontSize="2xl" ml="10rem">คุณสมบัติ</c-text>
-                <c-text ml="10rem"> - {{jobId.requirement }} </c-text>
-            </c-box>
-
-         </div>
-        
-     </div>
-     <div v-if="jobId.length <= 0 ">
-        <c-text fontSize="4xl">loading</c-text>
-     </div> -->
-    <!-- {{ jobId}} -->
-     </div>
-    {{ jobId}}
-    <JobCard></JobCard>
-      
-  <!-- </div> -->
   <div>
       <c-stack :spacing="6">
         <c-text fontSize="4xl" ml="20rem" mt="2rem">{{ jobId.title }}</c-text>
@@ -104,6 +52,8 @@
               <c-text ml="20rem"> - {{jobId.requirement }} </c-text>
           </c-box>
       </c-stack>
+      {{ jobId}}
+    <JobCard></JobCard>
   </div>
 </template>
 
