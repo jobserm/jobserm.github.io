@@ -73,11 +73,12 @@ export default {
         //     this.$forceUpdate();
 
         // },
-        // async value(id){
-        //     await JobApi.dispatch("fetchJobById" ,  id )
-        //     console.log("id")
-        //     console.log(id)
-        // }
+        async value(id){
+            await JobApi.dispatch("fetchJobById" ,  id )
+            console.log("id")
+            console.log(id)
+            this.$forceUpdate()
+        }
         // async value(id){
         //     await JobApi.dispatch("fetchJobById" ,  id )
         //     console.log("id")
@@ -107,7 +108,6 @@ export default {
         display: inline-flex;
         flex-wrap: wrap;
         gap: 20px 10px;
-        border: 1px solid red;
 
     }
     .services{

@@ -52,7 +52,11 @@
               <c-text ml="20rem"> - {{jobId.requirement }} </c-text>
           </c-box>
       </c-stack>
+
+      <br><br>
+      <c-text fontSize="4xl" ml="20rem" mt="2rem">หากคุณสนใจงานอื่น</c-text><br>
       <JobCard></JobCard>
+      <br><br>
   </div>
 </template>
 

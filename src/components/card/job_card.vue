@@ -1,7 +1,6 @@
 <template>
     <div>
         <body>
-            {{jobs.data}}
             <div class="cards">
                 <div class="services" v-for="index in jobs.data" :key="index.id">
                     <div class="content">
@@ -92,7 +91,7 @@ export default {
     .paginate{
         display: flex;
         flex-direction: row-reverse;
-        /* margin-top: 50px; */
+        margin-top: 50px;
     }
     .compensation{
         margin-top: 20px;
@@ -102,10 +101,10 @@ export default {
         margin-top: 10px;
     }
     .cards{
+        margin-top: 25px;
         display: inline-flex;
         flex-wrap: wrap;
         gap: 20px 10px;
-        border: 1px solid red;
 
     }
     .services{
