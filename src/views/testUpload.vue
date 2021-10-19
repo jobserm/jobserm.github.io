@@ -1,13 +1,23 @@
 <template>
   <div>
       <loading v-if="loading" />
-      <c-text>Upload File</c-text>
-      <c-input
-      type="file"
-      multiple
-      @change="handleFilesUpload( $event )"
+
+      <c-text fontSize="4xl" ml="20rem" mt="2rem">Upload File</c-text>
+
+      <c-image  w="15rem"
+                h="15rem"
+                ml="30rem"
+                mt="3rem"
+                src="https://cdn.shopify.com/s/files/1/0624/6741/products/content.jpg?v=1436808045" />
+      <c-input 
+                ml="30rem" 
+                mt="2rem"
+                w="30rem"
+                type="file"
+                multiple
+                @change="handleFilesUpload( $event )"
       />
-      <c-button @click="uploadFiles">UPLOAD</c-button>
+      <c-button bgColor="blue.400" color="white" mt="3rem" ml="32rem" width="170px" @click="uploadFiles">UPLOAD</c-button>
   </div>
 </template>
 
