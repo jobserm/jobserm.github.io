@@ -1,24 +1,49 @@
 <template>
-<c-box>
-    <c-stack>
-        <c-heading align="center" justify="center"> ข้อมูลส่วนตัว </c-heading>
-        
-    </c-stack>
+<c-box px="20" py="10">
+    <c-flex>
+      <c-box px="10" align="center">
+          <c-stack>
+
+            <c-heading size="md" pb="2">{{ ProfileName }} </c-heading>
+
+            <c-flex justify="center" >
+                <c-image v-bind:src="star" 
+                        w="20px"
+                        h="20px"
+                        />
+                        
+                <c-text
+                    as="h2"
+                    size="md"
+                    color="primary.800"
+                    opacity="0.9"
+                    fontWeight="normal"
+                    lineHeight="1.5"
+                    pl="2"
+                    > {{ rating }} / 5
+                </c-text>
+
+            </c-flex>
+                <c-text
+                    as="h2"
+                    size="md"
+                    color="primary.800"
+                    opacity="0.8"
+                    fontWeight="normal"
+                    lineHeight="1.7"
+                    white-space="pre-line"
+                    >อายุ : {{ age }}
+                </c-text>
+            </c-stack>
+      </c-box>
+  </c-flex>
 </c-box>
 </template>
 
 <script>
-import JobApi from '@/store/JobApi.js'
 export default {
     name: "InfoProfile",
-    data() {
-        return {
-
-        }
-    },
-methods:{
-
-},
+    props: ["ProfileName", "star", "rating", "age"]
 }
 </script>
 

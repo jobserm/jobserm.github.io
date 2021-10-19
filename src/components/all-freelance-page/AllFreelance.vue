@@ -37,28 +37,28 @@
 
 <script>
 import info from "./Info.vue"
-import JobApi from "../../store/JobApi"
-
+import Job from "../../store/JobApi"
 export default {
     components: { info },
     name: "Info",
     data() {
       return {
+        id: '',
         job: {},
       }
     },
 
-    created() {
-      //this.job = JSON.parse(localStorage.getItem('JobInfo'));
-      this.getEsaaa()
+    async created() {
+      this.id = this.$route.params.id;
+      this.job = await Job.dispatch("getJobByID", this.id);
     },
 
     methods: {
-      async getEsaaa() {
-        await JobApi.dispatch('fetchJobById', 1)
-        this.job = await JobApi.getters.job_filtered
-
-        console.log(this.job)
+      freelancerInfo() {
+        this.$router.push({
+          name: "--",
+          params: { id: this.job.user.id}
+        })
       }
     },
     
