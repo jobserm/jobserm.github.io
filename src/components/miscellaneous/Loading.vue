@@ -1,11 +1,12 @@
 <template>
   <div class="loading"> 
       <c-spinner 
-      size="xl"
-      thickness="5px"
-      speed="0.65s"
-      color="indigo.500"
-      empty-color="indigo.100"/>
+        size="xl"
+        thickness="5px"
+        speed="0.65s"
+        color="indigo.500"
+        empty-color="indigo.100"
+      /> 
     </div>
 </template>
 
