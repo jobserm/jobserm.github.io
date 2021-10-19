@@ -60,7 +60,9 @@ export default {
     methods:{
         async fetchReview(){
             await ReviewApi.dispatch("fetchData")
+            console.log("getters review", this.reviews)
             this.reviews = ReviewApi.getters.reviews
+            console.log("getters review", this.reviews)
         },
         async pageNumberChange(pageIndex) {
             this.payload_url = this.reviews.meta.links[pageIndex].url
@@ -68,7 +70,6 @@ export default {
             this.reviews = ReviewApi.getters.reviews
             this.count_review = this.reviews.meta.total
             this.$forceUpdate();
-
         },
     }
 }
