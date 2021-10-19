@@ -5,27 +5,25 @@
       </c-stack>
 
       <c-flex>
-          <div v-for="image in job_images" :key="image">
+          <!-- <div v-for="image in job_images" :key="image">
               <c-image 
               :src="require(`${image.dog}`)"
               w="350px"
               objectFit="scale-down"
               p="2"
               />
-          </div>
+          </div> -->
       </c-flex>
 
-
       <c-simple-grid :columns="[1, 1, 1, 5]" spacing="8" align="center" py="16">
-        <div v-for="user in job.user" :key="user.id">
+        <div v-for="user in job.users" :key="user.id">
             <div @click="freelancerInfo()">   
               <info
-                :image="require(`${user.path}`)"
-                :freelancerName="user.name + user.lastname"
-                :rating="user.rating"
-                :age="user.birthdate"
+                image="require(`${user.path}`)"
+                v-bind:freelancerName="user.name + user.lastname"
+                v-bind:rating="user.review || 0"
+                v-bind:age="user.birthdate"
                 :star="require(`./star.png`)"
-              
               />
             </div>
         </div>
@@ -48,16 +46,22 @@ export default {
       }
     },
 
-    async created() {
-      this.id = this.$route.params.id;
-      this.job = await Job.dispatch("getJobByID", this.id);
+    created() {
+      // this.job = JSON.parse(localStorage.getItem('JobInfo'));
+      this.getEsaaa()
     },
 
     methods: {
-      freelancerInfo() {
-        this.$router.push({
-          name: "--",
-          params: { id: this.job.user.id}
+      async getEsaaa() {
+        await JobApi.dispatch('fetchJobById', 1)
+        this.job = JobApi.getters.job_filtered
+        this.job.users.map(item => {
+          if (item.birthdate) {
+            let ageDifMs = Date.now() - new Date(item.birthdate).getTime()
+            let ageDate = new Date(ageDifMs)
+            item.birthdate = Math.abs(ageDate.getUTCFullYear() - 1970)
+          }
+          return item
         })
       }
     },

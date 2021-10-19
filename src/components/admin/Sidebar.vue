@@ -42,22 +42,6 @@
         alignItems="flex-start"
         mb="4"
         >
-        <c-divider />
-        <c-flex mt="4" align="center" w="100%" d="inline-grid">
-            <c-menu>
-                <c-menu-button 
-                right-icon="chevron-down" 
-                justifyContent="space-around"
-                py=2rem>
-                    <c-avatar size="md"/>
-                    <c-flex flexDirection="column">
-                        <c-heading size="sm">Patipan</c-heading>
-                        <c-text>Admin</c-text>
-                    </c-flex>
-                </c-menu-button>
-                <c-menu-list p="1rem">Logout</c-menu-list>
-            </c-menu>
-        </c-flex>
         </c-flex>
       </c-flex>
   </div>

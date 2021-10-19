@@ -34,6 +34,8 @@ export default {
             columns: [
                 { field: "id", key: "a", title: "ID", align: "center" },
                 { field: "title", key: "b", title: "Job Name", align: "left" },
+                { field: "job_owner", key: "c", title: "Job Owner", align: "left" },
+                { field: "report", key: "d", title: "Report", align: "left" },
             ],
             // loading: true,
             rawData: [],
