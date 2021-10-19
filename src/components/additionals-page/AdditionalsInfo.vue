@@ -104,11 +104,17 @@ export default {
         //     // this.$router.push("/");
         // }
         async saveInfo() {
-            let payload = {
+            if(this.form.remark !== "") {
+                let payload = {
                 id: this.user.id,
                 remark: this.form.remark
             }
             await JobApi.dispatch("addRemarks", payload)
+                this.$swal("คุณได้ส่งข้อมูลสำเร็จ", "success");
+                this.$router.push("/");
+            } else {
+                this.$swal("ส่งข้อมูลไม่สำเร็จ", `โปรดกรอกข้อมูลให้ครบถ้วน`, "error");
+            }
         }
     }
 }
