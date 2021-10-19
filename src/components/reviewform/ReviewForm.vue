@@ -64,7 +64,6 @@
                 ยืนยัน
             </c-button>
         </c-flex>
-        {{ jobId }}
   </div>
 </template>
 
@@ -138,7 +137,17 @@ export default {
           id: this.user.id,
           comment: this.form.comment
       }
-      await ReviewApi.dispatch("addReview", payload)
+      let user_id = this.jobUser.id
+      if(this.form.comment !== "" )
+      { 
+         this.$swal("รีวิวเสร็จสิ้น",'ขอบคุณที่ใช้งานเวปของเรา','success')
+        await ReviewApi.dispatch("addReview", payload)
+        await JobApi.dispatch("fetchUserFinish",user_id)
+        this.$router.push("/userJob")
+      }
+      else
+        this.$swal("กรุณากรอกรีวิว",'','error')
+      
     },
     // async getUser
     handleClickStar() {

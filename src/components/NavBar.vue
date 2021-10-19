@@ -67,11 +67,11 @@
             </c-menu>
         </c-flex>
         <div v-if="isAuthen() && !isAdmin()">
-          <button-secondary :text="`โพสต์ของคุณ`" :url="`/login`" mx="4" />
+          <button-secondary :text="`โพสต์ของคุณ`" :url="`/userJob`" mx="4" />
         </div>
-        <div v-if="isAuthen() && !isAdmin()">
+        <!-- <div v-if="isAuthen() && !isAdmin()">
           <button-secondary :text="`งานที่คุณสนใจ`" :url="`/login`" mx="4" />
-        </div>
+        </div> -->
         <div v-if="!isAuthen()">
           <button-primary :text="`เข้าสู่ระบบ`" :url="`/login`" mx="4" />
         </div>

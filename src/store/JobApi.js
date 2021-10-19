@@ -184,6 +184,7 @@ export default new Vuex.Store({
         },
         async fetchUserFinish({ commit }, id){
             let res = await Axios.get(`${api_endpoint}/jobs/${id}/finish-job`);
+            console.log("finish job =>",res)
             commit("fetchUserFinishJob", res)
         },
         async fetchJobByID({ commit }, { headers, id }) {
