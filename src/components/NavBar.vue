@@ -23,13 +23,13 @@
           <c-text mx="4">ติดต่อเรา</c-text></router-link
         >
 
-        <div v-if="isAuthen()">
+        <div v-if="isAuthen() && !isAdmin()">
           <router-link to="/postjob">
             <c-text ms="80">โพสต์งาน</c-text></router-link
           >
         </div>
 
-        <div v-if="isAuthen()">
+        <div v-if="isAuthen() && !isAdmin()">
           <router-link to="/freelance">
             <c-text ms="5">เริ่มหาฟรีแลนซ์</c-text></router-link
           >
