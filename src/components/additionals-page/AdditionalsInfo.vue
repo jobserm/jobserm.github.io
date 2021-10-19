@@ -105,14 +105,23 @@ export default {
         // }
         async saveInfo() {
             let payload = {
-                id: this.user.id,
-                remark: this.form.remark
+                user_id: this.user.id,
+                remark: this.form.remark,
+                job_id: this.jobId.id
             }
-            try{
-                await JobApi.dispatch("addRemarks", payload)
-            } catch(error) {
-                this.$swal("สมัครไปแล้ว",'',"error")
+            if(this.form.remark === ''){
+                this.$swal("กรุณาใส่คำแนะนำตัวเอง",'',"error")
             }
+            else{
+                try{
+                    await JobApi.dispatch("addRemarks", payload)
+                    this.$swal("สมัครเรียบร้อย",'รอการติดต่อจากผู้ว่าจ้าง',"success")
+                } catch(error) {
+                    this.$swal("สมัครไปแล้ว",'',"error")
+                    this.$router.push("/jobinfo")
+                }
+            }
+
             
             
         }
