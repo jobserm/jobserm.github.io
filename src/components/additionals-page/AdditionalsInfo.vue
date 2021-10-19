@@ -108,7 +108,13 @@ export default {
                 id: this.user.id,
                 remark: this.form.remark
             }
-            await JobApi.dispatch("addRemarks", payload)
+            try{
+                await JobApi.dispatch("addRemarks", payload)
+            } catch(error) {
+                this.$swal("สมัครไปแล้ว",'',"error")
+            }
+            
+            
         }
     }
 }

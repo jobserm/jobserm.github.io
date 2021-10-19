@@ -1,6 +1,5 @@
 <template>
     <div>
-        jobcard
         <body>
             
             <div class="cards">
