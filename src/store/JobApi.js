@@ -158,14 +158,14 @@ export default new Vuex.Store({
             console.log("payload.id---", payload.id)
             console.log("payload.remark---", payload.remark)
             let body = {
-                id: payload.id,
+                id: payload.user_id,
                 remark: payload.remark
             }
 
             console.log("body.id---", body.id)
             console.log("body.remark---", body.remark)
-            let res = await Axios.post(`${api_endpoint}/jobs/${payload.id}/apply-job`, body, header);
-            console.log(res.message)
+            let res = await Axios.post(`${api_endpoint}/jobs/${payload.job_id}/apply-job`, body);
+            console.log("res",res)
             commit("addRemark", {res})
             return res;
         },

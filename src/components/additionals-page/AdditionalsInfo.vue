@@ -98,23 +98,23 @@ export default {
         console.log(this.jobId)
     },
     methods: {
-        // saveInfo () {
-        //     this.$emit('saveInfo', this.form)
-        //     console.log("this.remark", this.user.id)
-        //     // this.$router.push("/");
-        // }
         async saveInfo() {
-            if(this.form.remark !== "") {
-                let payload = {
-                id: this.user.id,
-                remark: this.form.remark
+            let payload = {
+                user_id: this.user.id,
+                remark: this.form.remark,
+                job_id: this.jobId.id
             }
-            try {
-                await JobApi.dispatch("addRemarks", payload)
-            } catch(error) {
-                this.$swal("สมัครไปแล้ว",'',"error")
+            if(this.form.remark === ''){
+                this.$swal("กรุณาใส่คำแนะนำตัวเอง",'',"error")
             }
-            
+            else{
+                try{
+                    await JobApi.dispatch("addRemarks", payload)
+                    this.$swal("สมัครเรียบร้อย",'รอการติดต่อจากผู้ว่าจ้าง',"success")
+                } catch(error) {
+                    this.$swal("สมัครไปแล้ว",'',"error")
+                    this.$router.push("/jobinfo")
+                }
             }
         }
     }
