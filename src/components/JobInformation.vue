@@ -52,8 +52,7 @@
               <c-text ml="20rem"> - {{jobId.requirement }} </c-text>
           </c-box>
       </c-stack>
-      {{ jobId}}
-    <JobCard></JobCard>
+      <JobCard></JobCard>
   </div>
 </template>
 

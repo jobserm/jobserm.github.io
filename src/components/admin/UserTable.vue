@@ -111,7 +111,8 @@ export default {
       ],
       rawData: [],
       loading: true,
-      dataEmpty: true
+      dataEmpty: true,
+      id: ''
     };
   },
   computed: {
@@ -149,9 +150,10 @@ export default {
       this.pageSize = pageSize
     },
     async getUserByID(id) {
+      this.id = id;
       let user = await Authservice.getUserById(id)
       this.$emit('parentGetUserByID', user)
-    }
+    },
   }
 };
 </script>
