@@ -25,13 +25,13 @@
           <!-- button -->
           <c-flex class="button" justify="space-between" mr="10rem" pt="1rem" w="17%" m="auto">
             <router-link to="/additionals" >
-                <c-button  right-icon="arrow-forward"  mt="1rem" fontWeight="sm" variant-color="blue">
+                <c-button  right-icon="arrow-forward"  mt="1rem" fontWeight="sm" variant-color="blue" v-if="validated">
                     สนใจงานนี้
                 </c-button>
             </router-link>
 
             <router-link to="/review-form" >
-              <c-button @click="finish" color="blue" width="150px" bgColor="#D3EDED "  mt="1rem" >
+              <c-button @click="finish" color="blue" width="150px" bgColor="#D3EDED "  mt="1rem" v-if="validated_interest">
                   จบงาน
               </c-button>
             </router-link>
@@ -54,36 +54,31 @@
       </c-stack>
 
       <br><br>
-      <c-text fontSize="4xl" ml="20rem" mt="2rem">หากคุณสนใจงานอื่น</c-text><br>
-      <JobCard></JobCard>
+      <c-text v-if="validated" fontSize="4xl" ml="20rem" mt="2rem">หากคุณสนใจงานอื่น</c-text><br>
+      <JobCard v-if="validated"></JobCard>
       <br><br>
   </div>
 </template>
 
 <script>
 import JobApi from "@/store/JobApi.js"
+import UserApi from "@/store/AuthUser.js"
 import JobCard from "../components/card/job_card_info_page.vue"
 
 export default {
-  computed: {
-    count () {
-      return JobApi.state.JobById
-      // Or return basket.getters.fruitsCount
-      // (depends on your design decisions).
-    }
-  },
   components:{ JobCard  },
   data() {
     return {
        job:[ { "id": 2, "compensation": 15304, "description": "Adipisci saepe perspiciatis rerum nobis neque libero. Natus quaerat quia nulla ipsam quo. Omnis est voluptates ratione.", "requirement": "Et expedita voluptas cupiditate eos veritatis repellendus. Iure autem quia dolorum non.", "province": "North Adeline", "title": "Government", "created_at": "2021-10-02T18:44:39.000000Z", "updated_at": "2021-10-02T18:44:39.000000Z" } ],
        id:0,
        jobId:[],
-       userToReview: []
+       userToReview: [],
+      user_loged_in:[]
     }
   },
   async created(){
     console.log("created")
-
+    this.user_loged_in = UserApi.getters.user
     await JobApi.watch(
       (state) => {
         return JobApi.getters.job_filtered
@@ -99,8 +94,27 @@ export default {
       }
     )
     this.jobId = JSON.parse(localStorage.getItem('YourItem'));
-    console.log("this.jobId" ,this.jobId)
+    console.log("this.user_loged_in" ,this.user_loged_in)
     console.log("created")
+  },
+  computed:{
+    validated() {
+      if (this.user_loged_in.id === this.jobId.user_id){
+        return false
+      }
+      return true
+    },
+      validated_interest() {
+      if (this.user_loged_in.id === this.jobId.user_id){
+        return true
+      }
+      return false
+    },
+        count () {
+      return JobApi.state.JobById
+      // Or return basket.getters.fruitsCount
+      // (depends on your design decisions).
+    }
   },
   methods:{
     // async fetchJob(){
