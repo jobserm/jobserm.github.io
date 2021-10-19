@@ -67,13 +67,11 @@ export default {
       this.jobId = JSON.parse(localStorage.getItem('YourItem'));
       console.log("this.jobId" ,this.jobId)
       console.log("created")
-      // this.getEsaaa()
+      this.getEsaaa()
     },
     methods: {
       async getEsaaa() {
-        await JobApi.dispatch('fetchJobById', 1)
-        this.job = JobApi.getters.job_filtered
-        this.job.users.map(item => {
+        this.jobId.users.map(item => {
           if (item.birthdate) {
             let ageDifMs = Date.now() - new Date(item.birthdate).getTime()
             let ageDate = new Date(ageDifMs)

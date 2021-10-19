@@ -20,7 +20,7 @@
                             py="2"/>
                 </c-box>
 
-            <c-heading size="md" pb="2" align="center">{{ user.name + user.lastname }} </c-heading>
+            <c-heading size="md" pb="2" align="center">{{ user.name +" " + user.lastname }} </c-heading>
 
             <c-flex justify="center" >
                 <c-image v-bind:src="star" 
@@ -36,7 +36,7 @@
                     fontWeight="normal"
                     lineHeight="1.5"
                     pl="2"
-                    > {{ 4.25 }} / 5
+                    > {{ user.review }} / 5
                 </c-text>
 
             </c-flex>
@@ -75,7 +75,7 @@ export default {
  async created() {
      console.log("--created-------")
      this.user = JSON.parse(localStorage.getItem("user"))
-     console.log(this.user.name)
+     console.log(this.user)
  },
 }
 </script>
