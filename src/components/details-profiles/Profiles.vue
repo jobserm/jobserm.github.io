@@ -9,10 +9,9 @@
         </c-box>
         <c-flex>
             
-            <c-stack  px="10" w="50%" align="center">
+            <c-stack  px="10" w="70%" align="center">
                 <div>
                     <info-profile
-
                     :star="require(`./star.png`)"
                     
                     />
@@ -26,7 +25,6 @@
 <script>
 import InfoProfile from "./InfoProfile.vue"
 import JobApi from "@/store/JobApi.js"
-
 export default {
     components: {
         InfoProfile
@@ -34,33 +32,31 @@ export default {
  data() {
      return {
          id:'',
-         job:{},
+         user:[],
      }
  },
 
  async created() {
-     this.job = JSON.parse(localStorage.getItem(user))
-     await this.fetchJobs()
+     console.log("--created-------")
+     this.user = JSON.parse(localStorage.getItem("user"))
  },
 
  methods: {
-     async fetchJobs(){
-         await JobApi.dispatch("fetchJob")
-         this.jobs = JobApi.getters.jobs
-        let {         
-            name,
-            lastname ,
-            email,
-            birthdate,
-            gender,
-            phone,
-            address,
-            facebook,
-            line,
-            activation,
-            }=this.jobs.data[0].users[0]
-            console.log(name)
-        },
+      
+        // let {         
+        //     name,
+        //     lastname ,
+        //     email,
+        //     birthdate,
+        //     gender,
+        //     phone,
+        //     address,
+        //     facebook,
+        //     line,
+        //     activation,
+        //     }=this.jobs.data[0].users[0]
+        //     console.log(name)
+        // },
      },
 }
 </script>

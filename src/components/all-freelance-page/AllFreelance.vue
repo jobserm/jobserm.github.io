@@ -1,6 +1,5 @@
 <template>
    <c-box px="20" py="10">
-     {{jobId}}
       <c-stack>
           <c-heading py="12">ผู้ที่สนใจ <br> {{ job.title }}</c-heading>
       </c-stack>
@@ -50,10 +49,7 @@ export default {
         jobId:[]
       }
     },
-
     async created() {
-      console.log("created")
-
       await JobApi.watch(
         (state) => {
           return JobApi.getters.job_filtered
@@ -71,10 +67,8 @@ export default {
       this.jobId = JSON.parse(localStorage.getItem('YourItem'));
       console.log("this.jobId" ,this.jobId)
       console.log("created")
-
       // this.getEsaaa()
     },
-
     methods: {
       async getEsaaa() {
         await JobApi.dispatch('fetchJobById', 1)
