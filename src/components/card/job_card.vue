@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <!-- <div>
         <body>
             <div class="cards">
                 <div class="services" v-for="index in jobs.data" :key="index.id">
@@ -13,10 +13,6 @@
                             <br>
                             <a @click='value(index.id)' :href="'#/job'" v-bind="index">รายละเอียดงาน</a>
                         </div>
-                        
-                    
-                        
-
                     </div>
                 </div>
             </div>
@@ -26,7 +22,69 @@
             <ve-pagination :total="count_job" :page-size="4" :layout="['total', 'prev', 'pager', 'next', 'jumper']" @on-page-number-change="pageNumberChange"></ve-pagination>
         </div>
         
+    </div> -->
+<div>
+    <c-flex justify="space-between" m="auto" mb="2rem">
+    <c-box mt="4rem"  maxW="sm" border-width="3px" rounded="lg" overflow="hidden">
+    <div v-for="index in jobs.data" :key="index.id">
+    <c-image :src="property.imageUrl" :alt="property.imageAlt" />
+    <c-box p="6">
+        <c-box d="flex" align-items="baseline">
+            <c-badge rounded="full" px="2" variant-color="green">
+            New
+            </c-badge>
+        </c-box>
+        <c-box
+            mt="1"
+            font-weight="semibold"
+            as="h4"
+            line-height="tight"
+            is-truncated
+        >
+            {{ index.title }}
+        </c-box>
+
+        <c-box>
+            {{ property.description }}
+        </c-box>
+
+        <c-box
+            mt="1.5rem"
+            font-weight="semibold"
+            as="h4"
+            line-height="tight"
+            is-truncated
+        >
+            {{ "คุณสมบัติที่ต้องการ" }}
+        </c-box>
+        <c-box>
+          {{ property.requirment }} 
+        </c-box>
+
+        <c-box
+            mt="1.5rem"
+            font-weight="semibold"
+            as="h4"
+            line-height="tight"
+            is-truncated
+        >
+        {{ "ค่าจ้าง" }}
+        </c-box>
+        <c-box>
+            {{ index.compensation }} บาท/ชม
+        </c-box>
+
+        <c-button mt="1rem" bgColor="black" color="white">
+            <a @click='value(index.id)' :href="'#/job'" v-bind="index">รายละเอียดงาน</a>
+        </c-button>
+    </c-box>
     </div>
+    </c-box>
+    </c-flex>
+    <div class="paginate">
+        <ve-pagination :total="count_job" :page-size="4" :layout="['total', 'prev', 'pager', 'next', 'jumper']" @on-page-number-change="pageNumberChange"></ve-pagination>
+    </div>
+</div>
 </template>
 
 <script>
@@ -41,7 +99,13 @@ export default {
             jobs:{},
             count_job:0,
             payload_url:"",
-            job_id:0
+            job_id:0,
+            property: {
+            imageUrl: "	https://www.seekpng.com/png/full/560-5609130_free-boss-baby-pngs-boss-baby-no-background.png",
+            description: "เลี้ยงเด็กทารก 2 คน ว่างตลอด 24 ชม. ใจดี ไม่เหวี่ยง ซื่อสัตย์",
+            title: "Modern home in city center in the heart of historic Los Angeles",
+            requirment: "- เพศหญิง \n มีประสบการณ์มากกว่า 5 ปี",
+        }
         }
     },
     async created(){
