@@ -18,7 +18,8 @@
 
       <c-simple-grid :columns="[1, 1, 1, 5]" spacing="8" align="center" py="16">
         <div v-for="user in jobId.users" :key="user.id">
-            <div @click="freelancerInfo(user.id)">   
+          <router-link to="/profiles" >
+            <div @click="freelancerInfo(user)">   
               <info
                 image="require(`${user.path}`)"
                 v-bind:freelancerName="user.name + user.lastname"
@@ -26,8 +27,8 @@
                 v-bind:age="user.birthdate"
                 :star="require(`./star.png`)"
               />
-              {{user.id}}
             </div>
+            </router-link>
         </div>
       </c-simple-grid>
 
@@ -87,7 +88,8 @@ export default {
           return item
         })
       },
-      freelancerInfo(){
+      freelancerInfo(user){
+        localStorage.setItem('user',JSON.stringify(user))
         
       },
     },
