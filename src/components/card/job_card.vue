@@ -1,5 +1,5 @@
 <template>
-    <!-- <div>
+    <div>
         <body>
             <div class="cards">
                 <div class="services" v-for="index in jobs.data" :key="index.id">
@@ -22,8 +22,8 @@
             <ve-pagination :total="count_job" :page-size="4" :layout="['total', 'prev', 'pager', 'next', 'jumper']" @on-page-number-change="pageNumberChange"></ve-pagination>
         </div>
         
-    </div> -->
-<div>
+    </div>
+<!-- <div>
     <c-flex justify="space-between" m="auto" mb="2rem">
     <c-box mt="4rem"  maxW="sm" border-width="3px" rounded="lg" overflow="hidden">
     <div v-for="index in jobs.data" :key="index.id">
@@ -84,7 +84,7 @@
     <div class="paginate">
         <ve-pagination :total="count_job" :page-size="4" :layout="['total', 'prev', 'pager', 'next', 'jumper']" @on-page-number-change="pageNumberChange"></ve-pagination>
     </div>
-</div>
+</div> -->
 </template>
 
 <script>
@@ -100,12 +100,6 @@ export default {
             count_job:0,
             payload_url:"",
             job_id:0,
-            property: {
-            imageUrl: "	https://www.seekpng.com/png/full/560-5609130_free-boss-baby-pngs-boss-baby-no-background.png",
-            description: "เลี้ยงเด็กทารก 2 คน ว่างตลอด 24 ชม. ใจดี ไม่เหวี่ยง ซื่อสัตย์",
-            title: "Modern home in city center in the heart of historic Los Angeles",
-            requirment: "- เพศหญิง \n มีประสบการณ์มากกว่า 5 ปี",
-        }
         }
     },
     async created(){
