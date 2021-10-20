@@ -14,9 +14,7 @@ import VueAxios from "vue-axios";
 import VueSwal from "vue-swal";
 import dotenv from "dotenv";
 
-
-
-dotenv.config()
+dotenv.config();
 
 // VueTable
 import VueEasytable from "vue-easytable"; // import library
@@ -24,39 +22,52 @@ Vue.use(VueEasytable);
 import "vue-easytable/libs/theme-default/index.css"; // import style
 
 // import icons
-import { faHome, faUser, faStar, faBriefcase, faTag } from '@fortawesome/free-solid-svg-icons'
-import VueApexCharts from 'vue-apexcharts'
+import {
+  faHome,
+  faUser,
+  faStar,
+  faBriefcase,
+  faTag,
+} from "@fortawesome/free-solid-svg-icons";
+import VueApexCharts from "vue-apexcharts";
 import axios from "axios";
-import Loading from '../src/components/miscellaneous/Loading.vue'
+import Loading from "../src/components/miscellaneous/Loading.vue";
+import backendInstance from "./services/backendInstance";
 
 // Import Chakra UI Plugin and register it.
 Vue.use(Chakra, {
   extendTheme,
   icons: {
-    iconPack: 'fa',
+    iconPack: "fa",
     iconSet: {
       faHome,
       faUser,
       faStar,
       faBriefcase,
       faTag,
-    }
-  }
+    },
+  },
 });
 
 Vue.use(VueAxios, axios);
 Vue.use(VueSwal);
 
 // inject apexchart
-Vue.use(VueApexCharts)
-Vue.component('apexchart', VueApexCharts)
-Vue.component('loading', Loading)
+Vue.use(VueApexCharts);
+Vue.component("apexchart", VueApexCharts);
+Vue.component("loading", Loading);
 
 Vue.config.productionTip = false;
 
 new Vue({
   router,
-
+  beforeCreate: () => {
+    const auth_key = process.env.VUE_APP_AUTH_KEY || "auth-jobserm";
+    if (JSON.parse(localStorage.getItem(auth_key)) !== null) {
+      const jwt = JSON.parse(localStorage.getItem(auth_key)).jwt;
+      backendInstance.defaults.headers.common.Authorization = `Bearer ${jwt}`;
+    }
+  },
   render(h) {
     // Mount our application inside the
     // ThemeProvider and ColorModeProvider components :)
