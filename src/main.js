@@ -63,9 +63,9 @@ new Vue({
   router,
   beforeCreate: () => {
     const auth_key = process.env.VUE_APP_AUTH_KEY || "auth-jobserm";
-    if (JSON.parse(localStorage.getItem(auth_key)) !== null) {
-      const jwt = JSON.parse(localStorage.getItem(auth_key)).jwt;
-      backendInstance.defaults.headers.common.Authorization = `Bearer ${jwt}`;
+    const auth = JSON.parse(localStorage.getItem(auth_key));
+    if (auth !== null && auth.jwt) {
+      backendInstance.defaults.headers.common.Authorization = `Bearer ${auth.jwt}`;
     }
   },
   render(h) {
