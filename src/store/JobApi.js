@@ -17,7 +17,8 @@ export default new Vuex.Store({
         JobSuggest:[],
         fetchRemark: [],
         fetchUserFinish: [],
-        jobByUser:[]
+        jobByUser:[],
+        jobFromSearch:[],
     },
     getters: {
         posts: (state) => state.posts,
@@ -30,6 +31,7 @@ export default new Vuex.Store({
         getUserFinish: (state) => state.fetchUserFinish,
         getJobByUser: (state) => state.jobByUser,
         getJobById: (state) => state.JobById,
+        getJobFromSearch: (state) => state.jobFromSearch
     },
     mutations: {
         async fetch(state,{res}){
@@ -43,6 +45,9 @@ export default new Vuex.Store({
         },
         async fetchByUser(state,{res}){
             state.jobByUser = (await res).data
+        },
+        async fetchFromSearch(state,{res}){
+            state.jobFromSearch = (await res).data
         },
         addPost(state, post) {
             state.posts.unshift(post); 
@@ -140,6 +145,19 @@ export default new Vuex.Store({
                 console.log(e.message)
             }
             console.log("fetchById")
+        },
+        async fetchJobFromSearch({ commit }, payload){
+            let body={
+                province:payload.province
+            }
+            try {
+                let res = await Axios.post(`${api_endpoint}/get-job-from-search`,body)
+                commit("fetchJobFromSearch",{ res })
+                console.log((await res).data)
+            } catch (e) {
+                console.log(e.message)
+            }
+            console.log("fetchJobFromSearch")
         },
         async fetchJobUserId({ commit },id){
             console.log("---id---")

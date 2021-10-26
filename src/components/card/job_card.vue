@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <!-- <div>
         <body>
             <div class="cards">
                 <div class="services" v-for="index in jobs.data" :key="index.id">
@@ -22,69 +22,81 @@
             <ve-pagination :total="count_job" :page-size="4" :layout="['total', 'prev', 'pager', 'next', 'jumper']" @on-page-number-change="pageNumberChange"></ve-pagination>
         </div>
         
-    </div>
-<!-- <div>
-    <c-flex justify="space-between" m="auto" mb="2rem">
-    <c-box mt="4rem"  maxW="sm" border-width="3px" rounded="lg" overflow="hidden">
+    </div> -->
+<div>
     <div v-for="index in jobs.data" :key="index.id">
-    <c-image :src="property.imageUrl" :alt="property.imageAlt" />
-    <c-box p="6">
-        <c-box d="flex" align-items="baseline">
-            <c-badge rounded="full" px="2" variant-color="green">
-            New
-            </c-badge>
-        </c-box>
-        <c-box
-            mt="1"
-            font-weight="semibold"
-            as="h4"
-            line-height="tight"
-            is-truncated
-        >
-            {{ index.title }}
-        </c-box>
+        <c-box mt="4rem"  maxW="sm" border-width="4px" rounded="lg" overflow="hidden" border-color="black" :_hover="{bg: 'indigo.100' , borderColor:'indigo'}" fontSize="xl">
+            
+            <c-image src="https://static.toiimg.com/photo/msid-67586673/67586673.jpg?3918697" alt="cat" />
+            <c-box p="6">
+                <c-box d="flex" align-items="baseline">
+                    <c-badge rounded="full" px="5" variant-color="green" font-size="0.75em">
+                    AVALIABLE
+                    </c-badge>
+                    <c-box
+                        color="gray.500"
+                        font-weight="semibold"
+                        letter-spacing="wide"
+                        font-size="0.75em"
+                        text-transform="uppercase"
+                        ml="2"
+                        >
+                        {{ index.province }}  &bull; {{ index.baths }} ประเภท
+                    </c-box>
+                </c-box>
+                <c-box
+                    mt="1"
+                    font-weight="semibold"
+                    as="h4"
+                    line-height="tight"
+                    is-truncated
+                >
+                    {{ index.title }}
+                </c-box>
 
-        <c-box>
-            {{ property.description }}
-        </c-box>
+                <c-box>
+                    {{ index.description }}
+                </c-box>
 
-        <c-box
-            mt="1.5rem"
-            font-weight="semibold"
-            as="h4"
-            line-height="tight"
-            is-truncated
-        >
-            {{ "คุณสมบัติที่ต้องการ" }}
-        </c-box>
-        <c-box>
-          {{ property.requirment }} 
-        </c-box>
+                <c-box
+                    mt="1.5rem"
+                    font-weight="semibold"
+                    as="h4"
+                    line-height="tight"
+                    is-truncated
+                >
+                    {{ "คุณสมบัติที่ต้องการ" }}
+                </c-box>
+                <c-box>
+                {{ index.requirement }} 
+                </c-box>
 
-        <c-box
-            mt="1.5rem"
-            font-weight="semibold"
-            as="h4"
-            line-height="tight"
-            is-truncated
-        >
-        {{ "ค่าจ้าง" }}
-        </c-box>
-        <c-box>
-            {{ index.compensation }} บาท/ชม
-        </c-box>
+                <c-box
+                    mt="1.5rem"
+                    font-weight="semibold"
+                    as="h4"
+                    line-height="tight"
+                    is-truncated
+                >
+                {{ "ค่าจ้าง" }}
+                </c-box>
+                <c-box>
+                    {{ index.compensation }} บาท/ชม
+                </c-box>
 
-        <c-button mt="1rem" bgColor="black" color="white">
-            <a @click='value(index.id)' :href="'#/job'" v-bind="index">รายละเอียดงาน</a>
-        </c-button>
-    </c-box>
+                <c-flex jusify="center">
+                    <c-button  mt="1rem" bgColor="black" color="white" size="lg" :_hover="{bg: 'pink.400'}">
+                        <a @click='value(index.id)' :href="'#/job'" v-bind="index">รายละเอียดงาน</a>
+                    </c-button>
+                </c-flex>
+            </c-box>
+            
+        </c-box>
     </div>
-    </c-box>
-    </c-flex>
     <div class="paginate">
         <ve-pagination :total="count_job" :page-size="4" :layout="['total', 'prev', 'pager', 'next', 'jumper']" @on-page-number-change="pageNumberChange"></ve-pagination>
     </div>
-</div> -->
+</div>
 </template>
 
 <script>
@@ -151,7 +163,7 @@ export default {
         flex-direction: row-reverse;
         margin-top: 50px;
     }
-    .compensation{
+    /* .compensation{
         margin-top: 20px;
         font-size: 20px;
     }
@@ -164,11 +176,11 @@ export default {
         flex-wrap: wrap;
         gap: 20px 10px;
 
-    }
-    .services{
-        width: 900px;
+    } */
+    /* .services{
+        width: 900px; */
         /* border: 1px solid #c3c3c3; */
-        align-items: center;
+        /* align-items: center;
         flex: 2;
     }
     .content{
@@ -215,6 +227,6 @@ export default {
     }
     .content > *{
         flex: 1 1 100%;
-    }
+    } */
 
 </style>
