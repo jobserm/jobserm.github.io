@@ -27,8 +27,9 @@
         {{ `งานเทพๆ หาง่ายกว่าที่คิดเยอะ!\nคิดถึงงาน คิดถึงเรา` }}
       </c-heading>
       <c-flex wrap="wrap">
-        <button-primary :url="`/register`" :text="`หาคนเข้าทำงาน`" mr="2" />
-        <button-secondary :url="`/login`" :text="`ประกาศหางาน`" ml="2" />
+        <button-primary :url="`/employer`" :text="`หาคนเข้าทำงาน`" mr="2" />
+
+        <button-secondary :url="`/jobinfo`" :text="`เริ่มหางาน`" ml="2" />
       </c-flex>
       <c-text fontSize="xs" color="primary.800" opacity="0.6">
         No credit card required.
@@ -37,7 +38,7 @@
 
     <c-image
       :src="require('../../../assets/hero.svg')"
-      :size="['xs', 'sm', 'md', 'lg']"
+      size="['xs', 'sm', 'md', 'lg']"
       rounded="1rem"
     />
   </c-flex>
@@ -46,6 +47,7 @@
 <script>
 import ButtonPrimary from "../../button/ButtonPrimary.vue";
 import ButtonSecondary from "../../button/ButtonSecondary.vue";
+
 export default {
   components: { ButtonPrimary, ButtonSecondary },
   name: "Hero",

@@ -4,7 +4,6 @@ import Footer from "./components/Footer.vue";
 
 export default {
   name: "Navbar",
-  inject: ["$chakraColorMode", "$toggleColorMode"],
   components: {
     NavBar,
     Footer,

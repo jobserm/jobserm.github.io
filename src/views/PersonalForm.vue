@@ -2,7 +2,7 @@
 <c-flex justify="center" py="8vh">
     <c-stack w="55rem" >
         <c-form-control>
-            <personal-information @saveInfo="save"/>
+            <personal-information title="ข้อมูลสมาชิก" @saveInfo="save"/>
         </c-form-control>
     </c-stack>
 </c-flex>

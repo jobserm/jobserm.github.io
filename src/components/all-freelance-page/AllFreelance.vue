@@ -1,33 +1,32 @@
 <template>
    <c-box px="20" py="10">
       <c-stack>
-          <c-heading py="12">ผู้ที่สนใจ <br> {{ title }}</c-heading>
+          <c-heading py="12">ผู้ที่สนใจ <br> {{ job.title }}</c-heading>
       </c-stack>
 
       <c-flex>
-          <div v-for="image in job_images" :key="image">
+          <!-- <div v-for="image in job_images" :key="image">
               <c-image 
               :src="require(`${image.dog}`)"
               w="350px"
               objectFit="scale-down"
               p="2"
               />
-          </div>
+          </div> -->
       </c-flex>
 
-
-      <c-simple-grid :columns="[1, 1, 1, 4]" spacing="8" align="center" py="16">
-        <div v-for="freelancer in freelancers" :key="freelancer.id">
-            <router-link to="/" >   
+      <c-simple-grid :columns="[1, 1, 1, 5]" spacing="8" align="center" py="16">
+        <div v-for="user in jobId.users" :key="user.id">
+          <router-link to="/profiles" >
+            <div @click="freelancerInfo(user)">   
               <info
-                :image="require(`${freelancer.path}`)"
-                :freelancerName="freelancer.freelancerName"
-                :rating="freelancer.rating"
-                :gender="freelancer.gender"
-                :age="freelancer.age"
+                image="require(`${user.path}`)"
+                v-bind:freelancerName="user.name + user.lastname"
+                v-bind:rating="user.review || 0"
+                v-bind:age="user.birthdate"
                 :star="require(`./star.png`)"
-              
               />
+            </div>
             </router-link>
         </div>
       </c-simple-grid>
@@ -38,67 +37,57 @@
 
 <script>
 import info from "./Info.vue"
+import JobApi from "../../store/JobApi"
 export default {
-  components: { info },
-  name: "Info",
-
-  data() {
-    return {
-      freelancers: [
-      {
-        path: './user.png',
-        freelancerName:"ปฏิภาณ บุญสิมมา",
-        rating: "4.5",
-        gender: "เจ้าหญิง",
-        age:"24",
-      },
-      {
-        path: './user.png',
-        freelancerName:"คนิตา หวั่นแสง",
-        rating: "4.0",
-        gender: "ชาย",
-        age:"23",
-      },
-      {
-        path: './user.png',
-        freelancerName:"กานต์รวี วารินทร์ศิริกุล",
-        rating: "4.8",
-        gender: "ชาย",
-        age:"22",
-      },
-      {
-        path: './user.png',
-        freelancerName:"พีรพัฒน์ จิตรเจริญวีรกุล",
-        rating: "5.0",
-        gender: "หญิง",
-        age:"21",
-      }],
-
-      title: "พาน้องหมาไปเดินเล่น 10 ตัว",
-      
-      job_images:[
-        {
-          dog: "./dog_walking_1.jpg"
+    components: { info },
+    name: "Info",
+    data() {
+      return {
+        id: '',
+        job: {},
+        jobs:[],
+        jobId:[]
+      }
+    },
+    async created() {
+      await JobApi.watch(
+        (state) => {
+          return JobApi.getters.job_filtered
         },
-        {
-          dog: "./dog_walking_2.jpg"
-        },
-                {
-          dog: "./dog_walking_3.jpg"
-        },
-
-
-      ]
-    };
-  },  
-
-  async created() {
-
-
-  }
+        (newValue, oldValue) => {
+          this.jobs.push(newValue)
+          localStorage.setItem('YourItem',JSON.stringify(newValue))
+          this.jobId = JSON.parse(localStorage.getItem('YourItem'));
+          console.log("this.jobId" ,this.jobId)
+          console.log(localStorage)
+          console.log("this.newValue" ,newValue)
+          console.log("this.job" ,this.jobs)
+        }
+      )
+      this.jobId = JSON.parse(localStorage.getItem('YourItem'));
+      console.log("this.jobId" ,this.jobId)
+      console.log("created")
+      this.getEsaaa()
+    },
+    methods: {
+      async getEsaaa() {
+        this.jobId.users.map(item => {
+          if (item.birthdate) {
+            let ageDifMs = Date.now() - new Date(item.birthdate).getTime()
+            let ageDate = new Date(ageDifMs)
+            item.birthdate = Math.abs(ageDate.getUTCFullYear() - 1970)
+          }
+          return item
+        })
+      },
+      freelancerInfo(user){
+        localStorage.setItem('user',JSON.stringify(user))
+        
+      },
+    },
+    
 }
 </script>
 
 <style>
-
 </style>

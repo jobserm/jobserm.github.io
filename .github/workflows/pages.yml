@@ -12,13 +12,22 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
       - name: Set-up Node
         uses: actions/setup-node@v1
         with:
           node-version: "14.x"
-      - run: npm install
-      - run: npm run build
+
+      - name: Install NPM Dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+        env:
+          VUE_APP_JOBSERM_ENDPOINT: https://api-jobserm-cjtim.cloud.okteto.net
+
       - run: npm test
+
       - name: Deploy
         uses: crazy-max/ghaction-github-pages@v1
         if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' }}

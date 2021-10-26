@@ -18,7 +18,7 @@
     </c-box>
     <c-box>
         <c-text fontSize="4xl">
-            X
+            
         </c-text>
     </c-box>
     </c-flex>
@@ -27,15 +27,24 @@
 
 <script>
 import PostJob from '../components/form/PostJob.vue'
+import JobApi from '../store/JobApi'
 export default {
     components: {
         PostJob,
     },
     methods: {
-        post (value) {
+        async post (value) {
             // this method is invoked from child component via @postJob
             console.log('new job is posted!')
             console.log(value)
+
+            let res = await JobApi.dispatch('postJob', value)
+            if (res.success) {
+                this.$swal("โพสต์งานสำเร็จ", `ตรวจสอบได้ที่หน้ารวมงาน`, "success")
+                this.$router.push("/jobinfo")
+            } else {
+                this.$swal("โพสต์งานไม่สำเร็จ", res.message, "error")
+            }
         }
     }
 }
