@@ -1,29 +1,56 @@
 <template>
-    <!-- <div>
-        <body>
-            <div class="cards">
-                <div class="services" v-for="index in jobs.data" :key="index.id">
-                    <div class="content">
-                        <c-image class="pic" src="https://static.toiimg.com/photo/msid-67586673/67586673.jpg?3918697" />
-                        <div>
-                            <c-text  fontSize="2xl">{{ index.title }}</c-text>
-                            <c-text >{{ index.description }}</c-text>
-                            <c-text>{{ index.requirement }}</c-text>
-                            <c-text fontSize="xl">ค่าจ้าง {{ index.compensation }} บาท/ชม</c-text>
-                            <br>
-                            <a @click='value(index.id)' :href="'#/job'" v-bind="index">รายละเอียดงาน</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-        </body> 
-        <div class="paginate">
-            <ve-pagination :total="count_job" :page-size="4" :layout="['total', 'prev', 'pager', 'next', 'jumper']" @on-page-number-change="pageNumberChange"></ve-pagination>
-        </div>
-        
-    </div> -->
 <div>
+
+         <c-text fontSize="4xl" ml="10rem" mt="2rem">{{ "งานทั้งหมด" }}</c-text>
+      <c-flex>
+        <c-input-group size="sm" class="input" rounded="md">
+            <!-- <c-input-left-element><c-icon name="phone" color="gray.300" /></c-input-left-element> -->
+            <c-input borderColor="black" ml="10rem" focus-border-color="indigo.200" w="30rem" mt="1.5rem" h="2.6rem" type="phone" placeholder="ค้นหา" />
+        </c-input-group>
+
+        <c-flex mt="1.5rem" ml="1rem">
+            <!-- จังหวัด -->
+          <c-select id="province" v-model="form.provinces">
+              <option value="" style="display:none;" >จังหวัด</option>
+              <option v-for="index in provinces.data" :key="index.id">{{ index.province }}</option>
+          </c-select>
+          <!-- ประเภทงาน-->
+          <c-select id="type" v-model="form.category">
+              <option value="" style="display:none;" >ประเภทงาน</option>
+              <option v-for="index in categories" :key="index.id">{{ index.category_name }}</option>
+          </c-select>
+          <!-- ค่าตอบแทน -->
+          <c-select id="type" v-model="form.compensation">
+              <option value="" style="display:none;" >  ค่าตอบแทน</option>
+              <option>3,000 - 4,000</option>
+              <option>4,100 - 5,000</option>
+              <option>5,100 - 6,000</option>
+              <option>6,100 - 7,000</option>
+              <option>7,100 - 8,000</option>
+              <option>8,100 - 9,000</option>
+              <option>9,100 - 10,000</option>
+              <option>11,000 - 20,000</option>
+              <option>21,000 - 40,000</option>
+              <option>41,000 - 60,000</option>
+          </c-select>
+          <!-- สถานะการทำงาน -->
+          <c-select id="type" v-model="form.working_status">
+              <option value="" style="display:none;" >สถานการทำงาน</option>
+              <option>AVAILABLE</option>
+              <option>IN PROGRESS</option>
+              <option>FINISH</option>
+          </c-select>
+          <c-button @click="search(form.provinces)" variant-color="indigo" variant="outline">
+              ค้นหา
+          </c-button>
+          <c-button @click="fetchJobs()" variant-color="indigo" variant="outline">
+              clear
+          </c-button>
+
+        </c-flex>
+        </c-flex>
+
+    <c-flex align="center">
     <div v-for="index in jobs.data" :key="index.id">
         <c-box mt="4rem"  maxW="sm" border-width="4px" rounded="lg" overflow="hidden" border-color="black" :_hover="{bg: 'indigo.100' , borderColor:'indigo'}" fontSize="xl">
             
@@ -93,6 +120,7 @@
             
         </c-box>
     </div>
+    </c-flex>
     <div class="paginate">
         <ve-pagination :total="count_job" :page-size="4" :layout="['total', 'prev', 'pager', 'next', 'jumper']" @on-page-number-change="pageNumberChange"></ve-pagination>
     </div>
@@ -101,6 +129,8 @@
 
 <script>
 import JobApi from "@/store/JobApi.js"
+import Axios from "axios";
+import CategoryStore from "@/store/CategoryStore";
 
 export default {
     components: { 
@@ -108,18 +138,45 @@ export default {
     },
     data(){
         return{
+            form: {
+                provinces: "",
+                category:"",
+                compensation:"",
+                working_status:"",
+            },
             jobs:{},
             count_job:0,
             payload_url:"",
             job_id:0,
+            provinces: [],
+            categories: [],
         }
     },
     async created(){
         console.log("fetch=================")
         await this.fetchJobs()
         console.log("fetch=================",this.jobs.data)
+        this.getProvince()
+        this.getCategories()
     },
     methods:{
+            async search(province){
+      console.log(province)
+      await JobApi.dispatch("fetchJobFromSearch", province)
+      this.jobs = JobApi.getters.getJobFromSearch
+      this.count_job = this.jobs.meta.total
+      this.$forceUpdate()
+      
+
+    },
+            async getProvince() {
+      let res = await Axios.get(`https://thaiaddressapi-thaikub.herokuapp.com/v1/thailand/provinces`);
+      this.provinces = res.data;
+    },
+    async getCategories() {
+      await CategoryStore.dispatch('fetchData')
+      this.categories = CategoryStore.getters.getCategories
+    },
         async fetchJobs(){
         await JobApi.dispatch("fetchJob")
         this.jobs = JobApi.getters.jobs
@@ -145,6 +202,7 @@ export default {
             // console.log("id")
             // console.log(id)
         }
+        
         // async value(id){
         //     await JobApi.dispatch("fetchJobById" ,  id )
         //     console.log("id")
@@ -163,70 +221,19 @@ export default {
         flex-direction: row-reverse;
         margin-top: 50px;
     }
-    /* .compensation{
-        margin-top: 20px;
-        font-size: 20px;
-    }
-    .title{
-        margin-top: 10px;
-    }
     .cards{
         margin-top: 25px;
         display: inline-flex;
         flex-wrap: wrap;
         gap: 20px 10px;
 
-    } */
-    /* .services{
-        width: 900px; */
+    } 
+    .services{
+        width: 900px; 
         /* border: 1px solid #c3c3c3; */
-        /* align-items: center;
+        align-items: center;
         flex: 2;
     }
-    .content{
-        flex: 1;
-        margin: auto;
-        padding: 40px;
-        width: 400px;
-        height: 700px;
-        border: 2px solid black;
-        border-radius: 4px;
-        transition: all .3s ease;
-        text-align: center;
-    }
-    .content:hover p{
-        color: white;
-    }
-    .content:hover a{
-        border-color: white;
-        background: white;
-    }
-    .content:hover{
-        border-color: #8C30F5;
-        background: #8C30F5;
-    }
-    .content a{
-        margin: 22px 0;
-        background: black;
-        color: white;
-        text-decoration: none;
-        border: 1px solid black;
-        padding: 5px 20px;
-        border-radius: 25px;
-        transition: .3s ease;
-        
-        
-        
-    }
-    .content a:hover{
-        border-radius: 4px; 
-    }
-    .content:hover a{
-        color: #8C30F5;
-        
-    }
-    .content > *{
-        flex: 1 1 100%;
-    } */
+    
 
 </style>

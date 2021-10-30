@@ -148,11 +148,12 @@ export default new Vuex.Store({
         },
         async fetchJobFromSearch({ commit }, payload){
             let body={
-                province:payload.province
+                province:payload
             }
+            console.log("body",payload)
             try {
                 let res = await Axios.post(`${api_endpoint}/get-job-from-search`,body)
-                commit("fetchJobFromSearch",{ res })
+                commit("fetchFromSearch",{ res })
                 console.log((await res).data)
             } catch (e) {
                 console.log(e.message)
