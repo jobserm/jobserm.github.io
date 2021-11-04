@@ -28,20 +28,19 @@
             <c-input id="title" placeholder="งาน" v-model="form.title"/>
           </c-box>
 
-          <!-- <loading v-if="loading" />
+          <!-- <loading v-if="loading" /> -->
           <c-box>
             <c-form-label for="title" color="gray.600">{{
-              "อัปโหลดรูป"
+              "เพิ่มรูปงาน"
             }}</c-form-label>
             <c-input 
-                      mt="1rem"
-                      w="51rem"
-                      type="file"
-                      multiple
-                      @change="handleFilesUpload( $event )"
-           />
-           <c-button bgColor="blue.400" color="white" ml="43rem" mt="1rem" width="130px" @click="uploadFiles">UPLOAD</c-button>
-          </c-box> -->
+                mb="1rem"
+                type="file"
+                multiple
+                @change="handleFilesUpload( $event )"
+            />
+            <c-button bgColor="brand.400" color="brand.500" width="70px" @click="uploadFiles">เพิ่มรูป</c-button>
+          </c-box>
 
           <c-box>
             <c-form-label for="description" color="gray.600">{{
@@ -135,10 +134,10 @@ export default {
         let res = await Axios.get(`https://thaiaddressapi-thaikub.herokuapp.com/v1/thailand/provinces`);
         this.provinces = res.data;
       },
-      // handleFilesUpload(event) {
-      //       this.files = [...event.target.files]
-      //   },
-      //   async uploadFiles() {
+      handleFilesUpload(event) {
+            this.files = [...event.target.files]
+        },
+         async uploadFiles() {
       //       try {
       //           let formData = new FormData()
       //           this.files.forEach(async (file) => {
@@ -157,7 +156,7 @@ export default {
       //       } catch (e) {
       //           console.log(e)
       //       }
-      //   }
+         }
     }
 };
 </script>

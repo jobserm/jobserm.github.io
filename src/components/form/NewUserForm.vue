@@ -19,7 +19,20 @@
             <c-text fontSize="md" color="gray.400">{{
               "Specify exactly as in your passport"
             }}</c-text>
+            
+            <div>
+              
+            </div>
           </c-box>
+
+          <!-- upload profile pic -->
+              <c-input 
+                type="file"
+                multiple
+                @change="handleFilesUpload( $event )"
+           />
+          <c-button bgColor="brand.400" color="brand.500" width="70px" @click="uploadFiles">เพิ่มรูป</c-button>
+
           <c-box>
             <c-form-label for="name" color="gray.600">{{
               "ชื่อจริง"
@@ -148,6 +161,31 @@ export default {
   methods: {
     saveInfo () {
       this.$emit('saveInfo', this.form)
+    },
+    
+    handleFilesUpload(event) {
+      this.files = [...event.target.files]
+    },
+
+    async uploadFiles() {
+      // try {
+      //     let formData = new FormData()
+      //     this.files.forEach(async (file) => {
+      //         formData.append('photo', file)
+      //         let res = await axios.post('http://localhost:8000/api/images', formData, {
+      //             headers: {
+      //                 'X-JOB-ID': 1
+      //             }
+      //         })
+      //         console.log(res)
+      //         if (res.status === 200) {
+      //             console.log('upload success!')
+      //         }
+      //     })
+          
+      // } catch (e) {
+      //     console.log(e)
+      // }
     }
   }
 };
