@@ -10,13 +10,13 @@
             border-width="1px"
             >
             
-            <c-box justify="center">
+            <!-- <c-box justify="center">
                 <c-image v-bind:src="image" 
                          w="5rem" 
                          borderRadius="50%" 
                          marginTop="auto"
                          py="2"/>
-            </c-box>
+            </c-box> -->
             
     
             <c-heading size="md" pb="2">{{ freelancerName }}</c-heading>
@@ -61,7 +61,8 @@
 <script>
 export default {
     name:"Info",
-    props: ["image", "freelancerName", "star", "rating", "age"]
+    //props: ["image", "freelancerName", "star", "rating", "age"]
+    props: ["freelancerName", "star", "rating", "age"]
 }
 </script>
 
