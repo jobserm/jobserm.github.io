@@ -1,9 +1,7 @@
 import Axios from "axios";
 import Vue from "vue";
 import Vuex from "vuex";
-import AuthService from "../services/Authservice";
-
-let api_endpoint = process.env.VUE_APP_JOBSERM_ENDPOINT || "http://localhost:8000";
+import backendInstance from "../services/backendInstance";
 
 Vue.use(Vuex)
 
@@ -29,8 +27,7 @@ export default new Vuex.Store({
 
     actions: {
         async fetchData({ commit }) {
-            let header = AuthService.getApiHeader();
-            let res = await Axios.get(`${api_endpoint}/api/reviews`, header);
+            let res = await backendInstance.get(`/api/reviews`);
             commit("setData", res)
         },
         async addReview({ commit }, payload) {
@@ -39,7 +36,7 @@ export default new Vuex.Store({
                 rating: payload.rating,
                 id: payload.id
             }
-            let res = await Axios.post(`${api_endpoint}/api/reviews`, body);
+            let res = await backendInstance.post(`/api/reviews`, body);
             console.log("-----------", res)
             commit("setReview", res.data); 
             return res;
@@ -50,7 +47,7 @@ export default new Vuex.Store({
         //     return res;
         // },
         async paginate({ commit }, route){
-            let res = Axios.get(route)
+            let res = backendInstance.get(route)
             commit("fetch", { res })
         },
     },

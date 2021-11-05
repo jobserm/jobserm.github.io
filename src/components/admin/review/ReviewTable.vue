@@ -23,8 +23,8 @@
 
 <script>
 import Authservice from "../../../services/Authservice";
-import axios from "axios";
 import { CBadge } from "@chakra-ui/vue";
+import backendInstance from "../../../services/backendInstance";
 
 export default {
   data() {
@@ -96,7 +96,7 @@ export default {
   },
   methods: {
     async fetchReviews() {
-      let data = await axios.get('http://localhost:8000/api/reviews');
+      let data = await backendInstance.get("/api/reviews");
       if (data.length != 0) {
         this.rawData = data.data;
         this.loading = false;
@@ -113,12 +113,11 @@ export default {
     },
     async getUserByID(id) {
       // let user = await Authservice.getUserById(id)
-      let res = await axios.get(`http://localhost:8000/api/users/${id}`);
+      let res = await backendInstance.get(`/api/users/${id}`);
       this.$emit("parentGetUserByID", res.data);
     },
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>
