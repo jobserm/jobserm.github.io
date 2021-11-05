@@ -124,9 +124,10 @@ export default new Vuex.Store({
                         'Authorization':`Bearer ${jwt.access_token}`
                     }
                 })
+                console.log("res = " , (await res).data)
                 if ((await res).status === 200){
                     console.log((await res).data)
-                    console.log("fetchJob นะ")
+                    console.log("ดำะแ้ ่นิ")
                     commit("fetch",{ res })
                     return{
                         success: true
@@ -183,8 +184,7 @@ export default new Vuex.Store({
         },
         async fetchJobFromSearch({ commit }, payload){
             let body={
-                title:payload.title,
-                province:payload.province
+                province:payload
             }
             console.log("body",payload)
             try {
