@@ -44,7 +44,7 @@ export default new Vuex.Store({
             state.JobSuggest = (await res).data
         },
         async fetchByUser(state,{res}){
-            state.jobByUser = (await res).data
+            state.jobByUser = (await res)
         },
         async fetchFromSearch(state,{res}){
             state.jobFromSearch = (await res).data
@@ -116,13 +116,48 @@ export default new Vuex.Store({
             }
         },
         async fetchJob({ commit }){
-            let res = Axios.get(api_endpoint + "/jobs")
-            console.log((await res).data)
-            console.log("api")
-            commit("fetch",{ res })
+            try{
+                let jwt = JSON.parse(localStorage.getItem(auth_key))
+                console.log("jwt = " , jwt)
+                let res = Axios.get(api_endpoint + "/jobs" ,{
+                    headers:{
+                        'Authorization':`Bearer ${jwt.access_token}`
+                    }
+                })
+                if ((await res).status === 200){
+                    console.log((await res).data)
+                    console.log("fetchJob นะ")
+                    commit("fetch",{ res })
+                    return{
+                        success: true
+                    }
+                }
+
+            } catch(e) {
+                return{
+                    success:false
+                }
+            }
+
+
+
+
+
+            // let res = Axios.get(api_endpoint + "/jobs")
+            // console.log((await res).data)
+            // console.log("ดำะแ้ ่นิ")
+            // commit("fetch",{ res })
         },
         async paginate({commit},route){
             let res = Axios.get(route)
+            console.log("route")
+            console.log(route)
+            console.log("data from url")
+            console.log((await res).data)
+            commit("fetch",{ res })
+        },
+        async paginate_post({commit},route){
+            let res = Axios.post(route)
             console.log("route")
             console.log(route)
             console.log("data from url")
@@ -148,7 +183,8 @@ export default new Vuex.Store({
         },
         async fetchJobFromSearch({ commit }, payload){
             let body={
-                province:payload
+                title:payload.title,
+                province:payload.province
             }
             console.log("body",payload)
             try {

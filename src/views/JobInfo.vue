@@ -28,7 +28,7 @@ export default {
     }
   },
   async created(){
-    await this.fetchJobs()
+    // await this.fetchJobs()
     this.getProvince()
     this.getCategories()
   },

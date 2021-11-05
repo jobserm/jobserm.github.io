@@ -5,7 +5,7 @@
       <c-flex>
         <c-input-group size="sm" class="input" rounded="md">
             <!-- <c-input-left-element><c-icon name="phone" color="gray.300" /></c-input-left-element> -->
-            <c-input borderColor="black" ml="10rem" focus-border-color="indigo.200" w="30rem" mt="1.5rem" h="2.6rem" type="phone" placeholder="ค้นหา" />
+            <c-input borderColor="black" ml="10rem" focus-border-color="indigo.200" w="30rem" mt="1.5rem" h="2.6rem" type="phone" placeholder="ค้นหา" v-model="title"/>
         </c-input-group>
 
         <c-flex mt="1.5rem" ml="1rem">
@@ -40,15 +40,18 @@
               <option>IN PROGRESS</option>
               <option>FINISH</option>
           </c-select>
-          <c-button @click="search(form.provinces)" variant-color="indigo" variant="outline">
+          <c-button @click="search(title,form.provinces)" variant-color="indigo" variant="outline">
               ค้นหา
           </c-button>
-          <c-button @click="fetchJobs()" variant-color="indigo" variant="outline">
+          <c-button @click="clear()" variant-color="indigo" variant="outline">
               clear
           </c-button>
 
         </c-flex>
         </c-flex>
+
+
+        <c-text fontSize="5xl" align="center" color="red" mt="4rem" v-if="this.count_job === -1">ไม่มีงานที่ค้นหา</c-text>
 
     <c-flex align="center">
     <div v-for="index in jobs.data" :key="index.id">
@@ -123,7 +126,6 @@
                     </c-button>
                 </c-flex>
             </c-box>
-            
         </c-box>
     </div>
     </c-flex>
@@ -150,6 +152,7 @@ export default {
                 compensation:"",
                 working_status:"",
             },
+            title:"",
             jobs:{},
             count_job:0,
             payload_url:"",
@@ -166,11 +169,17 @@ export default {
         this.getCategories()
     },
     methods:{
-            async search(province){
-      console.log(province)
-      await JobApi.dispatch("fetchJobFromSearch", province)
+            async search(title,province){
+      
+      title = `%`+title+`%`
+      province = `%`+province+`%`
+
+      console.log(title)
+      await JobApi.dispatch("fetchJobFromSearch", {title,province})
       this.jobs = JobApi.getters.getJobFromSearch
       this.count_job = this.jobs.meta.total
+      if(this.count_job == 0)
+        this.count_job = -1
       this.$forceUpdate()
       
 
@@ -207,7 +216,21 @@ export default {
             await JobApi.dispatch("fetchJobById" ,  id )
             // console.log("id")
             // console.log(id)
-        }
+        },
+        async clear(){
+            await JobApi.dispatch("fetchJob")
+            this.jobs = JobApi.getters.jobs
+            this.count_job = this.jobs.meta.total
+            this.form.provinces = ""
+            this.form.category = ""
+            this.form.compensation = ""
+            this.form.working_status = ""
+            this.title = ""
+            // console.log("this.jobs")
+            // console.log(this.jobs.data)
+            // console.log("count_job")
+            // console.log(this.count_job)
+        },
         
         // async value(id){
         //     await JobApi.dispatch("fetchJobById" ,  id )
