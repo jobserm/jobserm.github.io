@@ -145,8 +145,8 @@ export default {
         await JobApi.dispatch("fetchUserFinish",user_id)
         this.$router.push("/userJob")
       }
-      // else
-      //   this.$swal("กรุณากรอกรีวิว",'','error')
+      else
+        this.$swal("คุณไม่ได้รีวิว",'','error')
       
     },
     // async getUser
