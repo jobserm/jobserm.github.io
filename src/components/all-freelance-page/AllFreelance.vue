@@ -59,7 +59,7 @@ export default {
         },
 
         async freelancerInfo(id) {
-            await
+            
         }
     },
     
