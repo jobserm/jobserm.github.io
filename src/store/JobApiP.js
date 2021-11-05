@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Axios from 'axios'
+import backendInstance from '../services/backendInstance'
 
-let api_endpoint = "http://127.0.0.1:8000/api"
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -21,13 +21,13 @@ export default new Vuex.Store({
     actions:{
         async fetchJob({ commit }){
             console.log("api")
-            let res = Axios.get(api_endpoint + "/jobs")
+            let res = backendInstance.get("/api/jobs")
             console.log((await res).data)
             console.log("api")
             commit("fetch",{ res })
         },
         async paginate({commit},route){
-            let res = Axios.get(route)
+            let res = backendInstance.get(route)
             console.log("route")
             console.log(route)
             console.log("data from url")
@@ -36,7 +36,7 @@ export default new Vuex.Store({
         },
         async fetchJobById({ commit }){
             console.log("api")
-            let res = Axios.get(api_endpoint + "/jobs")
+            let res = backendInstance.get("/api/jobs")
             console.log((await res).data)
             console.log("api")
             commit("fetch",{ res })

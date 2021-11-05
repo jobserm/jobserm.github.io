@@ -138,11 +138,7 @@ export default {
   },
   methods: {
     async fetchUsers() {      
-      let headers = {
-        'Authorization': `Bearer ${AuthUser.getters.jwt}`
-      }
-      console.log(headers)
-      await UserStore.dispatch('fetchUsers', headers)
+      await UserStore.dispatch('fetchUsers')
       let data = UserStore.getters.getUsers
       if (data.length != 0) {
         this.rawData = data

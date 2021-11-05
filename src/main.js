@@ -30,9 +30,8 @@ import {
   faTag,
 } from "@fortawesome/free-solid-svg-icons";
 import VueApexCharts from "vue-apexcharts";
-import axios from "axios";
 import Loading from "../src/components/miscellaneous/Loading.vue";
-import backendInstance from "./services/backendInstance";
+import backendInstance, { auth } from "./services/backendInstance";
 
 // Import Chakra UI Plugin and register it.
 Vue.use(Chakra, {
@@ -49,7 +48,7 @@ Vue.use(Chakra, {
   },
 });
 
-Vue.use(VueAxios, axios);
+Vue.use(VueAxios, backendInstance);
 Vue.use(VueSwal);
 
 // inject apexchart
@@ -62,10 +61,9 @@ Vue.config.productionTip = false;
 new Vue({
   router,
   beforeCreate: () => {
-    const auth_key = process.env.VUE_APP_AUTH_KEY || "auth-jobserm";
-    const auth = JSON.parse(localStorage.getItem(auth_key));
-    if (auth !== null && auth.jwt) {
-      backendInstance.defaults.headers.common.Authorization = `Bearer ${auth.jwt}`;
+    if (auth && auth.access_token) {
+      backendInstance.defaults.headers.common.Authorization = `Bearer ${auth.access_token}`;
+      console.log(`Bearer ${auth.access_token}`)
     }
   },
   render(h) {
