@@ -7,58 +7,43 @@
             </c-button>
 
         </c-box>
+        
         <c-flex>
-            
-            <c-stack  px="10" w="70%" align="center">
-                <div>
-                    <info-profile
-                    :star="require(`./star.png`)"
-                    
-                    />
-                </div>
-            </c-stack>
+
+            <info
+                v-bind:freelancerName="user.name + user.lastname"
+                v-bind:rating="user.review || 0"
+                v-bind:age="user.birthdate"
+                :star="require(`./star.png`)"
+            />
+
         </c-flex>
 
     </c-stack>   
 </template>
 
 <script>
-import InfoProfile from "./InfoProfile.vue"
+import Info from "../all-freelance-page/Info.vue"
 import JobApi from "@/store/JobApi.js"
 export default {
     components: {
-        InfoProfile
+        Info
     },
- data() {
-     return {
-         id:'',
-         user:[],
-     }
- },
+    data() {
+        return {
+            user: {}
+        }
+    },
 
- async created() {
-     console.log("--created-------")
-     this.user = JSON.parse(localStorage.getItem("user"))
-     console.log(this.user)
- },
+    async created() {
+        // console.log("--created-------")
+        // this.user = JSON.parse(localStorage.getItem("user"))
+        // console.log(this.user)
+    },
 
- methods: {
-      
-        // let {         
-        //     name,
-        //     lastname ,
-        //     email,
-        //     birthdate,
-        //     gender,
-        //     phone,
-        //     address,
-        //     facebook,
-        //     line,
-        //     activation,
-        //     }=this.jobs.data[0].users[0]
-        //     console.log(name)
-        // },
-     },
+    methods: {
+        
+    },
 }
 </script>
 

@@ -64,19 +64,7 @@
 export default {
     name: "InfoProfile",
     props: ["ProfileName", "star", "rating", "age"],
-
-    data() {
-     return {
-         id:'',
-         user:[],
-     }
- },
-
- async created() {
-     console.log("--created-------")
-     this.user = JSON.parse(localStorage.getItem("user"))
-     console.log(this.user)
- },
+ 
 }
 </script>
 

@@ -7,7 +7,7 @@
       <c-simple-grid :columns="[1, 1, 1, 5]" spacing="8" align="center" py="16">
         <div v-for="user in users" :key="user.id">
           <router-link to="/profiles" >
-            <div @click="freelancerInfo(user)">   
+            <div @click="freelancerInfo(user.id)">   
               <info
                 v-bind:freelancerName="user.name + user.lastname"
                 v-bind:rating="user.review || 0"
@@ -57,6 +57,10 @@ export default {
                 return item
             })
         },
+
+        async freelancerInfo(id) {
+            await
+        }
     },
     
 }
