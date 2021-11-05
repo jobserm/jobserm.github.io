@@ -30,7 +30,7 @@
         </div>
 
         <div v-if="isAuthen() && !isAdmin()">
-          <router-link to="/freelance">
+          <router-link to="/all-freelance">
             <c-text ms="5">เริ่มหาฟรีแลนซ์</c-text></router-link
           >
         </div>
