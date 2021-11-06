@@ -34,13 +34,13 @@
               <option>41,000 - 60,000</option>
           </c-select>
           <!-- สถานะการทำงาน -->
-          <c-select id="type" v-model="form.working_status">
-              <option value="" style="display:none;" >สถานะการทำงาน</option>
+          <!-- <c-select id="type" v-model="form.working_status">
+              <option value="" style="display:none;" >สถานการทำงาน</option>
               <option>AVAILABLE</option>
               <option>IN PROGRESS</option>
               <option>FINISH</option>
-          </c-select>
-          <c-button ml="1rem" w="15rem" @click="search(title,form.provinces)" variant-color="indigo" variant="outline">
+          </c-select> -->
+          <c-button @click="search(title,form.provinces,form.compensation,form.category)" variant-color="indigo" variant="outline">
               ค้นหา
           </c-button>
           <c-button ml="1rem" w="15rem" @click="clear()" variant-color="indigo" variant="outline">
@@ -77,7 +77,7 @@
                         text-transform="uppercase"
                         ml="2"
                         >
-                        {{ index.province }}  &bull; {{ index.baths }} ประเภท
+                        {{ index.province }}  &bull; {{ index.provinces }} 
                     </c-box>
                 </c-box>
                 <c-box
@@ -120,6 +120,7 @@
                     {{ index.compensation }} บาท/ชม
                 </c-box>
 
+                {{ index.user_id }}
                 <c-flex jusify="center">
                     <c-button  mt="1rem" bgColor="black" color="white" size="lg" :_hover="{bg: 'pink.400'}">
                         <a @click='value(index.id)' :href="'#/job'" v-bind="index">รายละเอียดงาน</a>
@@ -137,6 +138,7 @@
 
 <script>
 import JobApi from "@/store/JobApi.js"
+import UserApi from "@/store/AuthUser.js"
 import Axios from "axios";
 import CategoryStore from "@/store/CategoryStore";
 
@@ -159,23 +161,63 @@ export default {
             job_id:0,
             provinces: [],
             categories: [],
+            compensation_array: [],
+            less:0,
+            most:0,
+            user_id:0,
+            user:[]
         }
     },
     async created(){
         console.log("fetch=================")
+        await this.fetchUser()
         await this.fetchJobs()
-        console.log("fetch=================",this.jobs.data)
+        
+        console.log("fetch=================",this.user_id)
         this.getProvince()
         this.getCategories()
     },
     methods:{
-            async search(title,province){
-      
-      title = `%`+title+`%`
-      province = `%`+province+`%`
+         fetchUser(){
+            this.user = UserApi.getters.user
+            this.user_id = this.user.id
+            console.log("this.user==>",this.user)
+        },
+            async search(title,province,compensation,category){
+      if(compensation !== "")
+      {
+            this.compensatsion_array = compensation.split(" - ")
+            console.log(this.compensatsion_array)
+            this.less = Number(this.compensatsion_array[0].replace(",",''))
+            this.most = Number(this.compensatsion_array[1].replace(",",''))
+            this.compensatsion_array[0] = this.less
+            this.compensatsion_array[1] = this.most
+            console.log(this.compensatsion_array)
 
-      console.log(title)
-      await JobApi.dispatch("fetchJobFromSearch", {title,province})
+            let payload={
+                title : `%`+title+`%`,
+                province : `%`+province+`%`,
+                category : `%`+category+`%`,
+                compensatsion_array : this.compensatsion_array,
+                check: 0
+                    }
+
+            console.log(title)
+            await JobApi.dispatch("fetchJobFromSearch", payload)
+      }
+      else{
+          let payload={
+                title : `%`+title+`%`,
+                province : `%`+province+`%`,
+                category : `%`+category+`%`,
+                check: 1
+                    }
+
+            console.log(title)
+            await JobApi.dispatch("fetchJobFromSearch", payload)
+      }
+
+      
       this.jobs = JobApi.getters.getJobFromSearch
       this.count_job = this.jobs.meta.total
       if(this.count_job == 0)
@@ -193,9 +235,13 @@ export default {
       this.categories = CategoryStore.getters.getCategories
     },
         async fetchJobs(){
-        await JobApi.dispatch("fetchJob")
-        this.jobs = JobApi.getters.jobs
+        let id = this.user_id
+        await JobApi.dispatch("fetchJobAvaliableNotLogedIn",id)
+        console.log("fetchJobAVA")
+        this.jobs = JobApi.getters.getAvaJobNotLogIn
+        console.log("fetchJobAVA",this.jobs)
         this.count_job = this.jobs.meta.total
+        console.log("fetchJobAVA")
         // console.log("this.jobs")
         // console.log(this.jobs.data)
         // console.log("count_job")
@@ -204,10 +250,15 @@ export default {
         async pageNumberChange(pageIndex) {
             console.log(pageIndex)
             this.payload_url = this.jobs.meta.links[pageIndex].url
-            await JobApi.dispatch("paginate" ,  this.payload_url )
+            let payload = {
+                id : this.user_id,
+                url: this.payload_url
+            }
+            await JobApi.dispatch("paginate" ,  payload )
             console.log("payload_url")
             console.log(this.payload_url)
             this.jobs = JobApi.getters.jobs
+            console.log(this.jobs)
             this.count_job = this.jobs.meta.total
             this.$forceUpdate();
 
