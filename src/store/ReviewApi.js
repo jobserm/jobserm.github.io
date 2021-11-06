@@ -9,7 +9,8 @@ export default new Vuex.Store({
     state: {
         data: [],
         postsReview: [],
-        reviewsByUserID: []
+        reviewsByUserID: [],
+        reviews_after_remove: []
     },
 
     getters: {
@@ -27,7 +28,10 @@ export default new Vuex.Store({
         },
         setReviewByUserID(state, res) {
             state.reviewsByUserID = res
-        }
+        },
+        removeReview(state, res) {
+            state.reviews_after_remove = state.reviews_after_remove.map((review) => review.id != res.id);
+        },        
     },
 
     actions: {
@@ -59,6 +63,11 @@ export default new Vuex.Store({
         async getReviewByUserID({ commit }, id) {
             let res = await backendInstance.get(`/api/reviews/get-review-by-user-id/${id}`)
             commit("setReviewByUserID", res.data)
+        },
+
+        async removeReview({ commit }, id) {
+            let res = await backendInstance.delete(`/api/reviews/${id}`)
+            commit("removeReview", res.data);
         }
     },
     
