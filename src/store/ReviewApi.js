@@ -8,12 +8,14 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         data: [],
-        postsReview: []
+        postsReview: [],
+        reviewsByUserID: []
     },
 
     getters: {
         reviews: (state) => state.data,
-        getReviews: (state) => state.postsReview
+        getReviews: (state) => state.postsReview,
+        getReviewsByUserID: (state) => state.reviewsByUserID
     },
 
     mutations: {
@@ -22,6 +24,9 @@ export default new Vuex.Store({
         },
         setReview(state, res) {
             state.data = res
+        },
+        setReviewByUserID(state, res) {
+            state.reviewsByUserID = res
         }
     },
 
@@ -50,6 +55,11 @@ export default new Vuex.Store({
             let res = backendInstance.get(route)
             commit("fetch", { res })
         },
+
+        async getReviewByUserID({ commit }, id) {
+            let res = await backendInstance.get(`/api/reviews/get-review-by-user-id/${id}`)
+            commit("setReviewByUserID", res.data)
+        }
     },
     
     modules: {},

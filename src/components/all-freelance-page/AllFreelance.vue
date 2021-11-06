@@ -1,21 +1,21 @@
 <template>
    <c-box px="20" py="10">
       <c-stack>
-          <c-heading py="12">ฟรีแลนซ์ที่กำลังหางาน</c-heading>
+          <c-heading py="12" size="2xl">ฟรีแลนซ์ที่กำลังหางาน</c-heading>
       </c-stack>
 
-      <c-simple-grid :columns="[1, 1, 1, 5]" spacing="8" align="center" py="16">
+      <c-simple-grid :columns="[1, 1, 1, 5]" spacing="12" align="center" py="16">
         <div v-for="user in users" :key="user.id">
-          <router-link to="/profiles" >
-            <div @click="freelancerInfo(user.id)">   
+
+            <a :href="'#/profiles/'+user.id">   
               <info
                 v-bind:freelancerName="user.name + user.lastname"
-                v-bind:rating="user.review || 0"
+                v-bind:rating="user.review"
                 v-bind:age="user.birthdate"
                 :star="require(`./star.png`)"
               />
-            </div>
-            </router-link>
+            </a>
+
         </div>
       </c-simple-grid>
 
@@ -25,9 +25,8 @@
 
 <script>
 import info from "./Info.vue"
-import axios from 'axios'
+import UserStore from "../../store/UserStore";
 
-const auth_key = process.env.VUE_APP_AUTH_KEY || 'auth-jobserm';
 export default {
     components: { info },
     name: "Info",
@@ -37,30 +36,29 @@ export default {
         }
     },
     async created() {
-        let jwt = JSON.parse(localStorage.getItem(auth_key))
-        let res = await axios.get(`http://localhost:8000/api/get-user-is-publish`, {}, { 
-            headers: {
-                'Authorization': `Bearer ${jwt.access_token}`
-            }
-        })
-        this.users = res.data
-        this.convertBirthdate()
+        await UserStore.dispatch("fetchUsersArePublish")
+        let res = UserStore.getters.fetchUsersArePublish
+        this.users = res
+        this.editFormat()
+        console.log("all-freelance")
+        console.log(this.users)
     },
     methods: {
-        async convertBirthdate() {
+        async editFormat() {
             this.users.map(item => {
                 if (item.birthdate) {
                     let ageDifMs = Date.now() - new Date(item.birthdate).getTime()
                     let ageDate = new Date(ageDifMs)
                     item.birthdate = Math.abs(ageDate.getUTCFullYear() - 1970)
                 }
+                if (item.review === null) {
+                    item.review = 0
+                } else {
+                    item.review = item.review.toFixed(1)
+                }
                 return item
             })
         },
-
-        async freelancerInfo(id) {
-            await
-        }
     },
     
 }
