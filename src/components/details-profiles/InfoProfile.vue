@@ -1,7 +1,8 @@
 <template>
     
         <c-stack
-            
+            w="60rem" 
+            ml="3rem"
             rounded="0.5rem"
             p="20"
             bgColor="brand.400"
@@ -17,8 +18,10 @@
                          py="2"/>
             </c-box> -->
             
+            <!-- <c-image :src="require('./user_profile.png')" size="45rem"></c-image> -->
+            <c-image :src="require('./user_profile2.png')" size="45rem"></c-image>
     
-            <c-heading size="2xl" pb="2">{{ freelancerName }}</c-heading>
+            <c-heading mt="3rem" align="center" size="2xl" pb="2">{{ freelancerName }} {{ freelancerLastname }}</c-heading>
 
             <c-flex justify="center" >
                 <c-image v-bind:src="star" 
@@ -28,7 +31,7 @@
                         
                 <c-text
                     as="h2"
-                    fontSize="2xl"
+                    fontSize="4xl"
                     color="primary.800"
                     opacity="0.9"
                     fontWeight="normal"
@@ -42,7 +45,7 @@
             <c-flex justify="center">
                 <c-text
                     as="h2"
-                    fontSize="2xl"
+                    fontSize="4xl"
                     color="primary.800"
                     opacity="0.8"
                     fontWeight="normal"
@@ -61,7 +64,7 @@
 export default {
     name:"Info",
     //props: ["image", "freelancerName", "star", "rating", "age"]
-    props: ["freelancerName", "star", "rating", "age"]
+    props: ["freelancerName", "freelancerLastname", "star", "rating", "age"]
 }
 </script>
 
