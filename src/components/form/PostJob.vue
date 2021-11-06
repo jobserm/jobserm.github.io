@@ -138,24 +138,24 @@ export default {
             this.files = [...event.target.files]
         },
          async uploadFiles() {
-      //       try {
-      //           let formData = new FormData()
-      //           this.files.forEach(async (file) => {
-      //               formData.append('photo', file)
-      //               let res = await axios.post('http://localhost:8000/api/images', formData, {
-      //                   headers: {
-      //                       'X-JOB-ID': 1
-      //                   }
-      //               })
-      //               console.log(res)
-      //               if (res.status === 200) {
-      //                   console.log('upload success!')
-      //               }
-      //           })
+            // try {
+            //     let formData = new FormData()
+            //     this.files.forEach(async (file) => {
+            //         formData.append('photo', file)
+            //         let res = await axios.post('http://localhost:8000/api/images', formData, {
+            //             headers: {
+            //                 'X-JOB-ID': 1
+            //             }
+            //         })
+            //         console.log(res)
+            //         if (res.status === 200) {
+            //             console.log('upload success!')
+            //         }
+            //     })
                 
-      //       } catch (e) {
-      //           console.log(e)
-      //       }
+            // } catch (e) {
+            //     console.log(e)
+            // }
          }
     }
 };

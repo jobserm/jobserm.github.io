@@ -1,6 +1,6 @@
 <template>
     <div>
-        <c-text fontSize="2xl" textAlign="center">{{ "รีวิวทั้งหมด" }}</c-text>
+        <c-text fontSize="4xl" textAlign="center">{{ "รีวิวทั้งหมด" }}</c-text>
             <div v-for="index in reviews.data" :key="index.id">
                 <c-box
                     mt="4vh" 
@@ -24,7 +24,7 @@
                         <c-image    w="30px"
                                     h="30px"
                                     mr="1rem"
-                                    src ="https://thumbs.dreamstime.com/b/cute-star-eps-15764821.jpg"/>
+                                    src ="https://toppng.com/uploads/preview/5-point-stars-png-star-icon-flat-11562958768wpf63hu4tq.png"/>
                         <p class="rating">{{ index.rating }}</p>
                     </c-flex>
                 </c-box> 

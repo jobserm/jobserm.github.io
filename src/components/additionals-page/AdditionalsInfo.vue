@@ -111,6 +111,7 @@ export default {
                 try{
                     await JobApi.dispatch("addRemarks", payload)
                     this.$swal("สมัครเรียบร้อย",'รอการติดต่อจากผู้ว่าจ้าง',"success")
+                    this.$router.push("/")
                 } catch(error) {
                     this.$swal("สมัครไปแล้ว",'',"error")
                     this.$router.push("/jobinfo")

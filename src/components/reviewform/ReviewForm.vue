@@ -146,7 +146,7 @@ export default {
         this.$router.push("/userJob")
       }
       else
-        this.$swal("กรุณากรอกรีวิว",'','error')
+        this.$swal("คุณไม่ได้รีวิว",'','error')
       
     },
     // async getUser

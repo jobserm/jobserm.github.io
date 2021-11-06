@@ -35,15 +35,15 @@
           </c-select>
           <!-- สถานะการทำงาน -->
           <c-select id="type" v-model="form.working_status">
-              <option value="" style="display:none;" >สถานการทำงาน</option>
+              <option value="" style="display:none;" >สถานะการทำงาน</option>
               <option>AVAILABLE</option>
               <option>IN PROGRESS</option>
               <option>FINISH</option>
           </c-select>
-          <c-button @click="search(title,form.provinces)" variant-color="indigo" variant="outline">
+          <c-button ml="1rem" w="15rem" @click="search(title,form.provinces)" variant-color="indigo" variant="outline">
               ค้นหา
           </c-button>
-          <c-button @click="clear()" variant-color="indigo" variant="outline">
+          <c-button ml="1rem" w="15rem" @click="clear()" variant-color="indigo" variant="outline">
               clear
           </c-button>
 
@@ -55,7 +55,7 @@
 
     <c-flex align="center">
     <div v-for="index in jobs.data" :key="index.id">
-        <c-box mt="4rem"  maxW="sm" border-width="4px" rounded="lg" overflow="hidden" border-color="black" :_hover="{bg: 'indigo.100' , borderColor:'indigo'}" fontSize="xl">
+        <c-box mt="4rem" m="2rem" maxW="sm" border-width="2px" rounded="lg" overflow="hidden" border-color="black" :_hover="{bg: 'indigo.100' , borderColor:'indigo'}" fontSize="xl">
             
             <c-image src="https://static.toiimg.com/photo/msid-67586673/67586673.jpg?3918697" alt="cat" />
             <c-box p="6">
