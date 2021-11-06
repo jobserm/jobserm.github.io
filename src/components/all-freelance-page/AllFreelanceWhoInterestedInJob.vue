@@ -45,10 +45,12 @@ export default {
         id: '',
         job: {},
         jobs:[],
-        jobId:[]
+        jobId:[],
+        job_id: this.$route.params.id
       }
     },
     async created() {
+      console.log(this.job_id)
       await JobApi.watch(
         (state) => {
           return JobApi.getters.job_filtered

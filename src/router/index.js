@@ -113,7 +113,7 @@ const routes = [
     component: () => import("../views/AllFreelance.vue"),
   },
   {
-    path: "/all-freelance-who-interested-in-job",
+    path: "/all-freelance-who-interested-in-job/:id",
     name: "AllFreelanceWhoInterestedInJob",
     meta: {
       layout: "Main",

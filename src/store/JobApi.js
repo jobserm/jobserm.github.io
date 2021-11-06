@@ -16,6 +16,8 @@ export default new Vuex.Store({
     fetchUserFinish: [],
     jobByUser: [],
     jobFromSearch: [],
+    JobAvaNotLogIn: [],
+    AllJobsAvaNotLogIn:[],
   },
   getters: {
     posts: (state) => state.posts,
@@ -29,6 +31,8 @@ export default new Vuex.Store({
     getJobByUser: (state) => state.jobByUser,
     getJobById: (state) => state.JobById,
     getJobFromSearch: (state) => state.jobFromSearch,
+    getAvaJobNotLogIn: (state) => state.JobAvaNotLogIn,
+    getAllJobsAvaNotLogIn: (state) => state.AllJobsAvaNotLogIn,
   },
   mutations: {
     async fetch(state, { res }) {
@@ -40,8 +44,14 @@ export default new Vuex.Store({
     async fetchSuggest(state, { res }) {
       state.JobSuggest = (await res).data;
     },
+    async fetchAllAvaJobNotLogIn(state, { res }) {
+      state.AllJobsAvaNotLogIn = (await res).data;
+    },
     async fetchByUser(state, { res }) {
       state.jobByUser = await res;
+    },
+    async fetchAvaJobNotLogIn(state, { res }) {
+      state.JobAvaNotLogIn = await res.data;
     },
     async fetchFromSearch(state, { res }) {
       state.jobFromSearch = (await res).data;
@@ -132,12 +142,17 @@ export default new Vuex.Store({
       // console.log("ดำะแ้ ่นิ")
       // commit("fetch",{ res })
     },
-    async paginate({ commit }, route) {
-      let res = backendInstance.get(route);
+    async paginate({ commit }, payload) {
+      console.log(payload);
+      let body = {
+        id:payload.id
+      }
+      console.log(body.id);
+      let res = await backendInstance.post(payload.url,body.id);
       console.log("route");
-      console.log(route);
+      
       console.log("data from url");
-      console.log((await res).data);
+      console.log((await res));
       commit("fetch", { res });
     },
     async paginate_post({ commit }, route) {
@@ -167,13 +182,18 @@ export default new Vuex.Store({
     },
     async fetchJobFromSearch({ commit }, payload) {
       let body = {
-        province: payload,
+        title : payload.title,
+        province : payload.province,
+        category : payload.category,
+        compen : payload.compensatsion_array,
+        check : payload.check,
+
       };
       console.log("body", payload);
       try {
         let res = await backendInstance.post(`/api/get-job-from-search`, body);
         commit("fetchFromSearch", { res });
-        console.log((await res).data);
+        console.log("s",(await res).data);
       } catch (e) {
         console.log(e.message);
       }
@@ -191,6 +211,31 @@ export default new Vuex.Store({
       commit("fetchByUser", { res });
       console.log("fetchByUser");
     },
+
+    async fetchAllAvaJobsNotLogIn({ commit }, id) {
+      console.log("---id---");
+      console.log(id);
+      let body = {
+        id: id,
+      };
+      let res = await backendInstance.post(`/api/jobs/get-all-avaliable-jobs-not-log-in`, body);
+      console.log((await res).data);
+      console.log("fetchAllAvaJobsNotLogIn");
+      commit("fetchAllAvaJobNotLogIn", { res });
+      console.log("fetchAllAvaJobsNotLogIn");
+    },
+
+    async fetchJobAvaliableNotLogedIn({ commit }, id) {
+      console.log("fetchJobAvaliableNotLogedIn");
+      console.log("id",id);
+      let body = {
+        id: id,
+      };
+      let res = await backendInstance.post(`api/jobs/get-avaliable-jobs-not-log-in`, body);
+      console.log( res);
+      commit("fetchAvaJobNotLogIn", { res });
+    },
+
     async addRemarks({ commit }, payload) {
       console.log("payload.id---", payload.id);
       console.log("payload.remark---", payload.remark);

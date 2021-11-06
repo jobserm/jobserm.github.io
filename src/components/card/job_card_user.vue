@@ -36,11 +36,6 @@
               <option value="" style="display:none;" >จังหวัด</option>
               <option v-for="index in provinces.data" :key="index.id">{{ index.province }}</option>
           </c-select>
-          <!-- ประเภทงาน-->
-          <c-select id="type" v-model="form.category">
-              <option value="" style="display:none;" >ประเภทงาน</option>
-              <option v-for="index in categories" :key="index.id">{{ index.category_name }}</option>
-          </c-select>
           <!-- ค่าตอบแทน -->
           <c-select id="type" v-model="form.compensation">
               <option value="" style="display:none;" >  ค่าตอบแทน</option>
@@ -138,18 +133,22 @@
                 <c-box>
                     {{ index.compensation }} บาท/ชม
                 </c-box>
+                {{ index.user_id }}
 
                 <c-flex jusify="center">
                     <c-button  mt="1rem" bgColor="black" color="white" size="lg" :_hover="{bg: 'pink.400'}">
                         <a @click='value(index.id)' :href="'#/job'" v-bind="index">รายละเอียดงาน</a>
                     </c-button>
+                    <c-button mt="1rem" bgColor="black" color="white" size="lg" :_hover="{bg: 'pink.400'}">
+                        <a @click='Freelance(index.id)' :href="'#/all-freelance-who-interested-in-job/'+index.id" v-bind="index">ผู้ที่สนใจงาน</a>
+                    </c-button>
+                    
                 </c-flex>
             </c-box>
             
         </c-box>
     </div>
     </c-flex>
-    {{jobs}}
             
         </body> 
             <!-- <div class="paginate">

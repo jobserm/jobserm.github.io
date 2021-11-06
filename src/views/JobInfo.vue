@@ -7,6 +7,7 @@
 
 <script>
 import JobCard from "../components/card/job_card.vue"
+// import JobCard from "../components/card/job_card_paginate.vue"
 import JobApi from "../store/JobApi.js"
 import Axios from "axios";
 import CategoryStore from "../store/CategoryStore";
