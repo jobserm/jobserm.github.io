@@ -7,19 +7,26 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     users: [],
-    // usersArePublish: []
+    user: {},
+    usersArePublish: []
   },
   getters: {
     getUsers: (state) => state.users,
-    // getUsersArePublish: state => state.usersArePublish
+    fetchUser: (state) => state.user,
+    fetchUsersArePublish: (state) => state.usersArePublish
   },
   mutations: {
     setUsers(state, data) {
       state.users = data;
     },
-    // setUsersArePublish(state, data) {
-    //     state.usersArePublish = data
-    // }
+
+    fetchUser(state, data) {
+        (state).user = data;
+    },
+
+    fetchUsersArePublish(state, data) {
+        (state).usersArePublish = data
+    }
   },
   actions: {
     async fetchUsers({ commit }, headers) {
@@ -31,21 +38,23 @@ export default new Vuex.Store({
       }
     },
 
-    // async getUsersArePublish({ commit }) {
-    //     try {
-    //         let jwt = JSON.parse(localStorage.getItem(auth_key))
-    //         let res = await axios.get(`http://localhost:8000/api/get-user-is-publish`, {}, {
-    //             headers: {
-    //                 'Authorization': `Bearer ${jwt.access_token}`
-    //             }
-    //         })
+    async fetchUserByID({ commit }, id) {
+        try {
+            let res = await backendInstance.get(`/api/users/${id}`)
+            commit("fetchUser", res.data)
+        } catch (e) {
+            console.log(e);
+        }
+    },
 
-    //         console.log(res.data)
-    //         commit('setUsersArePublish', res.data)
+    async fetchUsersArePublish({ commit }) {
+        try {
+            let res = await backendInstance.get(`/api/get-user-is-publish`)
+            commit('fetchUsersArePublish', res.data)
 
-    //     } catch(e) {
-    //         console.log(e)
-    //     }
-    // },
+        } catch(e) {
+            console.log(e)
+        }
+    },
   },
 });

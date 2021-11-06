@@ -3,7 +3,7 @@
         <c-stack
             wrap="wrap"
             rounded="0.5rem"
-            p="5"
+            p="10"
             bgColor="brand.400"
             :_hover="{ bg: '#E2E8F0'}"
             shadow="xl" 
@@ -19,17 +19,17 @@
             </c-box> -->
             
     
-            <c-heading size="md" pb="2">{{ freelancerName }}</c-heading>
+            <c-heading size="xl" pb="2">{{ freelancerName }}</c-heading>
 
             <c-flex justify="center" >
                 <c-image v-bind:src="star" 
-                        w="20px"
-                        h="20px"
+                        w="30px"
+                        h="30px"
                         />
                         
                 <c-text
                     as="h2"
-                    size="md"
+                    fontSize="2xl"
                     color="primary.800"
                     opacity="0.9"
                     fontWeight="normal"
@@ -43,7 +43,7 @@
             <c-flex justify="center">
                 <c-text
                     as="h2"
-                    size="md"
+                    fontSize="2xl"
                     color="primary.800"
                     opacity="0.8"
                     fontWeight="normal"

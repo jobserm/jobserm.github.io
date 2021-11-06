@@ -83,6 +83,10 @@
         <div v-if="!isAuthen()">
           <button-primary :url="`/register`" :text="`สมัครสมาชิก`" mx="4" />
         </div>
+
+        <div v-if="isAuthen()">
+          <button-primary :text="`profile`" :url="`/auth-profile`" mx="12" />
+        </div>
         
       </c-flex>
     </c-simple-grid>

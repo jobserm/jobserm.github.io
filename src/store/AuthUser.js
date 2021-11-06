@@ -68,10 +68,11 @@ export default new Vuex.Store({
     },
     async firstRegister({ commit }, body) {
       try {
+        console.log("body", body);
         let res = await backendInstance.post(
-          `/api/users/${this.state.user.id}/first-register`,
-          body
+          `/api/users/${this.state.user.id}/first-register`, body
         );
+        console.log("res", res);
         if (res.status === 201) {
           // console.log('first register successfully!')
           // console.log(this.state.jwt)
