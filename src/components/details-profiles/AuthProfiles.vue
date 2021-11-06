@@ -92,11 +92,12 @@
 
                     <c-heading
                         as="h2"
-                        size="lg"
+                        size="xl"
                         color="black"
                         opacity="0.9"
                         px="24"
                         lineHeight="3"
+                        mt="1rem"
                     >
                     ช่องทางการติดต่อ
                     </c-heading>
@@ -125,11 +126,12 @@
 
                     <c-heading
                         as="h2"
-                        size="lg"
+                        size="xl"
                         color="black"
                         opacity="0.9"
                         px="24"
                         lineHeight="3"
+                        mt="1rem"
                     >
                     ข้อมูลเพิ่มเติม
                     </c-heading>
