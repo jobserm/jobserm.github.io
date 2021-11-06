@@ -1,9 +1,16 @@
 <template>
-    <c-box  px="20" py="10">
+    <c-box  
+        direction="column"
+        minW="100%"
+        :py="[null, '12']"
+        :bgImage="require('./bg_profile.svg')"
+        background-repeat="repeat-x"
+    >
+        <c-box  px="20" py="10" >
         <loading v-if="isLoading" />
         <div v-if="!isLoading">
             <c-stack>
-                <c-heading size="2xl" py="12">ประวัติส่วนตัว</c-heading>
+                <c-heading ml="5rem" fontSize="5xl" py="5">ประวัติส่วนตัว</c-heading>
             </c-stack>
             
 
@@ -14,10 +21,10 @@
                     v-bind:age="user.birthdate"
                     :star="require(`./star.png`)"
                 />
-                <c-box>
+                <c-box bg="#FDFDFD" border-width="3px" rounded="0.5rem">
                     <c-heading
                         as="h2"
-                        size="lg"
+                        size="xl"
                         color="black"
                         opacity="0.9"
                         px="24"
@@ -149,31 +156,34 @@
                     ความสามารถ : {{ this.user.skill }}
                     </c-text>
                 </c-box>
-
-                <c-simple-grid :columns="[1, 1, 1, 1]" spacing="10">
-                    <c-heading size="xl" pb="2" v-if="this.user.review !== 0">งานที่เคยทำ</c-heading>
-                    <div v-for="review in reviews" :key="review.id">
+            </c-flex>
+        </div>
+        <!-- รีวิว -->
+        <c-heading size="2xl" py="5" mt="5rem" ml="5rem" v-if="this.user.review !== 0">รีวิวจากผู้ว่าจ้าง</c-heading>
+        <c-simple-grid :columns="[1, 1, 1, 2]" spacing="10" ml="4rem">
+                    <div v-for="review in this.reviews" :key="review.id">
                         <c-stack
                             wrap="wrap"
                             rounded="0.5rem"
                             p="12"
-                            bgColor="yellow"
+                            bgColor="#FDFDFD"
                             shadow="xl" 
                             border-width="1px"
-                            w="700px"
-                            h="200px"
+                            w="70rem"
+                            h="12rem"
+                            mt="2rem"
                             >
                             
-                            <c-heading fontSize="2xl" pb="2">{{ review.comment }} <br>
-                            คะแนนรีวิว {{ review.rating.toFixed(1) }} </c-heading>
+                            <c-heading fontSize="2xl" pb="2">{{ review.comment }} 
+                                <br>
+                                <br>
+                                คะแนนรีวิว {{ review.rating.toFixed(1) }} 
+                            </c-heading>
         
                         </c-stack>
                     </div>
                 </c-simple-grid>
-        
-
-            </c-flex>
-        </div>
+        </c-box>
     </c-box>   
 </template>
 
