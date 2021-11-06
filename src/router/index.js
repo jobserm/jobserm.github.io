@@ -126,13 +126,13 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/AllFreelanceWhoInterestedInJob.vue"),
   },
   {
-    path: "/profiles",
+    path: "/profiles/:id",
     name: "profiles",
     meta: {
       layout: "Main",
       requiresAuth: true,
     },
-    component: () => import("../views/DetailForm.vue"),
+    component: () => import("../views/Profiles.vue"),
   },
   // {
   //   path: "/personalinformation",
