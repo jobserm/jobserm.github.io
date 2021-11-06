@@ -242,6 +242,15 @@ const routes = [
     name: "test upload",
     component: () => import("../views/testUpload.vue")
   },
+  {
+    path: "/auth-profile",
+    name: "auth-profile",
+    meta: {
+      layout: "Main",
+      requiresAuth: true,
+    },
+    component: () => import("../views/AuthProfiles.vue"),
+  },
 ];
 
 const router = new VueRouter({
