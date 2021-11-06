@@ -44,6 +44,7 @@ export default {
             this.lastname = lastname
         },
         async register(value) {
+            console.log("value",value)
             let res = await AuthUser.dispatch('firstRegister', value)
             if (res.success) {
                 this.$swal("ลงทะเบียนสำเร็จ", `ขอบคุณที่ให้ความสนใจ`, "success")
