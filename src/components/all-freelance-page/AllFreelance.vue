@@ -1,25 +1,27 @@
 <template>
    <c-box px="20" py="10">
-      <c-stack>
-          <c-heading py="12" size="2xl">ฟรีแลนซ์ที่กำลังหางาน</c-heading>
-      </c-stack>
+        <loading v-if="isLoading" />
+        <div v-if="!isLoading">
+            <c-stack>
+                <c-heading py="12" size="2xl">ฟรีแลนซ์ที่กำลังหางาน</c-heading>
+            </c-stack>
 
-      <c-simple-grid :columns="[1, 1, 1, 5]" spacing="12" align="center" py="16">
-        <div v-for="user in users" :key="user.id">
+            <c-simple-grid :columns="[1, 1, 1, 5]" spacing="12" align="center" py="16">
+                <div v-for="user in users" :key="user.id">
 
-            <a :href="'#/profiles/'+user.id">   
-              <info
-                v-bind:freelancerName="user.name + user.lastname"
-                v-bind:rating="user.review"
-                v-bind:age="user.birthdate"
-                :star="require(`./star.png`)"
-              />
-            </a>
+                    <a :href="'#/profiles/'+user.id">   
+                    <info
+                        v-bind:freelancerName="user.name + user.lastname"
+                        v-bind:rating="user.review"
+                        v-bind:age="user.birthdate"
+                        :star="require(`./star.png`)"
+                    />
+                    </a>
+
+                </div>
+            </c-simple-grid>
 
         </div>
-      </c-simple-grid>
-
-
   </c-box>
 </template>
 
@@ -32,7 +34,8 @@ export default {
     name: "Info",
     data() {
         return {
-            users: []
+            users: [],
+            isLoading: true
         }
     },
     async created() {
@@ -40,8 +43,7 @@ export default {
         let res = UserStore.getters.fetchUsersArePublish
         this.users = res
         this.editFormat()
-        console.log("all-freelance")
-        console.log(this.users)
+        this.isLoading = false
     },
     methods: {
         async editFormat() {
