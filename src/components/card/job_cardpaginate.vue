@@ -2,11 +2,11 @@
 <div>
     <c-text fontSize="4xl"> filther ตอน search ไม่เอางานของ user ที่ login</c-text>
 
-         <c-text fontSize="4xl" ml="10rem" mt="2rem">{{ "งานทั้งหมด" }}</c-text>
-      <c-flex>
+        <c-text fontSize="4xl" ml="11%" mt="2rem">{{ "งานทั้งหมด" }}</c-text>
+        <c-flex>
         <c-input-group size="sm" class="input" rounded="md">
             <!-- <c-input-left-element><c-icon name="phone" color="gray.300" /></c-input-left-element> -->
-            <c-input borderColor="black" ml="10rem" focus-border-color="indigo.200" w="30rem" mt="1.5rem" h="2.6rem" type="phone" placeholder="ค้นหา" v-model="title"/>
+            <c-input borderColor="black" ml="17rem" focus-border-color="indigo.200" w="60rem" mt="1.5rem" h="2.6rem" type="phone" placeholder="ค้นหา" v-model="title"/>
         </c-input-group>
 
         <c-flex mt="1.5rem" ml="1rem">
@@ -15,11 +15,6 @@
               <option value="" style="display:none;" >จังหวัด</option>
               <option v-for="index in provinces.data" :key="index.id">{{ index.province }}</option>
           </c-select>
-          <!-- ประเภทงาน-->
-          <!-- <c-select id="type" v-model="form.category">
-              <option value="" style="display:none;" >ประเภทงาน</option>
-              <option v-for="index in categories" :key="index.id">{{ index.category_name }}</option>
-          </c-select> -->
           <!-- ค่าตอบแทน -->
           <c-select id="type" v-model="form.compensation">
               <option value="" style="display:none;" >  ค่าตอบแทน</option>
@@ -34,17 +29,10 @@
               <option>21,000 - 40,000</option>
               <option>41,000 - 60,000</option>
           </c-select>
-          <!-- สถานะการทำงาน -->
-          <!-- <c-select id="type" v-model="form.working_status">
-              <option value="" style="display:none;" >สถานการทำงาน</option>
-              <option>AVAILABLE</option>
-              <option>IN PROGRESS</option>
-              <option>FINISH</option>
-          </c-select> -->
-          <c-button @click="search(title,form.provinces,form.compensation,form.category)" variant-color="indigo" variant="outline">
+          <c-button w="15rem" @click="search(title,form.provinces,form.compensation,form.category)" variant-color="indigo" variant="outline">
               ค้นหา
           </c-button>
-          <c-button ml="1rem" w="15rem" @click="clear()" variant-color="indigo" variant="outline">
+          <c-button ml="1rem" w="15rem" @click="clear()" bg="#F22BB2">
               clear
           </c-button>
 
@@ -54,9 +42,9 @@
 
         <c-text fontSize="5xl" align="center" color="red" mt="4rem" v-if="this.count_job === -1">ไม่มีงานที่ค้นหา</c-text>
 
-    <c-flex align="center">
+    <c-simple-grid :columns="[1, 1, 1, 6]" spacing="10" m="10">
     <div v-for="index in paginated" :key="index.id">
-        <c-box mt="4rem" m="2rem" maxW="sm" border-width="2px" rounded="lg" overflow="hidden" border-color="black" :_hover="{bg: 'indigo.100' , borderColor:'indigo'}" fontSize="xl">
+        <c-box mt="4rem" m="2rem" maxW="sm" border-width="3px" rounded="lg" overflow="hidden" border-color="black" :_hover="{bg: 'indigo.100' , borderColor:'indigo'}" fontSize="xl">
             
             <c-image src="https://static.toiimg.com/photo/msid-67586673/67586673.jpg?3918697" alt="cat" />
             <c-box p="6">
@@ -130,12 +118,15 @@
             </c-box>
         </c-box>
     </div>
-    </c-flex>
+    </c-simple-grid>
+
+    <!-- paginate -->
     <div class="paginate">
-        <c-flex mb="4rem">
-            <c-button @click="prev"> Prev </c-button>
-            <c-text fontSize="4xl">{{ current }}</c-text>
-            <c-button @click="next()"> Next </c-button>
+        <c-flex mr="3%" mb="5rem">
+            <c-button w="100px" @click="prev"> Prev </c-button>
+            <c-text fontSize="4xl"> {{ current }}</c-text>
+            
+            <c-button bg="#F1E4FF" w="100%" @click="next()"> Next </c-button>
         </c-flex>
     </div>
 </div>
@@ -174,7 +165,7 @@ export default {
             user:[],
             pageIndex:1,
             current: 1,
-            pageSize: 4,
+            pageSize: 6,
         }
     },
     async created(){
@@ -203,7 +194,7 @@ export default {
                 this.current--;
             },
             next() {
-            if(this.current < this.jobs.length/4)
+            if(this.current < this.jobs.length/6)
                 this.current++;
 
             },

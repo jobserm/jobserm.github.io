@@ -196,8 +196,8 @@
             </c-flex>
         </div>
         <!-- รีวิว -->
-        <c-heading size="2xl" py="5" mt="5rem" ml="5rem" v-if="this.user.review !== 0">รีวิวจากผู้ว่าจ้าง</c-heading>
-        <c-simple-grid :columns="[1, 1, 1, 2]" spacing="10" ml="4rem">
+        <c-heading size="2xl" py="5" mt="5%" ml="4%" v-if="this.user.review !== 0">รีวิวจากผู้ว่าจ้าง</c-heading>
+        <c-simple-grid :columns="[1, 1, 1, 2]" spacing="10" ml="3%">
                     <div v-for="review in this.reviews" :key="review.id">
                         <c-stack
                             wrap="wrap"
