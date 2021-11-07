@@ -1,36 +1,39 @@
 <template>
    <c-box px="20" py="10">
+      <loading v-if="isLoading" />
+      <div v-if="!isLoading">
       <c-stack>
-          <c-heading py="12">ผู้ที่สนใจ <br> {{ job.title }}</c-heading>
+          <c-heading py="12" fontSize="5xl">ผู้ที่สนใจ <br> {{ job.title }}</c-heading>
       </c-stack>
 
-      <c-flex>
-          <!-- <div v-for="image in job_images" :key="image">
+      <!-- <c-flex>
+          <div v-for="image in job_images" :key="image">
               <c-image 
               :src="require(`${image.dog}`)"
               w="350px"
               objectFit="scale-down"
               p="2"
               />
-          </div> -->
-      </c-flex>
+          </div>
+      </c-flex> -->
 
-      <c-simple-grid :columns="[1, 1, 1, 5]" spacing="8" align="center" py="16">
-        <div v-for="user in jobId.users" :key="user.id">
-          <router-link to="/profiles" >
-            <div @click="freelancerInfo(user)">   
+      <c-simple-grid :columns="[1, 1, 1, 5]" spacing="12" align="center" py="16">
+        <div v-for="user in job.users" :key="user.id">
+          <a :href="'#/candidate-profile/'+job.id+'/'+user.id"> 
+            <div>   
               <info
-                v-bind:freelancerName="user.name + user.lastname"
-                v-bind:rating="user.review || 0"
+                v-bind:freelancerName="user.name"
+                v-bind:freelancerLastname="user.lastname"
+                v-bind:rating="user.review"
                 v-bind:age="user.birthdate"
                 :star="require(`./star.png`)"
               />
             </div>
-            </router-link>
+          </a>
         </div>
       </c-simple-grid>
 
-
+    </div>
   </c-box>
 </template>
 
@@ -42,49 +45,36 @@ export default {
     name: "Info",
     data() {
       return {
-        id: '',
         job: {},
-        jobs:[],
-        jobId:[],
-        job_id: this.$route.params.id
+        job_id: this.$route.params.id,
+        isLoading: true
       }
     },
     async created() {
-      console.log(this.job_id)
-      await JobApi.watch(
-        (state) => {
-          return JobApi.getters.job_filtered
-        },
-        (newValue, oldValue) => {
-          this.jobs.push(newValue)
-          localStorage.setItem('YourItem',JSON.stringify(newValue))
-          this.jobId = JSON.parse(localStorage.getItem('YourItem'));
-          console.log("this.jobId" ,this.jobId)
-          console.log(localStorage)
-          console.log("this.newValue" ,newValue)
-          console.log("this.job" ,this.jobs)
-        }
-      )
-      this.jobId = JSON.parse(localStorage.getItem('YourItem'));
-      console.log("this.jobId" ,this.jobId)
-      console.log("created")
-      this.getEsaaa()
+      await JobApi.dispatch("fetchJobByID", this.job_id)
+      let res = JobApi.getters.getJobById
+      this.job = res
+      
+      this.editFormat()
+
+      this.isLoading = false
     },
     methods: {
-      async getEsaaa() {
-        this.jobId.users.map(item => {
-          if (item.birthdate) {
-            let ageDifMs = Date.now() - new Date(item.birthdate).getTime()
-            let ageDate = new Date(ageDifMs)
-            item.birthdate = Math.abs(ageDate.getUTCFullYear() - 1970)
-          }
-          return item
-        })
-      },
-      freelancerInfo(user){
-        localStorage.setItem('user',JSON.stringify(user))
-        
-      },
+        async editFormat() {
+            this.job.users.map(item => {
+                if (item.birthdate) {
+                    let ageDifMs = Date.now() - new Date(item.birthdate).getTime()
+                    let ageDate = new Date(ageDifMs)
+                    item.birthdate = Math.abs(ageDate.getUTCFullYear() - 1970)
+                }
+                if (item.review === null) {
+                    item.review = 0
+                } else {
+                    item.review = item.review.toFixed(1)
+                }
+                return item
+            })
+        },      
     },
     
 }

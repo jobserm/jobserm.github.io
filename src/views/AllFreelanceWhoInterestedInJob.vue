@@ -1,14 +1,14 @@
 <template>
-  <all-freelance/>
+  <all-freelance-who-interested-in-job />
 </template>
 
 <script>
-import AllFreelance from "../components/all-freelance-page/AllFreelance.vue";
+import AllFreelanceWhoInterestedInJob from "../components/all-freelance-page/AllFreelanceWhoInterestedInJob.vue";
 
 export default {
-  name: "Freelance",
+  name: "AllFreelance",
   components: {
-    AllFreelance
+    AllFreelanceWhoInterestedInJob
 
   },
 };
