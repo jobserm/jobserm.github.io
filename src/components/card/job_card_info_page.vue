@@ -2,7 +2,82 @@
     <div>
         
         <body>
-            <div class="cards">
+            <div v-for="index in jobs.slice(0,3)" :key="index.id">
+        <c-box mt="4rem" m="2rem" maxW="sm" border-width="2px" rounded="lg" overflow="hidden" border-color="black" :_hover="{bg: 'indigo.100' , borderColor:'indigo'}" fontSize="xl">
+            
+            <c-image src="https://static.toiimg.com/photo/msid-67586673/67586673.jpg?3918697" alt="cat" />
+            <c-box p="6">
+                <c-box d="flex" align-items="baseline">
+                    <c-badge rounded="full" px="5" variant-color="green" font-size="0.75em" v-if="index.working_status === 'AVAILABLE'">
+                    AVALIABLE
+                    </c-badge>
+                    <c-badge rounded="full" px="5" variant-color="yellow" font-size="0.75em" v-if="index.working_status === 'IN PROGRESS'">
+                    IN PROGRESS
+                    </c-badge>
+                    <c-badge rounded="full" px="5" variant-color="red" font-size="0.75em" v-if="index.working_status === 'FINISH'">
+                    FINISH
+                    </c-badge>
+                    <c-box
+                        color="gray.500"
+                        font-weight="semibold"
+                        letter-spacing="wide"
+                        font-size="0.75em"
+                        text-transform="uppercase"
+                        ml="2"
+                        >
+                        {{ index.province }}  &bull; {{ index.provinces }} 
+                    </c-box>
+                </c-box>
+                <c-box
+                    mt="1"
+                    font-weight="semibold"
+                    as="h4"
+                    line-height="tight"
+                    is-truncated
+                >
+                    {{ index.title }}
+                </c-box>
+
+                <c-box>
+                    {{ index.description }}
+                </c-box>
+
+                <c-box
+                    mt="1.5rem"
+                    font-weight="semibold"
+                    as="h4"
+                    line-height="tight"
+                    is-truncated
+                >
+                    {{ "คุณสมบัติที่ต้องการ" }}
+                </c-box>
+                <c-box>
+                {{ index.requirement }} 
+                </c-box>
+
+                <c-box
+                    mt="1.5rem"
+                    font-weight="semibold"
+                    as="h4"
+                    line-height="tight"
+                    is-truncated
+                >
+                {{ "ค่าจ้าง" }}
+                </c-box>
+                <c-box>
+                    {{ index.compensation }} บาท/ชม
+                </c-box>
+
+                {{ index.user_id }}
+                <c-flex jusify="center">
+                    <c-button  mt="1rem" bgColor="black" color="white" size="lg" :_hover="{bg: 'pink.400'}">
+                        <a @click='value(index.id)' :href="'#/job'" v-bind="index">รายละเอียดงาน</a>
+                    </c-button>
+                </c-flex>
+            </c-box>
+        </c-box>
+    </div>
+            <!-- <div class="cards">
                 
                 <div class="services" v-for="index in jobs.slice(0,3)" :key="index.id">
                     
@@ -24,7 +99,8 @@
 
                     </div>
                 </div>
-            </div>
+            </div> -->
+            
             
         </body>
 
