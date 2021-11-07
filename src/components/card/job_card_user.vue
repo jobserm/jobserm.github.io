@@ -6,23 +6,23 @@
             <c-flex>
                 <c-flex mt="1.5rem" ml="1rem">
                     <!-- สถานะการทำงาน -->
-                    <c-select mt="2rem" ml="103rem" id="type" v-model="form.working_status">
+                    <c-select mt="2rem" ml="98rem" id="type" v-model="form.working_status">
                         <option value="" style="display:none;" >สถานะการทำงาน</option>
                         <option>AVAILABLE</option>
                         <option>IN PROGRESS</option>
                         <option>FINISH</option>
                     </c-select>
                     <!-- ค้นหา -->
-                    <c-button mt="2rem" w="15rem" @click="search(form.provinces)" variant-color="indigo" variant="outline">
+                    <c-button ml="10" mt="2rem" w="20rem" @click="search(form.provinces)" variant-color="indigo" variant="outline">
                         ค้นหา
                     </c-button>
                     <!-- clear -->
-                    <c-button mt="2rem" ml="1rem" w="15rem" @click="fetchJobs()"  bg="#F22BB2">
+                    <c-button mt="2rem" ml="1rem" w="20rem" @click="fetchJobs()"  bg="#F22BB2">
                         clear
                     </c-button>
                 </c-flex>
             </c-flex>
-    <c-simple-grid :columns="[1, 1, 1, 6]" spacing="10" m="10">
+    <c-simple-grid :columns="[1, 1, 1, 6]" spacing="8" m="10">
     <div v-for="index in jobs.data" :key="index.id">
         <c-box mt="4rem"  maxW="sm" border-width="4px" rounded="lg" overflow="hidden" border-color="black" :_hover="{bg: 'indigo.100' , borderColor:'indigo'}" fontSize="xl">
             
@@ -91,12 +91,12 @@
                     {{ index.user_id }}
 
                 <c-flex jusify="center">
-                    <c-button  mt="1rem" bgColor="black" color="white" size="lg" :_hover="{bg: 'pink.400'}">
+                    <c-button mt="2rem" m="3" bgColor="black" color="white" size="lg" :_hover="{bg: 'pink.400'}">
                         <a @click='value(index.id)' :href="'#/job'" v-bind="index">รายละเอียดงาน</a>
                     </c-button>
 
                     <div v-if="index.working_status !== 'IN PROGRESS' && index.working_status !== 'FINISH'">
-                    <c-button mt="1rem" bgColor="black" color="white" size="lg" :_hover="{bg: 'pink.400'}">
+                    <c-button mt="2rem" m="3" bgColor="black" color="white" size="lg" :_hover="{bg: 'pink.400'}">
                         <a @click='Freelance(index.id)' :href="'#/all-freelance-who-interested-in-job/'+index.id" v-bind="index">ผู้ที่สนใจงาน</a>
                     </c-button>
 

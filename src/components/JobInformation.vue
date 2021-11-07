@@ -33,7 +33,7 @@
                 </router-link>
 
               <router-link to="/review-form" >
-                <c-button @click="finish" color="blue" width="150px" bgColor="#D3EDED "  mt="1rem" v-if="validated_interest && jobId.working_status === 'IN PROGRESS'">
+                <c-button h="4rem" w="19rem" fontSize="2xl" @click="finish" color="blue" bgColor="#D3EDED " v-if="validated_interest && jobId.working_status === 'IN PROGRESS'">
                     จบงาน
                 </c-button>
               </router-link>
@@ -60,9 +60,9 @@
       <br>
       <c-text v-if="validated" fontSize="4xl" ml="20rem" mt="2rem">
         หากคุณกำลังมองหางานอื่นอยู่
-        <c-simple-grid :columns="[1, 1, 1, 3]" spacing="10">
-          <JobCard v-if="validated"> </JobCard>
-        </c-simple-grid>
+          <JobCard v-if="validated"> 
+
+          </JobCard>
       </c-text>
       </div>
     </div>

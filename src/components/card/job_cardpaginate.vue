@@ -18,7 +18,7 @@
               <option v-for="index in provinces.data" :key="index.id">{{ index.province }}</option>
           </c-select>
           <!-- ค่าตอบแทน -->
-          <c-select id="type" v-model="form.compensation">
+          <c-select ml="3"  id="type" v-model="form.compensation">
               <option value="" style="display:none;" >  ค่าตอบแทน</option>
               <option>3,000 - 4,000</option>
               <option>4,100 - 5,000</option>
@@ -31,7 +31,7 @@
               <option>21,000 - 40,000</option>
               <option>41,000 - 60,000</option>
           </c-select>
-          <c-button w="15rem" @click="search(title,form.provinces,form.compensation,form.category)" variant-color="indigo" variant="outline">
+          <c-button ml="10" w="15rem" @click="search(title,form.provinces,form.compensation,form.category)" variant-color="indigo" variant="outline">
               ค้นหา
           </c-button>
           <c-button ml="1rem" w="15rem" @click="clear()" bg="#F22BB2">
