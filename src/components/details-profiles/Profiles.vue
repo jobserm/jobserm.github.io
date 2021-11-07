@@ -10,7 +10,7 @@
             <loading v-if="isLoading" />
             <div v-if="!isLoading">
             <c-stack>
-                <c-heading ml="5rem" fontSize="5xl" py="5">ประวัติส่วนตัว</c-heading>
+                <c-heading align="center" fontSize="5xl" py="5">ประวัติส่วนตัว</c-heading>
             </c-stack>
             
             <c-flex py="16" justify="center">

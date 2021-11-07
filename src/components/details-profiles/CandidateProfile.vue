@@ -10,7 +10,7 @@
         <loading v-if="isLoading" />
         <div v-if="!isLoading">
             <c-stack>
-                <c-heading ml="5rem" fontSize="5xl" py="5">ประวัติส่วนตัว</c-heading>
+                <c-heading align="center" fontSize="5xl" py="5">ประวัติส่วนตัว</c-heading>
             </c-stack>
             
 
@@ -295,7 +295,7 @@ export default {
           }).then((selectFreelance) => {
             if (selectFreelance) {
               if(res.success) {
-                this.$router.push("/")
+                this.$router.push("/userJob")
                 this.$swal("จ้างงานเสร็จสิ้น", {icon: "success"})
               } else {
                 console.log("ไม่นะะะ")
