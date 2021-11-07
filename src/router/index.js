@@ -251,6 +251,15 @@ const routes = [
     },
     component: () => import("../views/AuthProfiles.vue"),
   },
+  {
+    path: "/candidate-profile/:job_id/:user_id",
+    name: "candidate-profile",
+    meta: {
+      layout: "Main",
+      requiresAuth: true,
+    },
+    component: () => import("../views/CandidateProfile.vue"),
+  },
 ];
 
 const router = new VueRouter({
