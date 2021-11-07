@@ -1,63 +1,71 @@
 <template>
   <div>
+    <loading v-if="isLoading" />
+      <div v-if="!isLoading">
       <c-stack :spacing="6">
-        <c-text fontSize="4xl" ml="20rem" mt="2rem">{{ jobId.title }}</c-text>
+        <c-text fontSize="6xl" ml="20rem" mt="2rem">{{ jobId.title }}</c-text>
 
           <c-flex ml="20rem">
-            <c-image  w="40%"
+            <c-image mt="2rem" align="center" w="50%"
                       src="https://img.pptvhd36.com/thumbor/2020/07/16/news-0ae9eefe51.jpg" />
 
             <c-image  ml="5rem"
                       w="30%"
                       h="30%"
+                      mt="2rem"
                       src="https://www.forbes.com/advisor/wp-content/uploads/2021/03/pit-bull-featured.jpg" />
 
-            <!-- <c-image  w="20%"
-                      h="10%" 
-                      mt="13rem"
-                      src="https://www.cdc.gov/healthypets/images/pets/angry-dog.jpg?_=03873" /> -->
+            <!-- <c-image  ml="5rem"
+                      w="30%"
+                      h="30%"
+                      src="https://www.forbes.com/advisor/wp-content/uploads/2021/03/pit-bull-featured.jpg" /> -->
           </c-flex>
 
           <c-flex>
-              <c-text color="indigo.400"  fontSize="3xl" ml="20rem">ชั่วโมงละ {{jobId.compensation }} บาท</c-text>
-          </c-flex>
+              <c-text color="indigo.400"  fontSize="5xl" ml="20rem">ชั่วโมงละ {{  jobId.compensation }} บาท</c-text>
 
-          <!-- button -->
-          <c-flex class="button" justify="space-between" mr="10rem" pt="1rem" w="17%" m="auto">
-            <router-link to="/additionals" >
-                <c-button  right-icon="arrow-forward"  mt="1rem" fontWeight="sm" variant-color="blue" v-if="validated">
-                    สนใจงานนี้
+              <!-- button -->
+              <c-flex ml="70rem">
+                <router-link to="/additionals" >
+                  <c-button h="4rem" w="19rem" fontSize="2xl" right-icon="arrow-forward" fontWeight="md" bg="#FE9A22" v-if="validated">
+                      สมัครงาน
+                  </c-button>
+                </router-link>
+
+              <router-link to="/review-form" >
+                <c-button h="4rem" w="19rem" fontSize="2xl" @click="finish" color="blue" bgColor="#D3EDED " v-if="validated_interest && jobId.working_status === 'IN PROGRESS'">
+                    จบงาน
                 </c-button>
-            </router-link>
-
-            <router-link to="/review-form" >
-              <c-button @click="finish" color="blue" width="150px" bgColor="#D3EDED "  mt="1rem" v-if="validated_interest">
-                  จบงาน
-              </c-button>
-            </router-link>
+              </router-link>
+              </c-flex>
           </c-flex>
 
-          <c-text fontSize="md" ml="20rem" as="ins" mt="1rem">รายละเอียดงาน</c-text>
+          <c-text fontSize="4xl" ml="20rem" as="ins" mt="6rem">รายละเอียดงาน</c-text>
 
           <c-box class="compensation">
-              <c-text fontSize="2xl" ml="20rem" >อัตราค่าจ้าง</c-text>
-              <c-text ml="20rem"> - ชั่วโมงละ {{jobId.compensation }} บาท </c-text>
+              <c-text fontSize="3xl" ml="20rem" >อัตราค่าจ้าง</c-text>
+              <c-text fontSize="xl" ml="20rem"> - ชั่วโมงละ {{  jobId.compensation }} บาท </c-text>
           </c-box>
           <c-box class="description">
-              <c-text fontSize="2xl" ml="20rem">รายละเอียดงาน</c-text>
-              <c-text ml="20rem"> - {{jobId.description }} </c-text>
+              <c-text fontSize="3xl" ml="20rem">รายละเอียดงาน</c-text>
+              <c-text fontSize="xl" ml="20rem"> - {{  jobId.description }} </c-text>
           </c-box>
           <c-box class="requirement">
-              <c-text fontSize="2xl" ml="20rem">คุณสมบัติ</c-text>
-              <c-text ml="20rem"> - {{jobId.requirement }} </c-text>
+              <c-text fontSize="3xl" ml="20rem">คุณสมบัติ</c-text>
+              <c-text fontSize="xl" ml="20rem"> - {{  jobId.requirement }} </c-text>
           </c-box>
       </c-stack>
+      
+      <br>
+      <br>
+      <c-text v-if="validated" fontSize="4xl" ml="20rem" mt="2rem">
+        หากคุณกำลังมองหางานอื่นอยู่
+          <JobCard v-if="validated"> 
 
-      <br><br>
-      <c-text v-if="validated" fontSize="4xl" ml="20rem" mt="2rem">หากคุณสนใจงานอื่น</c-text><br>
-      <JobCard v-if="validated"></JobCard>
-      <br><br>
-  </div>
+          </JobCard>
+      </c-text>
+      </div>
+    </div>
 </template>
 
 <script>
@@ -74,7 +82,8 @@ export default {
        id:0,
        jobId:[],
        userToReview: [],
-      user_loged_in:[]
+       user_loged_in:[],
+       isLoading: true,
     }
   },
   async created(){
@@ -92,6 +101,8 @@ export default {
         console.log(localStorage)
         console.log("this.newValue" ,newValue)
         console.log("this.job" ,this.job)
+
+        this.isLoading = false
       }
     )
     this.jobId = JSON.parse(localStorage.getItem('YourItem'));

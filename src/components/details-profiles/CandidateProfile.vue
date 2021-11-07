@@ -10,7 +10,7 @@
         <loading v-if="isLoading" />
         <div v-if="!isLoading">
             <c-stack>
-                <c-heading ml="5rem" fontSize="5xl" py="5">ประวัติส่วนตัว</c-heading>
+                <c-heading align="center" fontSize="5xl" py="5">ประวัติส่วนตัว</c-heading>
             </c-stack>
             
 
@@ -158,6 +158,30 @@
                     ความสามารถ : {{ this.user.skill }}
                     </c-text>
 
+                    
+                    <c-heading
+                        as="h2"
+                        size="xl"
+                        color="black"
+                        opacity="0.9"
+                        px="24"
+                        lineHeight="3"
+                        mt="1rem"
+                    >
+                    สิ่งที่อยากบอก
+                    </c-heading>
+
+                    <c-text 
+                        as="h1"
+                        fontSize="2xl"
+                        color="black"
+                        opacity="0.9"
+                        px="24"
+                        lineHeight="2.5"
+                    >
+                    ข้อความเพิ่มเติมจากผู้สมัคร : {{ this.user.info[0].pivot.remark }}
+                    </c-text>
+
                     <c-button
                         mx="24" 
                         :_hover="{ bg: '#E2E8F0'}"
@@ -172,8 +196,8 @@
             </c-flex>
         </div>
         <!-- รีวิว -->
-        <c-heading size="2xl" py="5" mt="5rem" ml="5rem" v-if="this.user.review !== 0">รีวิวจากผู้ว่าจ้าง</c-heading>
-        <c-simple-grid :columns="[1, 1, 1, 2]" spacing="10" ml="4rem">
+        <c-heading size="2xl" py="5" mt="5%" ml="4%" v-if="this.user.review !== 0">รีวิวจากผู้ว่าจ้าง</c-heading>
+        <c-simple-grid :columns="[1, 1, 1, 2]" spacing="10" ml="3%">
                     <div v-for="review in this.reviews" :key="review.id">
                         <c-stack
                             wrap="wrap"
@@ -245,6 +269,8 @@ export default {
             let res = UserStore.getters.fetchUser
             this.user = res
 
+            console.log(this.user)
+
             await ReviewApi.dispatch("getReviewByUserID", this.user.id)
             let res2 = ReviewApi.getters.getReviewsByUserID
             this.reviews = res2
@@ -269,7 +295,7 @@ export default {
           }).then((selectFreelance) => {
             if (selectFreelance) {
               if(res.success) {
-                this.$router.push("/")
+                this.$router.push("/userJob")
                 this.$swal("จ้างงานเสร็จสิ้น", {icon: "success"})
               } else {
                 console.log("ไม่นะะะ")

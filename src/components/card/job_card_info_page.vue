@@ -1,7 +1,7 @@
 <template>
     <div>
-        
         <body>
+            <c-simple-grid :columns="[1, 1, 1, 3]" spacing="10" mr="10rem">
             <div v-for="index in jobs.slice(0,3)" :key="index.id">
         <c-box mt="4rem" m="2rem" maxW="sm" border-width="2px" rounded="lg" overflow="hidden" border-color="black" :_hover="{bg: 'indigo.100' , borderColor:'indigo'}" fontSize="xl">
             
@@ -9,13 +9,13 @@
             <c-box p="6">
                 <c-box d="flex" align-items="baseline">
                     <c-badge rounded="full" px="5" variant-color="green" font-size="0.75em" v-if="index.working_status === 'AVAILABLE'">
-                    AVALIABLE
+                        AVALIABLE
                     </c-badge>
                     <c-badge rounded="full" px="5" variant-color="yellow" font-size="0.75em" v-if="index.working_status === 'IN PROGRESS'">
-                    IN PROGRESS
+                        IN PROGRESS
                     </c-badge>
                     <c-badge rounded="full" px="5" variant-color="red" font-size="0.75em" v-if="index.working_status === 'FINISH'">
-                    FINISH
+                        FINISH
                     </c-badge>
                     <c-box
                         color="gray.500"
@@ -52,7 +52,7 @@
                     {{ "คุณสมบัติที่ต้องการ" }}
                 </c-box>
                 <c-box>
-                {{ index.requirement }} 
+                    {{ index.requirement }} 
                 </c-box>
 
                 <c-box
@@ -62,13 +62,13 @@
                     line-height="tight"
                     is-truncated
                 >
-                {{ "ค่าจ้าง" }}
+                    {{ "ค่าจ้าง" }}
                 </c-box>
                 <c-box>
                     {{ index.compensation }} บาท/ชม
                 </c-box>
 
-                {{ index.user_id }}
+                    {{ index.user_id }}
                 <c-flex jusify="center">
                     <c-button  mt="1rem" bgColor="black" color="white" size="lg" :_hover="{bg: 'pink.400'}">
                         <a @click='value(index.id)' :href="'#/job'" v-bind="index">รายละเอียดงาน</a>
@@ -77,34 +77,8 @@
             </c-box>
         </c-box>
     </div>
-            <!-- <div class="cards">
-                
-                <div class="services" v-for="index in jobs.slice(0,3)" :key="index.id">
-                    
-                    
-                    <div class="content">
-                        
-                        <c-image class="pic" src="https://static.toiimg.com/photo/msid-67586673/67586673.jpg?3918697" />
-                        <div>
-                            <c-text  fontSize="2xl">{{ index.title }}</c-text>
-                            <c-text >{{ index.description }}</c-text>
-                            <c-text>{{ index.requirement }}</c-text>
-                            <c-text fontSize="xl">ค่าจ้าง {{ index.compensation }} บาท/ชม</c-text>
-                            <br>
-                            <a @click='value(index.id)' :href="'#/job'" v-bind="index">รายละเอียดงาน</a>
-                        </div>
-                        
-                    
-                        
-
-                    </div>
-                </div>
-            </div> -->
-            
-            
-        </body>
-
-        
+    </c-simple-grid>
+    </body>
         
     </div>
 </template>

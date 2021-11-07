@@ -43,6 +43,8 @@ export default {
         await UserStore.dispatch("fetchUsersArePublish")
         let res = UserStore.getters.fetchUsersArePublish
         this.users = res
+        console.log("----user--")
+        console.log(this.users)
         this.editFormat()
         this.isLoading = false
     },
