@@ -58,9 +58,9 @@
       <br>
       <c-text v-if="validated" fontSize="4xl" ml="20rem" mt="2rem">
         หากคุณกำลังมองหางานอื่นอยู่
-        <c-simple-grid :columns="[1, 1, 1, 3]" spacing="10">
-          <JobCard v-if="validated"> </JobCard>
-        </c-simple-grid>
+          <JobCard v-if="validated"> 
+
+          </JobCard>
       </c-text>
   </div>
 </template>
