@@ -8,6 +8,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         categories: [],
+        categories_after_remove: []
     },
 
     getters: {
@@ -18,6 +19,9 @@ export default new Vuex.Store({
         setCategories(state, res) {
             state.categories = res;
         },
+        removeCategory(state, data) {
+            state.categories_after_remove = state.categories_after_remove.map((category) => category.id != data.id);
+        },
     },
 
     actions: {
@@ -25,6 +29,11 @@ export default new Vuex.Store({
             let res = await backendInstance.get(`/api/categories`);
             commit("setCategories", res.data)
         },
+
+        async removeCategory({ commit }, id) {
+            let res = await backendInstance.delete(`api/categories/${id}`)
+            commit("removeCategory", res.data)
+        }
     },
     
     modules: {},

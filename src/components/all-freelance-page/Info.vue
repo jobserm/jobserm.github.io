@@ -19,7 +19,7 @@
             </c-box> -->
             
     
-            <c-heading size="xl" pb="2">{{ freelancerName }}</c-heading>
+            <c-heading size="xl" pb="2">{{ freelancerName }} {{ freelancerLastname }}</c-heading>
 
             <c-flex justify="center" >
                 <c-image v-bind:src="star" 
@@ -62,7 +62,7 @@
 export default {
     name:"Info",
     //props: ["image", "freelancerName", "star", "rating", "age"]
-    props: ["freelancerName", "star", "rating", "age"]
+    props: ["freelancerName","freelancerLastname", "star", "rating", "age"]
 }
 </script>
 
