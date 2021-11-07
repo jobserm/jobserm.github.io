@@ -1,6 +1,8 @@
 <template>
 <div>
-    <c-text fontSize="4xl"> filther ตอน search ไม่เอางานของ user ที่ login</c-text>
+    <loading v-if="isLoading" />
+    <div v-if="!isLoading">
+        <c-text fontSize="4xl"> filther ตอน search ไม่เอางานของ user ที่ login</c-text>
 
         <c-text fontSize="4xl" ml="11%" mt="2rem">{{ "งานทั้งหมด" }}</c-text>
         <c-flex>
@@ -129,6 +131,7 @@
             <c-button bg="#F1E4FF" w="100%" @click="next()"> Next </c-button>
         </c-flex>
     </div>
+    </div>
 </div>
 </template>
 
@@ -166,6 +169,7 @@ export default {
             pageIndex:1,
             current: 1,
             pageSize: 6,
+            isLoading: true,
         }
     },
     async created(){
@@ -176,6 +180,8 @@ export default {
         console.log("fetch=================",this.user_id)
         this.getProvince()
         this.getCategories()
+
+        this.isLoading = false
     },
     computed: {
             indexStart() {

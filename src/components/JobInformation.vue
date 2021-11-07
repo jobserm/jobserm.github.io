@@ -1,5 +1,7 @@
 <template>
   <div>
+    <loading v-if="isLoading" />
+      <div v-if="!isLoading">
       <c-stack :spacing="6">
         <c-text fontSize="6xl" ml="20rem" mt="2rem">{{ jobId.title }}</c-text>
 
@@ -62,7 +64,8 @@
           <JobCard v-if="validated"> </JobCard>
         </c-simple-grid>
       </c-text>
-  </div>
+      </div>
+    </div>
 </template>
 
 <script>
@@ -78,7 +81,8 @@ export default {
        id:0,
        jobId:[],
        userToReview: [],
-      user_loged_in:[]
+       user_loged_in:[],
+       isLoading: true,
     }
   },
   async created(){
@@ -96,6 +100,8 @@ export default {
         console.log(localStorage)
         console.log("this.newValue" ,newValue)
         console.log("this.job" ,this.job)
+
+        this.isLoading = false
       }
     )
     this.jobId = JSON.parse(localStorage.getItem('YourItem'));

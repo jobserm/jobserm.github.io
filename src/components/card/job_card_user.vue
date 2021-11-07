@@ -1,5 +1,7 @@
 <template>
     <div>
+        <loading v-if="isLoading" />
+        <div v-if="!isLoading">
         <body>
             <c-flex>
                 <c-flex mt="1.5rem" ml="1rem">
@@ -107,7 +109,7 @@
     </div>
     </c-simple-grid>
     </body> 
-        
+    </div>
     </div>
 </template>
 
@@ -136,6 +138,7 @@ export default {
             user_id:0,
             provinces: [],
             categories: [],
+            isLoading: true,
         }
     },
     async created(){
@@ -144,6 +147,8 @@ export default {
         await this.fetchJobs()
         this.getProvince()
         this.getCategories()
+
+        this.isLoading = false
     },
     methods:{
         async search(province){
