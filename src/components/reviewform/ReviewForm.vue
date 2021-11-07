@@ -114,7 +114,8 @@ export default {
       hasdescription: true,
       starsize: "lg", //xs/6x
       maxstars: 5,
-      disabled: false
+      disabled: false,
+      jobID:0
       },
 
     };
@@ -124,6 +125,7 @@ export default {
     console.log(this.job)
     // รับ user คนที่ถูกรีวิวมาเงอะ
     this.jobUser = JSON.parse(localStorage.getItem('userToReview'));
+    this.jobID = JSON.parse(localStorage.getItem('๋JobId'));
     console.log("this.jobUser", this.jobUser)
   },
   async mounted() {
@@ -137,12 +139,13 @@ export default {
           id: this.user.id,
           comment: this.form.comment
       }
-      let user_id = this.jobUser.id
+      let job_id = this.jobID
+      console.log(job_id)
       if(this.form.comment !== "" )
       { 
          this.$swal("รีวิวเสร็จสิ้น",'ขอบคุณที่ใช้งานเวปของเรา','success')
         await ReviewApi.dispatch("addReview", payload)
-        await JobApi.dispatch("fetchUserFinish",user_id)
+        await JobApi.dispatch("fetchUserFinish",job_id)
         this.$router.push("/userJob")
       }
       else

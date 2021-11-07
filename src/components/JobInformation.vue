@@ -63,6 +63,7 @@
 <script>
 import JobApi from "@/store/JobApi.js"
 import UserApi from "@/store/AuthUser.js"
+import UserApii from "@/store/UserStore.js"
 import JobCard from "../components/card/job_card_info_page.vue"
 
 export default {
@@ -122,12 +123,30 @@ export default {
     //   console.log("jobfill",this.job)
     // }
     async finish(){
-      this.id = this.jobId.id
-      await JobApi.dispatch("fetchUserFinish", this.id)
-      this.userToReview = JobApi.getters.getUserFinish
+
+      console.log(this.jobId.users[1].info[0].pivot.is_selected)
+      console.log(this.jobId.users[0].info[0].pivot.is_selected)
+      console.log(this.jobId.users.length)
+
+      for(let i = 0 ; i<this.jobId.users.length  ; i++)
+      {
+        console.log("user_id",this.jobId.users[i].info[0].pivot.user_id)
+        console.log("is_selected",this.jobId.users[i].info[0].pivot.is_selected)
+        if(this.jobId.users[i].info[0].pivot.is_selected == 1)
+        {
+          await UserApii.dispatch("fetchUserByID", this.jobId.users[i].info[0].pivot.user_id)
+          // await JobApi.dispatch("fetchUserFinish",this.jobId.id)
+          this.userToReview = UserApii.getters.fetchUser
+        }
+        
+      }
+
+      
       console.log("userToReview", this.userToReview)
-      localStorage.setItem("userToReview" , JSON.stringify(this.userToReview.data[0][0]))
+      localStorage.setItem("userToReview" , JSON.stringify(this.userToReview))
+      localStorage.setItem("๋JobId" , JSON.stringify(this.jobId.id))
     }
+    
   }
 }
 </script>

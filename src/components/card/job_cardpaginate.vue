@@ -78,7 +78,7 @@
                         text-transform="uppercase"
                         ml="2"
                         >
-                        {{ index.province }}  &bull; {{ index.provinces }} 
+                        {{ index.province }}  &bull; {{ index.category_name[0].category_name }} 
                     </c-box>
                 </c-box>
                 <c-box
