@@ -237,22 +237,32 @@ export default new Vuex.Store({
     },
 
     async addRemarks({ commit }, payload) {
-      console.log("payload.id---", payload.id);
-      console.log("payload.remark---", payload.remark);
-      let body = {
-        id: payload.user_id,
-        remark: payload.remark,
-      };
+      try {
+        console.log("payload.id---", payload.id);
+        console.log("payload.remark---", payload.remark);
+        let body = {
+          id: payload.user_id,
+          remark: payload.remark,
+        };
 
-      console.log("body.id---", body.id);
-      console.log("body.remark---", body.remark);
-      let res = await backendInstance.post(
-        `/api/jobs/${payload.job_id}/apply-job`,
-        body
-      );
-      console.log("res", res);
-      commit("addRemark", { res });
-      return res;
+        console.log("body.id---", body.id);
+        console.log("body.remark---", body.remark);
+        let res = await backendInstance.post(
+          `/api/jobs/${payload.job_id}/apply-job`,
+          body
+        );
+        console.log("res", res);
+        commit("addRemark", { res });
+
+        return {
+          success: true
+        }
+      } catch(e) {
+        return {
+          success: false,
+          message: e.response.data
+        }
+      }
     },
     async fetchAllJobs({ commit }) {
       try {
