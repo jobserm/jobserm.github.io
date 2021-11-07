@@ -196,33 +196,13 @@ export default {
     },
 
     async created() {
-        console.log(this.user_id)
-
         await this.fetchUser(this.user_id)
-        // UserStore.watch(
-        //     (state) => {
-        //         return UserStore.getters.fetchUser
-        //     },
-        //     (newValue, oldValue) => {
-
-        //         localStorage.setItem('user', JSON.stringify(newValue))
-        //         this.user = JSON.parse(localStorage.getItem('user'))
-
-        //     }
-        // )
-        // this.user = JSON.parse(localStorage.getItem('user'))
-        
 
         await ReviewApi.dispatch("getReviewByUserID", this.user.id)
         let res = ReviewApi.getters.getReviewsByUserID
-        console.log(res)
         this.reviews = res
 
         this.editFormat()
-        console.log("profile")
-        console.log(this.user)
-        console.log("reviews")
-        console.log(this.reviews)
     },
 
     methods: {
