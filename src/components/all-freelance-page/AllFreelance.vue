@@ -11,7 +11,8 @@
 
                     <a :href="'#/profiles/'+user.id">   
                     <info
-                        v-bind:freelancerName="user.name + user.lastname"
+                        v-bind:freelancerName="user.name"
+                        v-bind:freelancerLastname="user.lastname"
                         v-bind:rating="user.review"
                         v-bind:age="user.birthdate"
                         :star="require(`./star.png`)"
