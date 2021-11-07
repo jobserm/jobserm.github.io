@@ -158,6 +158,30 @@
                     ความสามารถ : {{ this.user.skill }}
                     </c-text>
 
+                    
+                    <c-heading
+                        as="h2"
+                        size="xl"
+                        color="black"
+                        opacity="0.9"
+                        px="24"
+                        lineHeight="3"
+                        mt="1rem"
+                    >
+                    สิ่งที่อยากบอก
+                    </c-heading>
+
+                    <c-text 
+                        as="h1"
+                        fontSize="2xl"
+                        color="black"
+                        opacity="0.9"
+                        px="24"
+                        lineHeight="2.5"
+                    >
+                    ข้อความเพิ่มเติมจากผู้สมัคร : {{ this.user.info[0].pivot.remark }}
+                    </c-text>
+
                     <c-button
                         mx="24" 
                         :_hover="{ bg: '#E2E8F0'}"
@@ -244,6 +268,8 @@ export default {
             await UserStore.dispatch("fetchUserByID", id)
             let res = UserStore.getters.fetchUser
             this.user = res
+
+            console.log(this.user)
 
             await ReviewApi.dispatch("getReviewByUserID", this.user.id)
             let res2 = ReviewApi.getters.getReviewsByUserID
