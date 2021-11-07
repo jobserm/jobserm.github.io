@@ -52,15 +52,15 @@
           </c-select>
           <!-- สถานะการทำงาน -->
           <c-select id="type" v-model="form.working_status">
-              <option value="" style="display:none;" >สถานการทำงาน</option>
+              <option value="" style="display:none;" >สถานะการทำงาน</option>
               <option>AVAILABLE</option>
               <option>IN PROGRESS</option>
               <option>FINISH</option>
           </c-select>
-          <c-button @click="search(form.provinces)" variant-color="indigo" variant="outline">
+          <c-button w="15rem" @click="search(form.provinces)" variant-color="indigo" variant="outline">
               ค้นหา
           </c-button>
-          <c-button @click="fetchJobs()" variant-color="indigo" variant="outline">
+          <c-button ml="1rem" w="15rem" @click="fetchJobs()" variant-color="indigo" variant="outline">
               clear
           </c-button>
 
