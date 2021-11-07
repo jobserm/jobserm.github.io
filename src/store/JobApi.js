@@ -200,12 +200,13 @@ export default new Vuex.Store({
       }
       console.log("fetchJobFromSearch");
     },
-    async fetchJobUserId({ commit }, id) {
+    async fetchJobUserId({ commit }, payload) {
       console.log("---id---");
-      console.log(id);
       let body = {
-        id: id,
+        id: payload.user_id,
+        working_status : payload.working_status,
       };
+      console.log(body)
       let res = await backendInstance.post(`/api/get-job-by-user-id`, body);
       console.log((await res).data);
       console.log("fetchByUser");

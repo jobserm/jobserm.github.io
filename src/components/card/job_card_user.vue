@@ -13,7 +13,7 @@
                         <option>FINISH</option>
                     </c-select>
                     <!-- ค้นหา -->
-                    <c-button ml="10" mt="2rem" w="20rem" @click="search(form.provinces)" variant-color="indigo" variant="outline">
+                    <c-button ml="10" mt="2rem" w="20rem" @click="search(form.working_status)" variant-color="indigo" variant="outline">
                         ค้นหา
                     </c-button>
                     <!-- clear -->
@@ -46,7 +46,7 @@
                         text-transform="uppercase"
                         ml="2"
                         >
-                        {{ index.province }}  &bull; {{ index.category_name[0].category_name }}
+                        {{ index.province }}  &bull; {{ index.category_name[0].category_name }} 
                     </c-box>
                 </c-box>
                 <c-box
@@ -118,7 +118,6 @@ import JobApi from "@/store/JobApi.js"
 import UserApi from "@/store/AuthUser.js"
 import Axios from "axios";
 import CategoryStore from "@/store/CategoryStore";
-
 export default {
     components: { 
     },
@@ -147,16 +146,19 @@ export default {
         await this.fetchJobs()
         this.getProvince()
         this.getCategories()
-
         this.isLoading = false
     },
     methods:{
-        async search(province){
-        console.log(province)
-        await JobApi.dispatch("fetchJobFromSearch", province)
-        this.jobs = JobApi.getters.getJobFromSearch
-        this.count_job = this.jobs.meta.total
-        this.$forceUpdate()
+        async search(working_status){
+        let payload={
+            user_id : this.user_id,
+            working_status : working_status
+        }
+        await JobApi.dispatch("fetchJobUserId", payload)
+        this.jobs = JobApi.getters.getJobByUser
+        // this.count_job = this.jobs.meta.total
+        console.log("fetch=================",this.jobs)
+
     },
     async getProvince() {
         let res = await Axios.get(`https://thaiaddressapi-thaikub.herokuapp.com/v1/thailand/provinces`);
@@ -172,10 +174,15 @@ export default {
         console.log("this.user==>",this.user)
     },
     async fetchJobs(){
-        await JobApi.dispatch("fetchJobUserId",this.user_id)
+        let payload={
+            user_id : this.user_id,
+            working_status : "ALL"
+        }
+        await JobApi.dispatch("fetchJobUserId", payload)
         this.jobs = JobApi.getters.getJobByUser
         // this.count_job = this.jobs.meta.total
         console.log("fetch=================",this.jobs)
+        this.form.working_status = ""
         // console.log("this.jobs")
         // console.log(this.jobs.data)
         // console.log("count_job")
@@ -184,14 +191,12 @@ export default {
         // async pageNumberChange(pageIndex) {
         //     console.log(pageIndex)
         //     this.payload_url = this.jobs.meta.links[pageIndex].url
-
         //     await JobApi.dispatch("paginate_post" ,  this.payload_url)
         //     console.log("payload_url")
         //     console.log(this.payload_url)
         //     this.jobs = JobApi.getters.jobs
         //     this.count_job = this.jobs.meta.total
         //     this.$forceUpdate();
-
         // },
     async value(id){
         await JobApi.dispatch("fetchJobById" ,  id )
@@ -233,7 +238,6 @@ export default {
         flex-wrap: wrap;
         gap: 20px 10px;
         border: 1px solid red;
-
     }
     .services{
         width: 900px;
@@ -286,5 +290,4 @@ export default {
     .content > *{
         flex: 1 1 100%;
     }
-
 </style>
