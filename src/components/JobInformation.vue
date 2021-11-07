@@ -31,7 +31,7 @@
                 </router-link>
 
               <router-link to="/review-form" >
-                <c-button @click="finish" color="blue" width="150px" bgColor="#D3EDED "  mt="1rem" v-if="validated_interest && jobId.working_status === 'IN PROGRESS'">
+                <c-button h="4rem" w="19rem" fontSize="2xl" @click="finish" color="blue" bgColor="#D3EDED " v-if="validated_interest && jobId.working_status === 'IN PROGRESS'">
                     จบงาน
                 </c-button>
               </router-link>
