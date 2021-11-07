@@ -1,3 +1,4 @@
+import { BIconJoystick } from "bootstrap-vue";
 import Vue from "vue";
 import Vuex from "vuex";
 import Authservice from "../services/Authservice";
@@ -268,7 +269,7 @@ export default new Vuex.Store({
       console.log("finish job =>", res);
       commit("fetchUserFinishJob", res);
     },
-    async fetchJobByID({ commit }, { headers, id }) {
+    async fetchJobByID({ commit }, id) {
       try {
         let res = await backendInstance.get(`/api/jobs/${id}`);
         commit("setJobById", res.data);
@@ -285,5 +286,22 @@ export default new Vuex.Store({
         console.log(e.message);
       }
     },
+    async employerSelectFreelancer({ commit }, body1) {
+      try {
+        let body2 = {
+          id: body1.user_id
+        }
+        await backendInstance.put(`/api/jobs/${body1.job_id}/select-freelancer`, body2);
+ 
+        return {
+          success: true
+        }
+      } catch (e){
+        return {
+          success: false,
+          message: e.response.data
+        } 
+      }
+    }
   },
 });
