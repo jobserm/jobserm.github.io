@@ -1,5 +1,6 @@
 <template>
 <div>
+    <c-text fontSize="4xl"> filther ตอน search ไม่เอางานของ user ที่ login</c-text>
 
          <c-text fontSize="4xl" ml="10rem" mt="2rem">{{ "งานทั้งหมด" }}</c-text>
       <c-flex>
@@ -15,10 +16,10 @@
               <option v-for="index in provinces.data" :key="index.id">{{ index.province }}</option>
           </c-select>
           <!-- ประเภทงาน-->
-          <c-select id="type" v-model="form.category">
+          <!-- <c-select id="type" v-model="form.category">
               <option value="" style="display:none;" >ประเภทงาน</option>
               <option v-for="index in categories" :key="index.id">{{ index.category_name }}</option>
-          </c-select>
+          </c-select> -->
           <!-- ค่าตอบแทน -->
           <c-select id="type" v-model="form.compensation">
               <option value="" style="display:none;" >  ค่าตอบแทน</option>
@@ -40,7 +41,7 @@
               <option>IN PROGRESS</option>
               <option>FINISH</option>
           </c-select> -->
-          <c-button w="15rem" @click="search(title,form.provinces,form.compensation,form.category)" variant-color="indigo" variant="outline">
+          <c-button @click="search(title,form.provinces,form.compensation,form.category)" variant-color="indigo" variant="outline">
               ค้นหา
           </c-button>
           <c-button ml="1rem" w="15rem" @click="clear()" variant-color="indigo" variant="outline">
@@ -54,8 +55,8 @@
         <c-text fontSize="5xl" align="center" color="red" mt="4rem" v-if="this.count_job === -1">ไม่มีงานที่ค้นหา</c-text>
 
     <c-flex align="center">
-    <div v-for="index in jobs.data" :key="index.id">
-        <c-box mt="4rem" m="2rem" maxW="sm" border-width="3px" rounded="lg" overflow="hidden" border-color="black" :_hover="{bg: 'indigo.100' , borderColor:'indigo'}" fontSize="xl">
+    <div v-for="index in paginated" :key="index.id">
+        <c-box mt="4rem" m="2rem" maxW="sm" border-width="2px" rounded="lg" overflow="hidden" border-color="black" :_hover="{bg: 'indigo.100' , borderColor:'indigo'}" fontSize="xl">
             
             <c-image src="https://static.toiimg.com/photo/msid-67586673/67586673.jpg?3918697" alt="cat" />
             <c-box p="6">
@@ -131,7 +132,11 @@
     </div>
     </c-flex>
     <div class="paginate">
-        <ve-pagination :total="count_job" :page-size="4" :layout="['total', 'prev', 'pager', 'next', 'jumper']" @on-page-number-change="pageNumberChange"></ve-pagination>
+        <c-flex mb="4rem">
+            <c-button @click="prev"> Prev </c-button>
+            <c-text fontSize="4xl">{{ current }}</c-text>
+            <c-button @click="next()"> Next </c-button>
+        </c-flex>
     </div>
 </div>
 </template>
@@ -156,6 +161,7 @@ export default {
             },
             title:"",
             jobs:{},
+            JobA:[],
             count_job:0,
             payload_url:"",
             job_id:0,
@@ -165,7 +171,10 @@ export default {
             less:0,
             most:0,
             user_id:0,
-            user:[]
+            user:[],
+            pageIndex:1,
+            current: 1,
+            pageSize: 4,
         }
     },
     async created(){
@@ -177,56 +186,85 @@ export default {
         this.getProvince()
         this.getCategories()
     },
+    computed: {
+            indexStart() {
+            return (this.current - 1) * this.pageSize;
+            },
+            indexEnd() {
+            return this.indexStart + this.pageSize;
+            },
+            paginated() {
+            return this.JobA[0].slice(this.indexStart, this.indexEnd);
+            }
+        },
     methods:{
+        prev() {
+            if(this.current > 1)
+                this.current--;
+            },
+            next() {
+            if(this.current < this.jobs.length/4)
+                this.current++;
+
+            },
          fetchUser(){
             this.user = UserApi.getters.user
             this.user_id = this.user.id
             console.log("this.user==>",this.user)
         },
             async search(title,province,compensation,category){
-      if(compensation !== "")
-      {
-            this.compensatsion_array = compensation.split(" - ")
-            console.log(this.compensatsion_array)
-            this.less = Number(this.compensatsion_array[0].replace(",",''))
-            this.most = Number(this.compensatsion_array[1].replace(",",''))
-            this.compensatsion_array[0] = this.less
-            this.compensatsion_array[1] = this.most
-            console.log(this.compensatsion_array)
+                if(compensation !== "")
+                {
+                        this.compensatsion_array = compensation.split(" - ")
+                        console.log(this.compensatsion_array)
+                        this.less = Number(this.compensatsion_array[0].replace(",",''))
+                        this.most = Number(this.compensatsion_array[1].replace(",",''))
+                        this.compensatsion_array[0] = this.less
+                        this.compensatsion_array[1] = this.most
+                        console.log(this.compensatsion_array)
 
-            let payload={
-                title : `%`+title+`%`,
-                province : `%`+province+`%`,
-                category : `%`+category+`%`,
-                compensatsion_array : this.compensatsion_array,
-                check: 0
-                    }
+                        let payload={
+                            title : `%`+title+`%`,
+                            province : `%`+province+`%`,
+                            category : `%`+category+`%`,
+                            compensatsion_array : this.compensatsion_array,
+                            check: 0
+                                }
 
-            console.log(title)
-            await JobApi.dispatch("fetchJobFromSearch", payload)
-      }
-      else{
-          let payload={
-                title : `%`+title+`%`,
-                province : `%`+province+`%`,
-                category : `%`+category+`%`,
-                check: 1
-                    }
+                        console.log("payload",payload)
+                        await JobApi.dispatch("fetchJobFromSearch", payload)
+                }
+                else{
+                    let payload={
+                            title : `%`+title+`%`,
+                            province : `%`+province+`%`,
+                            category : `%`+category+`%`,
+                            check: 1
+                                }
 
-            console.log(title)
-            await JobApi.dispatch("fetchJobFromSearch", payload)
-      }
+                        console.log(title)
+                        await JobApi.dispatch("fetchJobFromSearch", payload)
+                }
 
       
-      this.jobs = JobApi.getters.getJobFromSearch
-      this.count_job = this.jobs.meta.total
-      if(this.count_job == 0)
-        this.count_job = -1
-      this.$forceUpdate()
+        this.jobs = JobApi.getters.getJobFromSearch
+        this.JobA.length = 0
+        this.JobA.push(this.jobs)
+        console.log("jobs",this.jobs.length)
+
+        this.count_job = this.jobs.length
+        console.log("count_job",this.count_job)
+        if(this.count_job == 0)
+        {
+            this.count_job = -1
+        }
+        this.current = 1;
+        console.log("count_job",this.count_job)
+        this.$forceUpdate()
       
 
     },
-            async getProvince() {
+    async getProvince() {
       let res = await Axios.get(`https://thaiaddressapi-thaikub.herokuapp.com/v1/thailand/provinces`);
       this.provinces = res.data;
     },
@@ -234,34 +272,18 @@ export default {
       await CategoryStore.dispatch('fetchData')
       this.categories = CategoryStore.getters.getCategories
     },
-        async fetchJobs(){
+    async fetchJobs(){
         let id = this.user_id
         await JobApi.dispatch("fetchJobAvaliableNotLogedIn",id)
-        console.log("fetchJobAVA")
+        console.log("this.JobA",this.JobA)
         this.jobs = JobApi.getters.getAvaJobNotLogIn
-        console.log("fetchJobAVA",this.jobs)
-        this.count_job = this.jobs.meta.total
+        this.JobA.push(this.jobs)
+        console.log("this.JobA",this.JobA)
         console.log("fetchJobAVA")
         // console.log("this.jobs")
         // console.log(this.jobs.data)
         // console.log("count_job")
         // console.log(this.count_job)
-        },
-        async pageNumberChange(pageIndex) {
-            console.log(pageIndex)
-            this.payload_url = this.jobs.meta.links[pageIndex].url
-            let payload = {
-                id : this.user_id,
-                url: this.payload_url
-            }
-            await JobApi.dispatch("paginate" ,  payload )
-            console.log("payload_url")
-            console.log(this.payload_url)
-            this.jobs = JobApi.getters.jobs
-            console.log(this.jobs)
-            this.count_job = this.jobs.meta.total
-            this.$forceUpdate();
-
         },
         async value(id){
             await JobApi.dispatch("fetchJobById" ,  id )
@@ -269,25 +291,22 @@ export default {
             // console.log(id)
         },
         async clear(){
-            await JobApi.dispatch("fetchJob")
-            this.jobs = JobApi.getters.jobs
-            this.count_job = this.jobs.meta.total
+            let id = this.user_id
+            await JobApi.dispatch("fetchJobAvaliableNotLogedIn",id)
+            this.jobs = JobApi.getters.getAvaJobNotLogIn
             this.form.provinces = ""
             this.form.category = ""
             this.form.compensation = ""
             this.form.working_status = ""
             this.title = ""
-            // console.log("this.jobs")
-            // console.log(this.jobs.data)
-            // console.log("count_job")
-            // console.log(this.count_job)
+            this.current = 1;
+            this.JobA.length = 0
+            this.JobA.push(this.jobs)
+            this.count_job = this.jobs.length
+            console.log("this.pageIndex",this.pageIndex)
+            this.$forceUpdate();
         },
         
-        // async value(id){
-        //     await JobApi.dispatch("fetchJobById" ,  id )
-        //     console.log("id")
-        //     console.log(id)
-        // }
     },
     colors:{
         purple: "#9356F7"

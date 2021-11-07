@@ -149,7 +149,7 @@ export default new Vuex.Store({
         id:payload.id
       }
       console.log(body.id);
-      let res = await backendInstance.post(payload.url,body.id);
+      let res = await backendInstance.post(payload.url,body);
       console.log("route");
       
       console.log("data from url");
@@ -194,7 +194,7 @@ export default new Vuex.Store({
       try {
         let res = await backendInstance.post(`/api/get-job-from-search`, body);
         commit("fetchFromSearch", { res });
-        console.log("s",(await res).data);
+        console.log("s", res);
       } catch (e) {
         console.log(e.message);
       }
@@ -213,18 +213,6 @@ export default new Vuex.Store({
       console.log("fetchByUser");
     },
 
-    async fetchAllAvaJobsNotLogIn({ commit }, id) {
-      console.log("---id---");
-      console.log(id);
-      let body = {
-        id: id,
-      };
-      let res = await backendInstance.post(`/api/jobs/get-all-avaliable-jobs-not-log-in`, body);
-      console.log((await res).data);
-      console.log("fetchAllAvaJobsNotLogIn");
-      commit("fetchAllAvaJobNotLogIn", { res });
-      console.log("fetchAllAvaJobsNotLogIn");
-    },
 
     async fetchJobAvaliableNotLogedIn({ commit }, id) {
       console.log("fetchJobAvaliableNotLogedIn");
