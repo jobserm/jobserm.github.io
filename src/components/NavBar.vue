@@ -67,6 +67,10 @@
             </c-menu>
         </c-flex>
         <div v-if="isAuthen() && !isAdmin()">
+          <button-secondary :url="`/jobinfo`" :text="`งานที่คุณสนใจ`" mx="4" />
+        </div>
+
+        <div v-if="isAuthen() && !isAdmin()">
           <button-secondary :text="`โพสต์ของคุณ`" :url="`/userJob`" mx="4" />
         </div>
         <!-- <div v-if="isAuthen() && !isAdmin()">
@@ -84,8 +88,10 @@
           <button-primary :url="`/register`" :text="`สมัครสมาชิก`" mx="4" />
         </div>
 
-        <div v-if="isAuthen()">
-          <button-primary :text="`profile`" :url="`/auth-profile`" mx="12" />
+        <div v-if="isAuthen() && !isAdmin()">
+          <router-link to="/auth-profile">
+            <c-image w="3rem" h="3rem" src="https://cdn-icons-png.flaticon.com/512/64/64572.png" />
+          </router-link>
         </div>
         
       </c-flex>
