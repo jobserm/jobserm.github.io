@@ -119,6 +119,9 @@
                 <c-flex jusify="center" v-if="index.apply">
                     <c-text color="red">คุณสมัครงานนี้ไปแล้ว</c-text>
                 </c-flex>
+                <c-button  mt="1rem" border="1px" bgColor="white" color="red" size="lg" :_hover="{bg: 'red' ,color:'white' , borderColor:'red'}">
+                        <a @click='report(index.id)' v-bind="index">REPORT</a>
+                </c-button>
             </c-box>
         </c-box>
     </div>
@@ -210,6 +213,16 @@ export default {
             // }
         },
     methods:{
+        async report(id){
+            console.log("idididid",id)
+            let payload={
+                id : id,
+            }
+            await JobApi.dispatch("report",payload)
+            this.$swal("รายงานเสร็จสิ้น",'ทางเราจะรีบตรวจสอบ','success')
+
+
+        },
         async ftechJobUserApply(){
         let payload={
             user_id : this.user_id,

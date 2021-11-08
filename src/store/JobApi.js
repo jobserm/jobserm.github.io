@@ -154,6 +154,15 @@ export default new Vuex.Store({
       // console.log("ดำะแ้ ่นิ")
       // commit("fetch",{ res })
     },
+    async report({ commit }, payload) {
+      console.log(payload);
+      let body = {
+        id:payload.id
+      }
+      console.log(body.id);
+      let res = await backendInstance.get(`/api/jobs/${payload.id}/report-inappropriate`);
+      
+    },
     async paginate({ commit }, payload) {
       console.log(payload);
       let body = {
