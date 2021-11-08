@@ -25,19 +25,7 @@
               <c-text color="indigo.400"  fontSize="5xl" ml="20rem">ชั่วโมงละ {{  jobId.compensation }} บาท</c-text>
 
               <!-- button -->
-              <c-flex ml="70rem">
-                <router-link to="/additionals" >
-                  <c-button h="4rem" w="19rem" fontSize="2xl" right-icon="arrow-forward" fontWeight="md" bg="#FE9A22" v-if="validated">
-                      สมัครงาน
-                  </c-button>
-                </router-link>
 
-              <router-link to="/review-form" >
-                <c-button h="4rem" w="19rem" fontSize="2xl" @click="finish" color="blue" bgColor="#D3EDED " v-if="validated_interest && jobId.working_status === 'IN PROGRESS'">
-                    จบงาน
-                </c-button>
-              </router-link>
-              </c-flex>
           </c-flex>
 
           <c-text fontSize="4xl" ml="20rem" as="ins" mt="6rem">รายละเอียดงาน</c-text>
@@ -56,14 +44,7 @@
           </c-box>
       </c-stack>
       
-      <br>
-      <br>
-      <c-text v-if="validated" fontSize="4xl" ml="20rem" mt="2rem">
-        หากคุณกำลังมองหางานอื่นอยู่
-          <JobCard v-if="validated"> 
 
-          </JobCard>
-      </c-text>
       </div>
     </div>
 </template>
@@ -72,10 +53,8 @@
 import JobApi from "@/store/JobApi.js"
 import UserApi from "@/store/AuthUser.js"
 import UserApii from "@/store/UserStore.js"
-import JobCard from "../components/card/job_card_info_page.vue"
 
 export default {
-  components:{ JobCard  },
   data() {
     return {
        job:[ { "id": 2, "compensation": 15304, "description": "Adipisci saepe perspiciatis rerum nobis neque libero. Natus quaerat quia nulla ipsam quo. Omnis est voluptates ratione.", "requirement": "Et expedita voluptas cupiditate eos veritatis repellendus. Iure autem quia dolorum non.", "province": "North Adeline", "title": "Government", "created_at": "2021-10-02T18:44:39.000000Z", "updated_at": "2021-10-02T18:44:39.000000Z" } ],

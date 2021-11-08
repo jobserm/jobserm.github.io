@@ -52,6 +52,24 @@ const routes = [
     component: () => import('../views/userJob.vue')
   },
   {
+    path: '/userJobApply',
+    name: 'userJobApply',
+    meta: {
+      layout: "Main",
+      requiresAuth: true,
+    },
+    component: () => import('../views/userJobApply.vue')
+  },
+  {
+    path: '/JobInfoApply',
+    name: 'JobInfoApply',
+    meta: {
+      layout: "Main",
+      requiresAuth: true,
+    },
+    component: () => import('../views/JobInformationForApply.vue')
+  },
+  {
     path: '/job',
     name: 'Job',
     props: true,

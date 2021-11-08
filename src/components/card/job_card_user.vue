@@ -13,7 +13,7 @@
                         <option>FINISH</option>
                     </c-select>
                     <!-- ค้นหา -->
-                    <c-button ml="10" mt="2rem" w="20rem" @click="search(form.provinces)" variant-color="indigo" variant="outline">
+                    <c-button ml="10" mt="2rem" w="20rem" @click="search(form.working_status)" variant-color="indigo" variant="outline">
                         ค้นหา
                     </c-button>
                     <!-- clear -->
@@ -22,6 +22,11 @@
                     </c-button>
                 </c-flex>
             </c-flex>
+
+            <c-text fontSize="5xl" align="center" color="red" mt="4rem" v-if="this.check === -1">คุณยังไม่ได้โพสงาน</c-text>
+            <c-text fontSize="5xl" align="center" color="red" mt="4rem" v-if="this.check === -2">ไม่มีงานที่ AVALIABLE</c-text>
+            <c-text fontSize="5xl" align="center" color="red" mt="4rem" v-if="this.check === -3">ไม่มีงานที่ IN PROGRESS</c-text>
+            <c-text fontSize="5xl" align="center" color="red" mt="4rem" v-if="this.check === -4">ไม่มีงานที่ FINISH</c-text>
     <c-simple-grid :columns="[1, 1, 1, 6]" spacing="8" m="10">
     <div v-for="index in jobs.data" :key="index.id">
         <c-box mt="4rem"  maxW="sm" border-width="4px" rounded="lg" overflow="hidden" border-color="black" :_hover="{bg: 'indigo.100' , borderColor:'indigo'}" fontSize="xl">
@@ -46,7 +51,7 @@
                         text-transform="uppercase"
                         ml="2"
                         >
-                        {{ index.province }}  &bull; {{ index.baths }} ประเภท
+                        {{ index.province }}  &bull; {{ index.category_name[0].category_name }} 
                     </c-box>
                 </c-box>
                 <c-box
@@ -118,7 +123,6 @@ import JobApi from "@/store/JobApi.js"
 import UserApi from "@/store/AuthUser.js"
 import Axios from "axios";
 import CategoryStore from "@/store/CategoryStore";
-
 export default {
     components: { 
     },
@@ -139,6 +143,7 @@ export default {
             provinces: [],
             categories: [],
             isLoading: true,
+            check:0
         }
     },
     async created(){
@@ -147,16 +152,38 @@ export default {
         await this.fetchJobs()
         this.getProvince()
         this.getCategories()
-
         this.isLoading = false
     },
     methods:{
-        async search(province){
-        console.log(province)
-        await JobApi.dispatch("fetchJobFromSearch", province)
-        this.jobs = JobApi.getters.getJobFromSearch
-        this.count_job = this.jobs.meta.total
-        this.$forceUpdate()
+        async search(working_status){
+        let payload={
+            user_id : this.user_id,
+            working_status : working_status
+        }
+        await JobApi.dispatch("fetchJobUserId", payload)
+        this.jobs = JobApi.getters.getJobByUser
+        this.check = 0;
+        if(this.jobs.data.length == 0)
+        {
+            if(working_status == "AVAILABLE")
+            {
+                this.check = -2
+            }
+            if(working_status == "IN PROGRESS")
+            {
+                this.check = -3
+            }
+            if(working_status == "FINISH")
+            {
+                this.check = -4
+            }
+            
+                
+        }
+        
+        // this.count_job = this.jobs.meta.total
+        console.log("fetch=================",this.jobs)
+
     },
     async getProvince() {
         let res = await Axios.get(`https://thaiaddressapi-thaikub.herokuapp.com/v1/thailand/provinces`);
@@ -172,10 +199,20 @@ export default {
         console.log("this.user==>",this.user)
     },
     async fetchJobs(){
-        await JobApi.dispatch("fetchJobUserId",this.user_id)
+        let payload={
+            user_id : this.user_id,
+            working_status : "ALL"
+        }
+        await JobApi.dispatch("fetchJobUserId", payload)
         this.jobs = JobApi.getters.getJobByUser
         // this.count_job = this.jobs.meta.total
         console.log("fetch=================",this.jobs)
+        this.check = 0;
+        if(this.jobs.data.length == 0)
+        {
+            this.check = -1
+        }
+        this.form.working_status = ""
         // console.log("this.jobs")
         // console.log(this.jobs.data)
         // console.log("count_job")
@@ -184,14 +221,12 @@ export default {
         // async pageNumberChange(pageIndex) {
         //     console.log(pageIndex)
         //     this.payload_url = this.jobs.meta.links[pageIndex].url
-
         //     await JobApi.dispatch("paginate_post" ,  this.payload_url)
         //     console.log("payload_url")
         //     console.log(this.payload_url)
         //     this.jobs = JobApi.getters.jobs
         //     this.count_job = this.jobs.meta.total
         //     this.$forceUpdate();
-
         // },
     async value(id){
         await JobApi.dispatch("fetchJobById" ,  id )
@@ -233,7 +268,6 @@ export default {
         flex-wrap: wrap;
         gap: 20px 10px;
         border: 1px solid red;
-
     }
     .services{
         width: 900px;
@@ -286,5 +320,4 @@ export default {
     .content > *{
         flex: 1 1 100%;
     }
-
 </style>

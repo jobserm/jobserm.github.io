@@ -2,7 +2,6 @@
 <div>
     <loading v-if="isLoading" />
     <div v-if="!isLoading">
-        <c-text fontSize="4xl"> filther ตอน search ไม่เอางานของ user ที่ login</c-text>
 
         <c-text fontSize="4xl" ml="11%" mt="2rem">{{ "งานทั้งหมด" }}</c-text>
         <c-flex>
@@ -68,7 +67,7 @@
                         text-transform="uppercase"
                         ml="2"
                         >
-                        {{ index.province }}  &bull; {{ index.provinces }} 
+                        {{ index.province }}  &bull; {{ index.category_name[0].category_name }} 
                     </c-box>
                 </c-box>
                 <c-box
@@ -113,9 +112,12 @@
 
                 {{ index.user_id }}
                 <c-flex jusify="center">
-                    <c-button  mt="1rem" bgColor="black" color="white" size="lg" :_hover="{bg: 'pink.400'}">
+                    <c-button  mt="1rem" bgColor="black" color="white" size="lg" :_hover="{bg: 'pink.400'}" v-if="!index.apply">
                         <a @click='value(index.id)' :href="'#/job'" v-bind="index">รายละเอียดงาน</a>
                     </c-button>
+                </c-flex>
+                <c-flex jusify="center" v-if="index.apply">
+                    <c-text color="red">คุณสมัครงานนี้ไปแล้ว</c-text>
                 </c-flex>
             </c-box>
         </c-box>
@@ -170,12 +172,14 @@ export default {
             current: 1,
             pageSize: 6,
             isLoading: true,
+            jobsApply:[]
         }
     },
     async created(){
         console.log("fetch=================")
         await this.fetchUser()
         await this.fetchJobs()
+        await this.ftechJobUserApply()
         
         console.log("fetch=================",this.user_id)
         this.getProvince()
@@ -192,9 +196,48 @@ export default {
             },
             paginated() {
             return this.JobA[0].slice(this.indexStart, this.indexEnd);
-            }
+            },
+            // apply(id){
+            //     console.log(id)
+            //     return true
+            //     // console.log(id)
+            //     // for(let i = 0 ; this.jobsApply.length ; i++)
+            //     // {
+            //     //     if(this.jobsApply[i].id == id)
+            //     //         return true;
+            //     // }
+            //     // return false;
+            // }
         },
     methods:{
+        async ftechJobUserApply(){
+        let payload={
+            user_id : this.user_id,
+            working_status : "AVAILABLE"
+        }
+        await JobApi.dispatch("fetchJobUserApply", payload)
+        this.jobsApply = JobApi.getters.getJobsThatUserApply
+        // this.count_job = this.jobs.meta.total
+        console.log("jobs L ",this.jobs.length)
+        console.log("jobsApply L",this.jobsApply.length)
+        for(let i = 0 ; i < this.jobs.length ; i++)
+                {
+                    var obj = this.jobs[i]
+                        obj["apply"] = false;
+                    for(let y = 0 ; y < this.jobsApply.length ; y++)
+                    {
+                        console.log("i", i)
+                        console.log("y", y)
+                        if(this.jobsApply[y].id == this.jobs[i].id)
+                        {
+                            obj["apply"] = true;
+                            console.log("i--", this.jobsApply[y].id)
+                            console.log("y--", this.jobs[i].id)
+                        }
+                            
+                    }
+                }
+    },
         prev() {
             if(this.current > 1)
                 this.current--;
@@ -225,7 +268,8 @@ export default {
                             province : `%`+province+`%`,
                             category : `%`+category+`%`,
                             compensatsion_array : this.compensatsion_array,
-                            check: 0
+                            check: 0,
+                            user_id : this.user_id
                                 }
 
                         console.log("payload",payload)
@@ -236,7 +280,8 @@ export default {
                             title : `%`+title+`%`,
                             province : `%`+province+`%`,
                             category : `%`+category+`%`,
-                            check: 1
+                            check: 1,
+                            user_id : this.user_id
                                 }
 
                         console.log(title)
@@ -245,11 +290,31 @@ export default {
 
       
         this.jobs = JobApi.getters.getJobFromSearch
+        console.log("jobs L ",this.jobs.data.length)
+        console.log("jobsApply L",this.jobsApply.length)
+        for(let i = 0 ; i < this.jobs.data.length ; i++)
+                {
+                    var obj = this.jobs.data[i]
+                        obj["apply"] = false;
+                    for(let y = 0 ; y < this.jobsApply.length ; y++)
+                    {
+                        console.log("i", i)
+                        console.log("y", y)
+                        if(this.jobsApply[y].id == this.jobs.data[i].id)
+                        {
+                            obj["apply"] = true;
+                            console.log("i--", this.jobsApply[y].id)
+                            console.log("y--", this.jobs.data[i].id)
+                        }
+                            
+                    }
+                }
+        console.log("jobs = ",this.jobs.data)
         this.JobA.length = 0
-        this.JobA.push(this.jobs)
-        console.log("jobs",this.jobs.length)
+        this.JobA.push(this.jobs.data)
+        console.log("jobs",this.jobs.data.length)
 
-        this.count_job = this.jobs.length
+        this.count_job = this.jobs.data.length
         console.log("count_job",this.count_job)
         if(this.count_job == 0)
         {
@@ -301,6 +366,23 @@ export default {
             this.JobA.push(this.jobs)
             this.count_job = this.jobs.length
             console.log("this.pageIndex",this.pageIndex)
+            for(let i = 0 ; i < this.jobs.length ; i++)
+                {
+                    var obj = this.jobs[i]
+                        obj["apply"] = false;
+                    for(let y = 0 ; y < this.jobsApply.length ; y++)
+                    {
+                        console.log("i", i)
+                        console.log("y", y)
+                        if(this.jobsApply[y].id == this.jobs[i].id)
+                        {
+                            obj["apply"] = true;
+                            console.log("i--", this.jobsApply[y].id)
+                            console.log("y--", this.jobs[i].id)
+                        }
+                            
+                    }
+                }
             this.$forceUpdate();
         },
         

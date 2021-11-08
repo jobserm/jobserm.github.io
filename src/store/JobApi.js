@@ -19,6 +19,7 @@ export default new Vuex.Store({
     jobFromSearch: [],
     JobAvaNotLogIn: [],
     AllJobsAvaNotLogIn:[],
+    JobsThatUserApply:[],
   },
   getters: {
     posts: (state) => state.posts,
@@ -34,6 +35,7 @@ export default new Vuex.Store({
     getJobFromSearch: (state) => state.jobFromSearch,
     getAvaJobNotLogIn: (state) => state.JobAvaNotLogIn,
     getAllJobsAvaNotLogIn: (state) => state.AllJobsAvaNotLogIn,
+    getJobsThatUserApply: (state) => state.JobsThatUserApply
   },
   mutations: {
     async fetch(state, { res }) {
@@ -41,6 +43,9 @@ export default new Vuex.Store({
     },
     async fetchById(state, { res }) {
       state.JobById = (await res).data;
+    },
+    async fetchJobUserApply(state, { res }) {
+      state.JobsThatUserApply = (await res).data;
     },
     async fetchSuggest(state, { res }) {
       state.JobSuggest = (await res).data;
@@ -188,6 +193,7 @@ export default new Vuex.Store({
         category : payload.category,
         compen : payload.compensatsion_array,
         check : payload.check,
+        user_id : payload.user_id
 
       };
       console.log("body", payload);
@@ -200,17 +206,31 @@ export default new Vuex.Store({
       }
       console.log("fetchJobFromSearch");
     },
-    async fetchJobUserId({ commit }, id) {
+    async fetchJobUserId({ commit }, payload) {
       console.log("---id---");
-      console.log(id);
       let body = {
-        id: id,
+        id: payload.user_id,
+        working_status : payload.working_status,
       };
+      console.log(body)
       let res = await backendInstance.post(`/api/get-job-by-user-id`, body);
       console.log((await res).data);
       console.log("fetchByUser");
       commit("fetchByUser", { res });
       console.log("fetchByUser");
+    },
+    async fetchJobUserApply({ commit }, payload) {
+      console.log("---id---");
+      let body = {
+        id: payload.user_id,
+        working_status : payload.working_status,
+      };
+      console.log(body)
+      let res = await backendInstance.post(`/api/get-job-apply`, body);
+      console.log((await res).data);
+      console.log("fetchJobUserApply");
+      commit("fetchJobUserApply", { res });
+      console.log("fetchJobUserApply");
     },
 
 

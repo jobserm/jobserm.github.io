@@ -41,7 +41,7 @@ export default {
             let res = await JobApi.dispatch('postJob', value)
             if (res.success) {
                 this.$swal("โพสต์งานสำเร็จ", `ตรวจสอบได้ที่หน้ารวมงาน`, "success")
-                this.$router.push("/jobinfo")
+                this.$router.push("/userJob")
             } else {
                 this.$swal("โพสต์งานไม่สำเร็จ", res.message, "error")
             }

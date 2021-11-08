@@ -16,7 +16,7 @@
               />
           </div>
       </c-flex> -->
-
+      <c-text fontSize="4xl" color="red" v-if="this.job.users.length == 0">ยังไม่มีคนสนใจงาน</c-text>
       <c-simple-grid :columns="[1, 1, 1, 5]" spacing="12" align="center" py="16">
         <div v-for="user in job.users" :key="user.id">
           <a :href="'#/candidate-profile/'+job.id+'/'+user.id"> 
