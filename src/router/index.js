@@ -70,7 +70,7 @@ const routes = [
     component: () => import('../views/JobInformationForApply.vue')
   },
   {
-    path: '/job',
+    path: '/job/:id',
     name: 'Job',
     props: true,
     meta: {

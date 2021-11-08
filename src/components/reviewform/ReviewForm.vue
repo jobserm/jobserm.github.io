@@ -152,8 +152,7 @@ export default {
           id: this.user.id,
           comment: this.form.comment
       }
-      let job_id = this.jobID
-      console.log(payload)
+      let job_id = this.job.id
       if(this.form.comment !== "" )
       { 
          this.$swal("รีวิวเสร็จสิ้น",'ขอบคุณที่ใช้งานเวปของเรา','success')

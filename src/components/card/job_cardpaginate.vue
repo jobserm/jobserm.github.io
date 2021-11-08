@@ -113,7 +113,7 @@
                 {{ index.user_id }}
                 <c-flex jusify="center">
                     <c-button  mt="1rem" bgColor="black" color="white" size="lg" :_hover="{bg: 'pink.400'}" v-if="!index.apply">
-                        <a @click='value(index.id)' :href="'#/job'" v-bind="index">รายละเอียดงาน</a>
+                        <a @click='value(index.id)' :href="'#/job/'+index.id" v-bind="index">รายละเอียดงาน</a>
                     </c-button>
                 </c-flex>
                 <c-flex jusify="center" v-if="index.apply">
