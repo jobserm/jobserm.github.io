@@ -10,16 +10,13 @@
             border-width="1px"
             >
             
-            <!-- <c-box justify="center">
+            <c-box justify="center">
                 <c-image v-bind:src="image" 
                          w="5rem" 
                          borderRadius="50%" 
                          marginTop="auto"
                          py="2"/>
-            </c-box> -->
-            
-            <!-- <c-image :src="require('./user_profile.png')" size="45rem"></c-image> -->
-            <c-image :src="require('./user_profile2.png')" size="45rem"></c-image>
+            </c-box>
     
             <c-heading mt="3rem" align="center" size="2xl" pb="2">{{ freelancerName }} {{ freelancerLastname }}</c-heading>
 
@@ -63,8 +60,7 @@
 <script>
 export default {
     name:"Info",
-    //props: ["image", "freelancerName", "star", "rating", "age"]
-    props: ["freelancerName", "freelancerLastname", "star", "rating", "age"]
+    props: ["freelancerName", "freelancerLastname", "star", "rating", "age", "image"]
 }
 </script>
 

@@ -1,11 +1,5 @@
 <template>
-    <c-box  
-        direction="column"
-        minW="100%"
-        :py="[null, '12']"
-        :bgImage="require('./bg_profile.svg')"
-        background-repeat="repeat-x"
-    >
+    <c-box>
         <c-box  px="20" py="10" >
         <loading v-if="isLoading" />
         <div v-if="!isLoading">
@@ -16,9 +10,11 @@
 
             <c-flex py="16" justify="center">
                 <info-profile
-                    v-bind:freelancerName="this.user.name + this.user.lastname"
+                    v-bind:freelancerName="this.user.name"
+                    v-bind:freelancerLastname="this.user.lastname"
                     v-bind:rating="user.review"
                     v-bind:age="user.birthdate"
+                    v-bind:image="this.user.img_url"
                     :star="require(`./star.png`)"
                 />
                 <c-box bg="#FDFDFD" border-width="3px" rounded="0.5rem">
@@ -187,7 +183,7 @@
                         :_hover="{ bg: '#E2E8F0'}"
                         bgColor="brand.500"
                         p="6"
-                        mt="12"
+                        my="8"
                         ml="85%"
                         color="white"
                         fontSize="2xl"
