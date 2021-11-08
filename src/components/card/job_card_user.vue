@@ -27,6 +27,7 @@
             <c-text fontSize="5xl" align="center" color="red" mt="4rem" v-if="this.check === -2">ไม่มีงานที่ AVALIABLE</c-text>
             <c-text fontSize="5xl" align="center" color="red" mt="4rem" v-if="this.check === -3">ไม่มีงานที่ IN PROGRESS</c-text>
             <c-text fontSize="5xl" align="center" color="red" mt="4rem" v-if="this.check === -4">ไม่มีงานที่ FINISH</c-text>
+             <c-text fontSize="5xl" ml="4rem" color="indigo.400" mt="4rem" >งานที่คุณโพส</c-text>
     <c-simple-grid :columns="[1, 1, 1, 6]" spacing="8" m="10">
     <div v-for="index in jobs.data" :key="index.id">
         <c-box mt="4rem"  maxW="sm" border-width="4px" rounded="lg" overflow="hidden" border-color="black" :_hover="{bg: 'indigo.100' , borderColor:'indigo'}" fontSize="xl">
@@ -97,7 +98,7 @@
 
                 <c-flex jusify="center">
                     <c-button mt="2rem" m="3" bgColor="black" color="white" size="lg" :_hover="{bg: 'pink.400'}">
-                        <a @click='value(index.id)' :href="'#/job'" v-bind="index">รายละเอียดงาน</a>
+                        <a @click='value(index.id)' :href="'#/job/'+index.id" v-bind="index">รายละเอียดงาน</a>
                     </c-button>
 
                     <div v-if="index.working_status !== 'IN PROGRESS' && index.working_status !== 'FINISH'">
