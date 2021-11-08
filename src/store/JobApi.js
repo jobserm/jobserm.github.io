@@ -193,6 +193,7 @@ export default new Vuex.Store({
         category : payload.category,
         compen : payload.compensatsion_array,
         check : payload.check,
+        user_id : payload.user_id
 
       };
       console.log("body", payload);

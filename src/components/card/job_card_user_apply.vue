@@ -22,6 +22,8 @@
                     </c-button>
                 </c-flex>
             </c-flex>
+
+            <c-text fontSize="5xl" align="center" color="red" mt="4rem" v-if="this.jobs.length === 0">ยังไม่มีงานที่คุณสนใจ</c-text>
     <c-simple-grid :columns="[1, 1, 1, 6]" spacing="8" m="10">
     <div v-for="index in jobs" :key="index.id">
         <c-box mt="4rem"  maxW="sm" border-width="4px" rounded="lg" overflow="hidden" border-color="black" :_hover="{bg: 'indigo.100' , borderColor:'indigo'}" fontSize="xl">

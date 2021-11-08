@@ -18,7 +18,7 @@
             </c-flex>
 
             <c-flex justify="center">
-                <c-text>{{ jobUser.name }} {{ jobUser.lastname }}</c-text>
+                <c-text>{{ user.name }} {{ user.lastname }}</c-text>
             </c-flex>
         </c-stack>
 
@@ -122,15 +122,28 @@ export default {
   },
   async created() {
     this.job = JSON.parse(localStorage.getItem('YourItem'));
-    console.log(this.job)
+    console.log("job",this.job)
     // รับ user คนที่ถูกรีวิวมาเงอะ
     this.jobUser = JSON.parse(localStorage.getItem('userToReview'));
     this.jobID = JSON.parse(localStorage.getItem('๋JobId'));
-    console.log("this.jobUser", this.jobUser)
+    for(let i = 0 ; i < this.job.users.length ; i++)
+    {
+      console.log("-")
+      for(let y = 0 ; y < this.job.users[i].info.length ; y++)
+      {
+        console.log("is_se",this.job.users[i].info[y].pivot.is_selected)
+        if(this.job.users[i].info[y].pivot.is_selected == 1)
+        {
+          this.user = this.job.users[i]
+        }
+      }
+
+    }
+    console.log("this.jobUser", this.user)
   },
-  async mounted() {
-    this.user = await AuthUser.getters.user;
-  },
+  // async mounted() {
+  //   this.user = await AuthUser.getters.user;
+  // },
   methods:{
     async saveInfo() {
       console.log("star", this.score)
@@ -140,7 +153,7 @@ export default {
           comment: this.form.comment
       }
       let job_id = this.jobID
-      console.log(job_id)
+      console.log(payload)
       if(this.form.comment !== "" )
       { 
          this.$swal("รีวิวเสร็จสิ้น",'ขอบคุณที่ใช้งานเวปของเรา','success')

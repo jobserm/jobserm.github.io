@@ -25,7 +25,7 @@
                         text-transform="uppercase"
                         ml="2"
                         >
-                        {{ index.province }}  &bull; {{ index.provinces }} 
+                        {{ index.province }}   
                     </c-box>
                 </c-box>
                 <c-box
@@ -70,9 +70,12 @@
 
                     {{ index.user_id }}
                 <c-flex jusify="center">
-                    <c-button  mt="1rem" bgColor="black" color="white" size="lg" :_hover="{bg: 'pink.400'}">
+                    <c-button  mt="1rem" bgColor="black" color="white" size="lg" :_hover="{bg: 'pink.400'}" v-if="!index.apply">
                         <a @click='value(index.id)' :href="'#/job'" v-bind="index">รายละเอียดงาน</a>
                     </c-button>
+                    <c-flex jusify="center" v-if="index.apply">
+                    <c-text color="red">คุณสมัครงานนี้ไปแล้ว</c-text>
+                </c-flex>
                 </c-flex>
             </c-box>
         </c-box>
@@ -85,6 +88,7 @@
 
 <script>
 import JobApi from "@/store/JobApi.js"
+import UserApi from "@/store/AuthUser.js"
 
 export default {
     components: { 
@@ -97,15 +101,52 @@ export default {
             payload_url:"",
             job_id:0,
             jobId:[],
-            id:0
+            id:0,
+            user_id:0,
+            user:[]
         }
     },
     async created(){
         this.jobId = JSON.parse(localStorage.getItem('YourItem'));
         console.log("created jobId",this.jobId.id)
          await this.fetchJobs(this.jobId.id)
+         await this.fetchUser()
+         await this.ftechJobUserApply()
     },
     methods:{
+        fetchUser(){
+            this.user = UserApi.getters.user
+            this.user_id = this.user.id
+            console.log("this.user==>",this.user)
+        },
+        async ftechJobUserApply(){
+        let payload={
+            user_id : this.user_id,
+            working_status : "AVAILABLE"
+        }
+        await JobApi.dispatch("fetchJobUserApply", payload)
+        this.jobsApply = JobApi.getters.getJobsThatUserApply
+        // this.count_job = this.jobs.meta.total
+        console.log("jobs L ",this.jobs.length)
+        console.log("jobsApply L",this.jobsApply.length)
+        for(let i = 0 ; i < this.jobs.length ; i++)
+                {
+                    var obj = this.jobs[i]
+                        obj["apply"] = false;
+                    for(let y = 0 ; y < this.jobsApply.length ; y++)
+                    {
+                        console.log("i", i)
+                        console.log("y", y)
+                        if(this.jobsApply[y].id == this.jobs[i].id)
+                        {
+                            obj["apply"] = true;
+                            console.log("i--", this.jobsApply[y].id)
+                            console.log("y--", this.jobs[i].id)
+                        }
+                            
+                    }
+                }
+    },
         async fetchJobs(id){
             await JobApi.dispatch("fetchJobSuggest",id)
             this.jobs = JobApi.getters.getJobSuggest
