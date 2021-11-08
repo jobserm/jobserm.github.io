@@ -179,7 +179,7 @@
                         px="24"
                         lineHeight="2.5"
                     >
-                    ข้อความเพิ่มเติมจากผู้สมัคร : {{ this.user.info[0].pivot.remark }}
+                    ข้อความเพิ่มเติมจากผู้สมัคร : {{ remark }}
                     </c-text>
 
                     <c-button
@@ -240,7 +240,8 @@ export default {
             reviews: [],
             isLoading: true,
             job_id: this.$route.params.job_id,
-            user_id: this.$route.params.user_id
+            user_id: this.$route.params.user_id,
+            remark:""
         }
     },
 
@@ -270,6 +271,17 @@ export default {
             this.user = res
 
             console.log(this.user)
+            console.log("length" , this.job_id)
+
+            for(let i = 0 ; i<this.user.info.length ; i++)
+            {
+                console.log("this.user.info[i]" , this.user.info[i])
+                if(this.user.info[i].id == this.job_id)
+                {
+                    
+                    this.remark =this.user.info[i].pivot.remark
+                }
+            }
 
             await ReviewApi.dispatch("getReviewByUserID", this.user.id)
             let res2 = ReviewApi.getters.getReviewsByUserID
