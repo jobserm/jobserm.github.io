@@ -3,6 +3,7 @@
         wrap="wrap"
         rounded="0.3rem"
         p="3"
+        bgColor="white"
         >
             <c-flex>
                 <!-- <c-image v-bind:src="job.image" 
@@ -13,7 +14,7 @@
                     <c-text as="h3" fontSize="3xl" textAlign="center" pb="1">{{ job.title }}</c-text>
                     <c-text>รายละเอียดงาน : {{ job.description }}</c-text>
                     <c-text>คุณสมบัติผู้สมัคร : {{ job.requirement }}</c-text>
-                    <c-text>ประเภทงาน : {{job.category_name[0].category_name || '-'}} </c-text>
+                    <c-text>ประเภทงาน : {{ job.category_name[0].category_name ||'-' }} </c-text>
                     <c-text>จังหวัด : {{ job.province }}</c-text>
                     <c-text>ค่าตอบแทน : {{ job.compensation }}</c-text>
                     <c-text>สถานะ : {{ job.status }}</c-text>
