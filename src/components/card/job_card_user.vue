@@ -31,8 +31,8 @@
     <c-simple-grid :columns="[1, 1, 1, 6]" spacing="8" m="10">
     <div v-for="index in jobs.data" :key="index.id">
         <c-box mt="4rem"  maxW="sm" border-width="4px" rounded="lg" overflow="hidden" border-color="black" :_hover="{bg: 'indigo.100' , borderColor:'indigo'}" fontSize="xl">
-            
-            <c-image src="https://static.toiimg.com/photo/msid-67586673/67586673.jpg?3918697" alt="cat" />
+
+            <c-image :src="index.image[0].path" alt="cat" />
             <c-box p="6">
                 <c-box d="flex" align-items="baseline">
                     <c-badge rounded="full" px="5" variant-color="green" font-size="0.75em" v-if="index.working_status === 'AVAILABLE'">

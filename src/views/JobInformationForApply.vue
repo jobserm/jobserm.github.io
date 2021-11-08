@@ -5,7 +5,7 @@
       <c-stack :spacing="6">
         <c-text fontSize="6xl" ml="20rem" mt="2rem">{{ jobId.title }}</c-text>
 
-          <c-flex ml="20rem">
+          <!-- <c-flex ml="20rem">
             <c-image mt="2rem" align="center" w="50%"
                       src="https://img.pptvhd36.com/thumbor/2020/07/16/news-0ae9eefe51.jpg" />
 
@@ -13,12 +13,49 @@
                       w="30%"
                       h="30%"
                       mt="2rem"
-                      src="https://www.forbes.com/advisor/wp-content/uploads/2021/03/pit-bull-featured.jpg" />
+                      src="https://www.forbes.com/advisor/wp-content/uploads/2021/03/pit-bull-featured.jpg" /> -->
 
             <!-- <c-image  ml="5rem"
                       w="30%"
                       h="30%"
                       src="https://www.forbes.com/advisor/wp-content/uploads/2021/03/pit-bull-featured.jpg" /> -->
+          <!-- </c-flex> -->
+
+                    <c-flex ml="20rem" v-if="jobId.image.length === 1">
+
+              <c-image mt="2rem" align="center" w="50%" v-bind:src="jobId.image[0].path" ></c-image>
+
+          </c-flex>
+
+          <c-flex ml="20rem" v-if="jobId.image.length === 2">
+
+              <c-image mt="2rem" align="center" w="50%" v-bind:src="jobId.image[0].path"></c-image>
+              <c-flex flexDirection="column" >
+              <c-image  ml="5rem"
+                      w="50%"
+                      h="50%"
+                      mt="2rem"
+                        v-bind:src="jobId.image[1].path" /> 
+
+              </c-flex>
+          </c-flex>
+
+          <c-flex ml="20rem" v-if="jobId.image.length === 3">
+
+              <c-image mt="2rem" align="center" w="50%" v-bind:src="jobId.image[0].path"></c-image>
+              <c-flex flexDirection="column" >
+              <c-image  ml="5rem"
+                      w="50%"
+                      h="50%"
+                      mt="2rem"
+                        v-bind:src="jobId.image[1].path" /> 
+
+              <c-image  ml="5rem"
+                      mt="2rem"
+                      w="50%"
+                      h="50%"
+                        v-bind:src="jobId.image[2].path" />
+              </c-flex>
           </c-flex>
 
           <c-flex>

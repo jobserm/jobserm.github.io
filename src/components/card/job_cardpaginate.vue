@@ -47,7 +47,7 @@
     <div v-for="index in paginated" :key="index.id">
         <c-box mt="4rem" m="2rem" maxW="sm" border-width="3px" rounded="lg" overflow="hidden" border-color="black" :_hover="{bg: 'indigo.100' , borderColor:'indigo'}" fontSize="xl">
             
-            <c-image src="https://static.toiimg.com/photo/msid-67586673/67586673.jpg?3918697" alt="cat" />
+            <c-image :src="index.image[0].path" alt="cat" />
             <c-box p="6">
                 <c-box d="flex" align-items="baseline">
                     <c-badge rounded="full" px="5" variant-color="green" font-size="0.75em" v-if="index.working_status === 'AVAILABLE'">

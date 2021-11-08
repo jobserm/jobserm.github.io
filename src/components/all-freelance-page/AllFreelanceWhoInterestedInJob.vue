@@ -5,17 +5,16 @@
       <c-stack>
           <c-heading py="12" fontSize="5xl">ผู้ที่สนใจ <br> {{ job.title }}</c-heading>
       </c-stack>
-<!-- 
       <c-flex>
-          <div v-for="image in job.img_url" :key="image">
+          <div v-for="image in job.image" :key="image">
               <c-image 
-              :src="require(`${image.dog}`)"
+              :src="image.path"
               w="350px"
               objectFit="scale-down"
               p="2"
               />
           </div>
-      </c-flex> -->
+      </c-flex>
 
       <c-text fontSize="4xl" color="red" v-if="this.job.users.length == 0">ยังไม่มีคนสนใจงาน</c-text>
       <c-simple-grid :columns="[1, 1, 1, 5]" spacing="12" align="center" py="16">
