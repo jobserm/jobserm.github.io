@@ -96,6 +96,7 @@ export default {
   },
   methods: {
     async fetchReviews() {
+      this.loading = true;
       let data = await backendInstance.get("/api/reviews");
       if (data.length != 0) {
         this.rawData = data.data;
