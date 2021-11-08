@@ -20,6 +20,7 @@ export default new Vuex.Store({
     JobAvaNotLogIn: [],
     AllJobsAvaNotLogIn:[],
     JobsThatUserApply:[],
+    recentlyPostedJob: [],
   },
   getters: {
     posts: (state) => state.posts,
@@ -35,7 +36,8 @@ export default new Vuex.Store({
     getJobFromSearch: (state) => state.jobFromSearch,
     getAvaJobNotLogIn: (state) => state.JobAvaNotLogIn,
     getAllJobsAvaNotLogIn: (state) => state.AllJobsAvaNotLogIn,
-    getJobsThatUserApply: (state) => state.JobsThatUserApply
+    getJobsThatUserApply: (state) => state.JobsThatUserApply,
+    getRecentlyPostedJob: (state) => state.recentlyPostedJob
   },
   mutations: {
     async fetch(state, { res }) {
@@ -88,6 +90,9 @@ export default new Vuex.Store({
     removeJob(state, data) {
       state.allJobs = state.allJobs.map((job) => job.id != data.id);
     },
+    setRecentlyPostedJob(state, data) {
+      state.recentlyPostedJob = data;
+    }
   },
   actions: {
     async fetchJobSuggest({ commit }, id) {
@@ -113,6 +118,7 @@ export default new Vuex.Store({
       try {
         let res = await backendInstance.post(`/api/jobs`, payload);
         if (res.status === 201) {
+          commit('setRecentlyPostedJob', res.data)
           return {
             success: true,
           };

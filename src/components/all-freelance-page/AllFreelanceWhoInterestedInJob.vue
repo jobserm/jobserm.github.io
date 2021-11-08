@@ -27,6 +27,7 @@
                 v-bind:freelancerLastname="user.lastname"
                 v-bind:rating="user.review"
                 v-bind:age="user.birthdate"
+                v-bind:image="user.img_url"
                 :star="require(`./star.png`)"
               />
             </div>

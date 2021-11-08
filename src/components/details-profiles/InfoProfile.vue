@@ -9,14 +9,16 @@
             shadow="xl" 
             border-width="1px"
             >
-            
-            <c-box justify="center">
-                <c-image v-bind:src="image" 
-                         w="5rem" 
-                         borderRadius="50%" 
-                         marginTop="auto"
-                         py="2"/>
-            </c-box>
+            <c-flex justify="center">
+                <c-box>
+                    <c-image textAlign="center" v-bind:src="image" 
+                            w="30rem"
+                            h="30rem"
+                            borderRadius="50%" 
+                            marginTop="auto"
+                            py="2"/>
+                </c-box>
+            </c-flex>
     
             <c-heading mt="3rem" align="center" size="2xl" pb="2">{{ freelancerName }} {{ freelancerLastname }}</c-heading>
 

@@ -73,6 +73,7 @@ export default {
                 this.$swal("ลงทะเบียนสำเร็จ", `ขอบคุณที่ให้ความสนใจ`, "success")
                 this.$router.push("/")
             } else {
+                this.isLoading = false
                 this.$swal("ลงทะเบียนไม่สำเร็จ", res.message, "error")
             }
         }

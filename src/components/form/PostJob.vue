@@ -39,7 +39,6 @@
                 multiple
                 @change="handleFilesUpload( $event )"
             />
-            <c-button bgColor="brand.400" color="brand.500" width="70px" @click="uploadFiles">เพิ่มรูป</c-button>
           </c-box>
 
           <c-box>
@@ -111,7 +110,7 @@ export default {
             }, 
             categories: [],
             provinces: [],
-            // file: []
+            files: []
         }
     },
     created() {
@@ -122,11 +121,14 @@ export default {
       post () {
         // this.$emit will invoke parent method (postJob) 
         // and pass this.form back to parent
-        this.$emit('postJob', this.form)
+      let returnData = {
+        body: this.form,
+        img: this.files
+      }
+        this.$emit('postJob', returnData)
       },
 
       async getCategories() {
-        //console.log("eiei")
         await CategoryStore.dispatch('fetchData')
         this.categories = CategoryStore.getters.getCategories
       },

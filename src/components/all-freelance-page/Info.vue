@@ -11,7 +11,8 @@
         
         <c-box justify="center">
             <c-image v-bind:src="image" 
-                        w="5rem" 
+                        w="12rem"
+                        h="12rem"
                         borderRadius="50%" 
                         marginTop="auto"
                         py="2"/>
