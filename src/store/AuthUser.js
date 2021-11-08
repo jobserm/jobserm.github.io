@@ -41,6 +41,9 @@ export default new Vuex.Store({
     registerSuccess(state, user) {
       state.user = user;
     },
+    setUser(state, data) {
+      state.user = data;
+    }
   },
   actions: {
     async login({ commit }, { email, password }) {
@@ -92,5 +95,9 @@ export default new Vuex.Store({
         //console.log(e)
       }
     },
+    async me({ commit }) {
+      let res = await backendInstance.post(`/api/auth/me`, {});
+      commit("setUser", res.data);
+    }
   },
 });

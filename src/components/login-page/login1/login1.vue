@@ -1,4 +1,6 @@
 <template>
+<div>
+  <loading v-if="isLoading" />
   <c-flex
       align="center"
       justify="center"
@@ -74,7 +76,7 @@
       </c-stack>
     </c-flex>
     </c-flex>
-
+</div>
 </template>
 
 <script>
@@ -89,11 +91,13 @@ export default {
         email: '',
         password: ''
       },
-      show: false
+      show: false,
+      isLoading: false,
     }
   },
   methods: {
     async login() {
+      this.isLoading = true;
       if (this.form.email !== "" && this.form.password !== "") {
         let res = await AuthUser.dispatch("login", this.form);
 
@@ -108,6 +112,7 @@ export default {
         } else {
           this.$swal("เข้าสู่ระบบไม่สำเร็จ", res.message, "error");
         }
+        this.isLoading = false;
       }
       else {
         this.$swal("เข้าสู่ระบบไม่สำเร็จ", `โปรดกรอกข้อมูลให้ครบถ้วน`, "error");

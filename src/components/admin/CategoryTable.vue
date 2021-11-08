@@ -1,6 +1,6 @@
 <template>
     <div>
-        <!-- <loading v-if="loading"/> -->
+        <loading v-if="isLoading"/>
         <ve-table
             :fixed-header="true"
             :columns="columns"
@@ -30,14 +30,26 @@ export default {
         return {
             columns: [
                 { field: "id", key: "a", title: "ID", align: "center" },
-                { field: "category_name", key: "b", title: "Category Name", align: "left" },
+                { field: "category_name", key: "b", title: "Category Name", align: "left", 
+                renderBodyCell: ({ row, column, rowIndex }, h) => {
+                    const text = row[column.field];
+                    return (
+                        <span>
+                            <a 
+                                onClick={() => this.getCategoryById(row['id'])}
+                                style="color:#1890ff;cursor:pointer;"
+                            >
+                                {text}
+                            </a>
+                        </span>
+                    )
+                }},
                 { field: "job_count", key: "c", title: "จำนวนงานในหมวดหมู่", align: "left" },
             ],
-            // loading: true,
+            isLoading: true,
             rawData: [],
             pageIndex: 1,
             pageSize: 10,
-            loading: true,
             dataEmpty: true,
         }
     },
@@ -53,6 +65,7 @@ export default {
     },
     async created () {
         await this.fetchCategories();
+        this.$root.$refs.categoryTable = this
     },
     methods: {
         pageNumberChange( pageIndex ) {
@@ -64,14 +77,23 @@ export default {
         },
 
          async fetchCategories() {
+             console.log('fetchCategories')
+            this.isLoading = true
             await CategoryStore.dispatch('fetchData')
             let categories = CategoryStore.getters.getCategories
             if (categories.length > 0) {
                 this.rawData = categories
-                this.loading = false
+                this.isLoading = false
                 this.dataEmpty = false
              }
-            this.loading = false
+            this.isLoading = false
+        },
+        async getCategoryById(id) {
+            this.isLoading = true
+            await CategoryStore.dispatch('fetchCategoryById', id)
+            let category = CategoryStore.getters.getCategory
+            this.$emit('parentGetCategoryById', category)
+            this.isLoading = false
         },
     },
 

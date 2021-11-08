@@ -94,7 +94,7 @@ export default {
       console.log(body);
 
       let res = await backendInstance.post(`/api/auth/register`, body);
-      //console.log(res);
+      console.log(res);
       if (res.status === 201) {
         let autoLogin = await AuthUser.dispatch("login", body);
         console.log(autoLogin.jwt);
