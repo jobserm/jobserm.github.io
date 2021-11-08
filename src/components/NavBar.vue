@@ -67,7 +67,7 @@
             </c-menu>
         </c-flex>
         <div v-if="isAuthen() && !isAdmin()">
-          <button-secondary :url="`/userJobApply`" :text="`งานที่คุณสนใจ`" mx="4" />
+          <button-secondary :url="`/userJobApply`" :text="`งานที่คุณสมัคร`" mx="4" />
         </div>
 
         <div v-if="isAuthen() && !isAdmin()">

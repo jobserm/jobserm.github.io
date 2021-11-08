@@ -286,24 +286,12 @@ export default {
           }
           let res = await JobApi.dispatch("employerSelectFreelancer", body1)
 
-          this.$swal({
-                title: "ยืนยันการจ้างงาน",
-                text: "",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,              
-          }).then((selectFreelance) => {
-            if (selectFreelance) {
-              if(res.success) {
-                this.$router.push("/userJob")
-                this.$swal("จ้างงานเสร็จสิ้น", {icon: "success"})
-              } else {
-                console.log("ไม่นะะะ")
-              }
-            }
-          });
-         
-          
+          if (res.success) {
+            this.$router.push("/userJob")
+            this.$swal("จ้างงานเสร็จสิ้น", {icon: "success"})
+          } else {
+            console.log("-----??")
+          }
         }
     },
 }

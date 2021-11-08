@@ -41,7 +41,7 @@
         >
             <c-box>
                 <c-text fontSize="2xl">
-                    {{ "คอมเม้น" }}
+                    {{ "คอมเมนต์" }}
                 </c-text>
                 <c-text fontSize="md" color="gray.400">
                     {{"Leave your comment"}}

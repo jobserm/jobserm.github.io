@@ -23,7 +23,7 @@
                 </c-flex>
             </c-flex>
 
-            <c-text fontSize="5xl" align="center" color="red" mt="4rem" v-if="this.check === -1">คุณยังไม่ได้โพสงาน</c-text>
+            <c-text fontSize="5xl" align="center" color="red" mt="4rem" v-if="this.check === -1">คุณยังไม่ได้โพสต์งาน</c-text>
             <c-text fontSize="5xl" align="center" color="red" mt="4rem" v-if="this.check === -2">ไม่มีงานที่ AVALIABLE</c-text>
             <c-text fontSize="5xl" align="center" color="red" mt="4rem" v-if="this.check === -3">ไม่มีงานที่ IN PROGRESS</c-text>
             <c-text fontSize="5xl" align="center" color="red" mt="4rem" v-if="this.check === -4">ไม่มีงานที่ FINISH</c-text>
