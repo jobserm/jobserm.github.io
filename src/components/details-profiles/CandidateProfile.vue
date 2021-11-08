@@ -191,7 +191,7 @@
                         ml="85%"
                         color="white"
                         fontSize="2xl"
-                        @click="submit">จ้างงาน</c-button>
+                        @click="selectFreelance">จ้างงาน</c-button>
                 </c-box>
             </c-flex>
         </div>
@@ -279,35 +279,19 @@ export default {
             this.editFormat()
         },
 
-        async submit() {
-          this.$swal({
-                title: "ยืนยันการจ้างงาน",
-                text: "",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,              
-          }).then((selectFreelance) => {
-            if (selectFreelance) {
-                let res = this.selectFreelance()
-                if(res.success) {
-                    this.$router.push("/userJob")
-                    this.$swal("จ้างงานเสร็จสิ้น", {icon: "success"})
-                } else {
-                    console.log("ไม่นะะะ")
-                }
-            }
-          });
-         
-          
-        },
-
         async selectFreelance() {
-            let body1 = {
+          let body1 = {
             job_id : this.job_id,
             user_id : this.user_id
           }
           let res = await JobApi.dispatch("employerSelectFreelancer", body1)
-          return res
+
+          if (res.success) {
+            this.$router.push("/userJob")
+            this.$swal("จ้างงานเสร็จสิ้น", {icon: "success"})
+          } else {
+            console.log("-----??")
+          }
         }
     },
 }
