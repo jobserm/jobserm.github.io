@@ -64,6 +64,10 @@ export default {
                 return item
             })
         },
+
+        // async freelancerInfo(id) {
+        //     await
+        // }
     },
     
 }

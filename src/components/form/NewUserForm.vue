@@ -31,7 +31,6 @@
                 multiple
                 @change="handleFilesUpload( $event )"
            />
-          <c-button bgColor="brand.400" color="brand.500" width="70px" @click="uploadFiles">เพิ่มรูป</c-button>
 
           <c-box>
             <c-form-label for="name" color="gray.600">{{
@@ -155,12 +154,17 @@ export default {
         skill: "",
         is_publish: 0,
         // gender: "",
-      }
+      },
+      files: []
     }
   },
   methods: {
     saveInfo () {
-      this.$emit('saveInfo', this.form)
+      let returnData = {
+        body: this.form,
+        img: this.files
+      }
+      this.$emit('saveInfo', returnData)
     },
     
     handleFilesUpload(event) {

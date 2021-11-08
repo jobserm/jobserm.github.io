@@ -90,7 +90,7 @@
 
         <div v-if="isAuthen() && !isAdmin()">
           <router-link to="/auth-profile">
-            <c-image w="3rem" h="3rem" src="https://cdn-icons-png.flaticon.com/512/64/64572.png" />
+            <c-avatar w="3rem" h="3rem" :src="user.img_url" />
           </router-link>
         </div>
         
@@ -117,8 +117,8 @@ export default {
     };
   },
 
-  created() {
-    this.getUser()
+  async created() {
+    await this.getUser()
   },
 
   methods: {
@@ -130,8 +130,10 @@ export default {
       return AuthUser.getters.isAdmin
     },
 
-    getUser() {
+    async getUser() {
+      await AuthUser.dispatch('me');
       this.user = AuthUser.getters.user
+      console.log(this.user)
     }
   },
 };
