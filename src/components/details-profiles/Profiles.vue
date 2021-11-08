@@ -1,11 +1,5 @@
 <template>
-    <c-box
-        direction="column"
-        minW="100%"
-        :py="[null, '12']"
-        :bgImage="require('./bg_profile.svg')"
-        background-repeat="repeat-x"
-    >
+    <c-box>
         <c-box  px="20" py="10" >
             <loading v-if="isLoading" />
             <div v-if="!isLoading">
@@ -19,6 +13,7 @@
                     v-bind:freelancerLastname="this.user.lastname"
                     v-bind:rating="this.user.review"
                     v-bind:age="this.user.birthdate"
+                    v-bind:image="this.user.img_url"
                     :star="require(`./star.png`)"
                 />
                 <c-box bg="#FDFDFD" border-width="3px" rounded="0.5rem">
@@ -154,6 +149,7 @@
                         opacity="0.9"
                         px="24"
                         lineHeight="2.5"
+                        pb="5"
                     >
                     ความสามารถ : {{ this.user.skill }}
                     </c-text>
