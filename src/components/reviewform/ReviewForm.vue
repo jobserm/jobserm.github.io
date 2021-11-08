@@ -125,7 +125,7 @@ export default {
     console.log("job",this.job)
     // รับ user คนที่ถูกรีวิวมาเงอะ
     this.jobUser = JSON.parse(localStorage.getItem('userToReview'));
-    this.jobID = JSON.parse(localStorage.getItem('๋JobId'));
+    this.jobID = JSON.parse(localStorage.getItem('JobId'));
     for(let i = 0 ; i < this.job.users.length ; i++)
     {
       console.log("-")
