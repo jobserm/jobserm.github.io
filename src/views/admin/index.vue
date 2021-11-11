@@ -11,7 +11,9 @@
                     <WeeklyCard header="Jobs" v-bind:amount="jobs.length" remark="Increased by 7%"/>
                     <!-- <WeeklyCard header="Recently Online" amount="572" remark="Increased by 11%"/> -->
                 </c-flex>
-                <!-- <Chart /> -->
+                <Chart 
+                v-bind:users="users"
+                v-bind:jobs="jobs"/>
                 <UserTable />
             </c-stack>
         </c-flex>
@@ -22,7 +24,7 @@
 <script>
 import Sidebar from "../../components/admin/Sidebar.vue";
 import WeeklyCard from "../../components/admin/WeeklyCard.vue";
-// import Chart from "../../components/admin/Chart.vue";
+import Chart from "../../components/admin/Chart.vue";
 import UserTable from "../../components/admin/UserTable.vue";
 import Header from "../../components/admin/Header.vue";
 import backendInstance from '../../services/backendInstance';
@@ -30,7 +32,7 @@ export default {
     components: {
         Sidebar,
         WeeklyCard,
-        // Chart,
+        Chart,
         UserTable,
         Header,
     },

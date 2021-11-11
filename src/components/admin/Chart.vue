@@ -11,15 +11,28 @@
 
 <script>
 export default {
+    props: ['users', 'jobs'],
     data() {
-        let months =  ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct']
+        let months =  ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        let users_amount = Array(11).fill(0)
+        let jobs_amount = Array(11).fill(0)
+        for (let i = 0; i < this.users.length; i++) {
+            let date = new Date(this.users[i].created_at);
+            users_amount[date.getMonth()] += 1;
+        }
+
+        for (let i = 0; i < this.jobs.length; i++) {
+            let date = new Date(this.jobs[i].created_at);
+            jobs_amount[date.getMonth()] += 1;
+        }
+        console.log(users_amount)
         return {
             series: [{
             name: 'Users',
-            data: [220, 140, 158, 258, 185, 149, 341, 456, 415]
+            data: users_amount
             }, {
             name: 'Jobs',
-            data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
+            data: jobs_amount
             }],
             chartOptions: {
             chart: {

@@ -55,12 +55,13 @@ export default {
                     const text = row['job_owner'][0];
                     return (
                     <span>
-                          {text.name}
+                          {text.name + ' ' + text.lastname}
                     </span>
                 );
           },
                 },
-                { field: "report", key: "d", title: "รายงานความไม่เหมาะสม", align: "left" },
+                { field: "selected_user_admin", key: "d", title: "ผู้รับผิดชอบงาน", align: "left" },
+                { field: "report", key: "e", title: "รายงานความไม่เหมาะสม", align: "left" },
             ],
             // loading: true,
             rawData: [],
