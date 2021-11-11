@@ -91,7 +91,7 @@
                 <c-box>
                     {{ index.compensation }} บาท/ชม
                 </c-box>
-                    {{ index.user_id }}
+                    <!-- {{ index.user_id }} -->
 
                 <c-flex jusify="center">
                     <c-button mt="2rem" m="3" bgColor="black" color="white" size="lg" :_hover="{bg: 'pink.400'}">

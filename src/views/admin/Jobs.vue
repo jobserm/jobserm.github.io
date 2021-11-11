@@ -60,6 +60,10 @@ export default {
           province: '', 
           compensation: '',
           status: '',
+          category_name: [{
+            category_name:"-"
+          }]
+
       },
         this.showDeleteBtn = false
       },

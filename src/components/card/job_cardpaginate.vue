@@ -110,7 +110,7 @@
                     {{ index.compensation }} บาท/ชม
                 </c-box>
 
-                {{ index.user_id }}
+                <!-- {{ index.user_id }} -->
                 <c-flex jusify="center">
                     <c-button  mt="1rem" bgColor="black" color="white" size="lg" :_hover="{bg: 'pink.400'}" v-if="!index.apply">
                         <a @click='value(index.id)' :href="'#/job/'+index.id" v-bind="index">รายละเอียดงาน</a>
