@@ -12,8 +12,8 @@
                     <!-- <WeeklyCard header="Recently Online" amount="572" remark="Increased by 11%"/> -->
                 </c-flex>
                 <Chart 
-                v-bind:users="users"
-                v-bind:jobs="jobs"/>
+                v-bind:users="users_amount"
+                v-bind:jobs="jobs_amount"/>
                 <UserTable />
             </c-stack>
         </c-flex>
@@ -40,7 +40,9 @@ export default {
         return {
             users: [],
             jobs: [],
-            isLoading: false
+            isLoading: false,
+            users_amount: Array(11).fill(0),
+            jobs_amount: Array(11).fill(0),
         }
     },
     async created() {
@@ -54,6 +56,10 @@ export default {
             console.log(res)
             if (res.status === 200) {
                 this.users = res.data
+                for (let i = 0; i < this.users.length; i++) {
+                    let date = new Date(this.users[i].created_at);
+                    this.users_amount[date.getMonth()] += 1;
+                }
             }
             this.isLoading = false
         },
@@ -62,6 +68,11 @@ export default {
             let res = await backendInstance.get('/api/get-all-jobs');
             if (res.status === 200) {
                 this.jobs = res.data
+                for (let i = 0; i < this.jobs.length; i++) {
+                    let date = new Date(this.jobs[i].created_at);
+                    this.jobs_amount[date.getMonth()] += 1;
+                    console.log(this.jobs_amount)
+                }
             }
             this.isLoading = false
         },

@@ -10,29 +10,18 @@
 </template>
 
 <script>
+import backendInstance from '../../services/backendInstance'
 export default {
     props: ['users', 'jobs'],
     data() {
         let months =  ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-        let users_amount = Array(11).fill(0)
-        let jobs_amount = Array(11).fill(0)
-        for (let i = 0; i < this.users.length; i++) {
-            let date = new Date(this.users[i].created_at);
-            users_amount[date.getMonth()] += 1;
-        }
-
-        for (let i = 0; i < this.jobs.length; i++) {
-            let date = new Date(this.jobs[i].created_at);
-            jobs_amount[date.getMonth()] += 1;
-        }
-        console.log(users_amount)
         return {
             series: [{
             name: 'Users',
-            data: users_amount
+            data: this.users
             }, {
             name: 'Jobs',
-            data: jobs_amount
+            data: this.jobs
             }],
             chartOptions: {
             chart: {
@@ -74,7 +63,7 @@ export default {
             }
             },
         }
-    }
+    },
 }
 </script>
 
