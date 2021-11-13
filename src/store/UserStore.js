@@ -56,5 +56,31 @@ export default new Vuex.Store({
             console.log(e)
         }
     },
+
+    async fetchEditUser({commit} , payload){
+      let body = {
+        firstname: payload.firstname,
+        email: payload.email,
+        password: payload.password,
+        lastname: payload.lastname,
+        phone: payload.phone,
+        username: payload.username,
+        birthdate: payload.birthdate,
+        address: payload.address,
+        facebook: payload.facebook,
+        line: payload.line,
+        about_me: payload.about_me,
+        skill: payload.skill,
+        is_publish: payload.is_publish,
+        id:payload.id,
+        password_confirmation:payload.password_confirmation
+      }
+      try{
+        let res = await backendInstance.post(`/api/users/${payload.id}/edit-user`,body)
+      }
+      catch(e){
+        console.log(e)
+      }
+    }
   },
 });

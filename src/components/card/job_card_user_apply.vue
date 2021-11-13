@@ -22,9 +22,12 @@
                     </c-button>
                 </c-flex>
             </c-flex>
-
-            <c-text fontSize="5xl" align="center" color="red" mt="4rem" v-if="this.jobs.length === 0">ยังไม่มีงานที่คุณสมัคร</c-text>
-            <c-text fontSize="5xl" ml="4rem" color="indigo.400" mt="4rem" >งานที่คุณสมัครไป</c-text>
+            <c-text fontSize="5xl" ml="4rem" color="indigo.400" mt="4rem" >รายการงานที่คุณสมัครไป</c-text>
+            <c-text fontSize="5xl" align="center" color="red" mt="4rem" v-if="check === 0">ยังไม่มีงานที่คุณสมัคร</c-text>
+            <c-text fontSize="5xl" align="center" color="red" mt="4rem" v-if="check === 1 ">ยังไม่มีงานที่ AVAILABLE</c-text>
+            <c-text fontSize="5xl" align="center" color="red" mt="4rem" v-if="check === 2 ">ยังไม่มีงานที่ IN PROGRESS</c-text>
+            <c-text fontSize="5xl" align="center" color="red" mt="4rem" v-if="check === 3 ">ยังไม่มีงานที่ FINISH</c-text>
+            
     <c-simple-grid :columns="[1, 1, 1, 6]" spacing="8" m="10">
     <div v-for="index in jobs" :key="index.id">
         <c-box mt="4rem"  maxW="sm" border-width="4px" rounded="lg" overflow="hidden" border-color="black" :_hover="{bg: 'indigo.100' , borderColor:'indigo'}" fontSize="xl">
@@ -139,6 +142,7 @@ export default {
             provinces: [],
             categories: [],
             isLoading: true,
+            check:0
         }
     },
     async created(){
@@ -158,6 +162,21 @@ export default {
         await JobApi.dispatch("fetchJobUserApply", payload)
         this.jobs = JobApi.getters.getJobsThatUserApply
         // this.count_job = this.jobs.meta.total
+        if(this.jobs.length == 0 && working_status == 'AVAILABLE')
+        {
+            this.check = 1
+        }
+        else if(this.jobs.length == 0 && working_status == 'IN PROGRESS')
+        {
+            this.check = 2
+        }
+        else if(this.jobs.length == 0 && working_status == 'FINISH')
+        {   
+            this.check = 3
+        }
+        else{
+            this.check = 4
+        }
         console.log("fetch=================",this.jobs)
 
     },
@@ -182,6 +201,13 @@ export default {
         await JobApi.dispatch("fetchJobUserApply", payload)
         this.jobs = JobApi.getters.getJobsThatUserApply
         // this.count_job = this.jobs.meta.total
+        if(this.jobs.length == 0)
+        {
+            this.check = 0;
+        }
+        else{
+            this.check = 4
+        }
         console.log("fetch=================",this.jobs)
         this.form.working_status = ""
         // console.log("this.jobs")

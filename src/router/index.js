@@ -80,6 +80,16 @@ const routes = [
     component: () => import('../views/Job.vue')
   },
   {
+    path: '/edit/:id',
+    name: 'Edit',
+    props: true,
+    meta: {
+      layout: "Main",
+      requiresAuth: true,
+    },
+    component: () => import('../views/EditUserProfile.vue')
+  },
+  {
     path: "/employer",
     name: "Employer",
     meta: {

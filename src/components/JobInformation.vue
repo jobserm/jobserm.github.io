@@ -97,6 +97,9 @@
       
       <br>
       <br>
+      <c-box v-if="jobId.working_status === 'IN PROGRESS' || jobId.working_status === 'FINISH'">
+        <AllFreelanceWhoInterestedInJob/>
+      </c-box>
       <!-- <c-text v-if="validated" fontSize="4xl" ml="20rem" mt="2rem"> -->
         <!-- หากคุณกำลังมองหางานอื่นอยู่
           <JobCard v-if="validated"> 
@@ -112,9 +115,10 @@ import JobApi from "@/store/JobApi.js"
 import UserApi from "@/store/AuthUser.js"
 import UserApii from "@/store/UserStore.js"
 import JobCard from "../components/card/job_card_info_page.vue"
+import AllFreelanceWhoInterestedInJob from "../components/FreelanceSelected";
 
 export default {
-  // components:{ JobCard  },
+  components:{ AllFreelanceWhoInterestedInJob  },
   data() {
     return {
        job:[ { "id": 2, "compensation": 15304, "description": "Adipisci saepe perspiciatis rerum nobis neque libero. Natus quaerat quia nulla ipsam quo. Omnis est voluptates ratione.", "requirement": "Et expedita voluptas cupiditate eos veritatis repellendus. Iure autem quia dolorum non.", "province": "North Adeline", "title": "Government", "created_at": "2021-10-02T18:44:39.000000Z", "updated_at": "2021-10-02T18:44:39.000000Z" } ],

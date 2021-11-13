@@ -154,6 +154,11 @@
                     >
                     ความสามารถ : {{ this.user.skill }}
                     </c-text>
+                    <a :href="'#/edit/'+user.id">
+                    <c-button mx="140px" mb="40px" fontSize="lg" height="50px" width="250px" left-icon="info" variant-color="indigo" variant="solid">
+                        แก้ไขข้อมูลส่วนตัว
+                    </c-button>
+                    </a>
                 </c-box>
             </c-flex>
         </div>
