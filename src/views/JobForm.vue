@@ -28,21 +28,45 @@
 <script>
 import PostJob from '../components/form/PostJob.vue'
 import JobApi from '../store/JobApi'
+import axios from 'axios'
+
 export default {
     components: {
         PostJob,
     },
+    data() {
+        return {
+            isLoading: false
+        }
+    },
     methods: {
-        async post (value) {
+        async post ({ body, img }) {
             // this method is invoked from child component via @postJob
             console.log('new job is posted!')
-            console.log(value)
-
-            let res = await JobApi.dispatch('postJob', value)
+            this.isLoading = true
+            let res = await JobApi.dispatch('postJob', body)
             if (res.success) {
-                this.$swal("โพสต์งานสำเร็จ", `ตรวจสอบได้ที่หน้ารวมงาน`, "success")
-                this.$router.push("/jobinfo")
+                let formData = new FormData()
+                let token = JSON.parse(localStorage.getItem('auth-jobserm')).access_token
+                console.log(token)
+                img.forEach(async (file) => {
+                    formData.append('photo', file)
+                    let res = await axios.post('http://localhost:8000/api/images', formData, {
+                            headers: {
+                                'Authorization': `Bearer ${JSON.parse(localStorage.getItem('auth-jobserm')).access_token}`,
+                                'X-JOB-ID': JobApi.getters.getRecentlyPostedJob.id
+                            }
+                    })
+                    console.log(res)
+                    if (res.status === 200) {
+                        console.log('upload success')
+                        this.isLoading = false
+                    }
+                    this.$swal("โพสต์งานสำเร็จ", `ตรวจสอบได้ที่หน้ารวมงาน`, "success")
+                    this.$router.push("/userJob")
+                })
             } else {
+                this.isLoading = false
                 this.$swal("โพสต์งานไม่สำเร็จ", res.message, "error")
             }
         }

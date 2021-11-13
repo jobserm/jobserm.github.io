@@ -10,16 +10,18 @@
 </template>
 
 <script>
+import backendInstance from '../../services/backendInstance'
 export default {
+    props: ['users', 'jobs'],
     data() {
-        let months =  ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct']
+        let months =  ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
         return {
             series: [{
             name: 'Users',
-            data: [220, 140, 158, 258, 185, 149, 341, 456, 415]
+            data: this.users
             }, {
             name: 'Jobs',
-            data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
+            data: this.jobs
             }],
             chartOptions: {
             chart: {
@@ -61,7 +63,7 @@ export default {
             }
             },
         }
-    }
+    },
 }
 </script>
 

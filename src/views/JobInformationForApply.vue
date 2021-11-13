@@ -4,25 +4,24 @@
       <div v-if="!isLoading">
       <c-stack :spacing="6">
         <c-text fontSize="6xl" ml="20rem" mt="2rem">{{ jobId.title }}</c-text>
-          
+
           <!-- <c-flex ml="20rem">
-              <c-image mt="2rem" align="center" w="50%" v-bind:src="jobId.image[0].path"></c-image>
-              <c-flex flexDirection="column">
-              <c-image  ml="5rem"
-                      w="50%"
-                      h="50%"
-                      mt="2rem"
-                        v-bind:src="jobId.image[1].path" /> 
+            <c-image mt="2rem" align="center" w="50%"
+                      src="https://img.pptvhd36.com/thumbor/2020/07/16/news-0ae9eefe51.jpg" />
 
-              <c-image  ml="5rem"
+            <c-image  ml="5rem"
+                      w="30%"
+                      h="30%"
                       mt="2rem"
-                      w="50%"
-                      h="50%"
-                        v-bind:src="jobId.image[2].path" />
-          </c-flex>
-          </c-flex> -->
+                      src="https://www.forbes.com/advisor/wp-content/uploads/2021/03/pit-bull-featured.jpg" /> -->
 
-          <c-flex ml="20rem" v-if="jobId.image.length === 1">
+            <!-- <c-image  ml="5rem"
+                      w="30%"
+                      h="30%"
+                      src="https://www.forbes.com/advisor/wp-content/uploads/2021/03/pit-bull-featured.jpg" /> -->
+          <!-- </c-flex> -->
+
+                    <c-flex ml="20rem" v-if="jobId.image.length === 1">
 
               <c-image mt="2rem" align="center" w="50%" v-bind:src="jobId.image[0].path" ></c-image>
 
@@ -58,25 +57,12 @@
                         v-bind:src="jobId.image[2].path" />
               </c-flex>
           </c-flex>
-          
 
           <c-flex>
               <c-text color="indigo.400"  fontSize="5xl" ml="20rem">ชั่วโมงละ {{  jobId.compensation }} บาท</c-text>
 
               <!-- button -->
-              <c-flex ml="70rem">
-                <router-link to="/additionals" >
-                  <c-button h="4rem" w="19rem" fontSize="2xl" right-icon="arrow-forward" fontWeight="md" bg="#FE9A22" v-if="validated">
-                      สมัครงาน
-                  </c-button>
-                </router-link>
 
-              <router-link to="/review-form" >
-                <c-button h="4rem" w="19rem" fontSize="2xl" @click="finish" color="blue" bgColor="#D3EDED " v-if="validated_interest && jobId.working_status === 'IN PROGRESS'">
-                    จบงาน
-                </c-button>
-              </router-link>
-              </c-flex>
           </c-flex>
 
           <c-text fontSize="4xl" ml="20rem" as="ins" mt="6rem">รายละเอียดงาน</c-text>
@@ -95,14 +81,7 @@
           </c-box>
       </c-stack>
       
-      <br>
-      <br>
-      <!-- <c-text v-if="validated" fontSize="4xl" ml="20rem" mt="2rem"> -->
-        <!-- หากคุณกำลังมองหางานอื่นอยู่
-          <JobCard v-if="validated"> 
 
-          </JobCard> -->
-      <!-- </c-text> -->
       </div>
     </div>
 </template>
@@ -111,10 +90,8 @@
 import JobApi from "@/store/JobApi.js"
 import UserApi from "@/store/AuthUser.js"
 import UserApii from "@/store/UserStore.js"
-import JobCard from "../components/card/job_card_info_page.vue"
 
 export default {
-  // components:{ JobCard  },
   data() {
     return {
        job:[ { "id": 2, "compensation": 15304, "description": "Adipisci saepe perspiciatis rerum nobis neque libero. Natus quaerat quia nulla ipsam quo. Omnis est voluptates ratione.", "requirement": "Et expedita voluptas cupiditate eos veritatis repellendus. Iure autem quia dolorum non.", "province": "North Adeline", "title": "Government", "created_at": "2021-10-02T18:44:39.000000Z", "updated_at": "2021-10-02T18:44:39.000000Z" } ],
@@ -147,7 +124,6 @@ export default {
     this.jobId = JSON.parse(localStorage.getItem('YourItem'));
     console.log("this.user_loged_in" ,this.user_loged_in)
     console.log("created")
-    console.log("image",this.jobId.image)
   },
   computed:{
     validated() {

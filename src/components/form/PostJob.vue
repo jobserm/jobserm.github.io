@@ -28,20 +28,18 @@
             <c-input id="title" placeholder="งาน" v-model="form.title"/>
           </c-box>
 
-          <!-- <loading v-if="loading" />
+          <!-- <loading v-if="loading" /> -->
           <c-box>
             <c-form-label for="title" color="gray.600">{{
-              "อัปโหลดรูป"
+              "เพิ่มรูปงาน"
             }}</c-form-label>
             <c-input 
-                      mt="1rem"
-                      w="51rem"
-                      type="file"
-                      multiple
-                      @change="handleFilesUpload( $event )"
-           />
-           <c-button bgColor="blue.400" color="white" ml="43rem" mt="1rem" width="130px" @click="uploadFiles">UPLOAD</c-button>
-          </c-box> -->
+                mb="1rem"
+                type="file"
+                multiple
+                @change="handleFilesUpload( $event )"
+            />
+          </c-box>
 
           <c-box>
             <c-form-label for="description" color="gray.600">{{
@@ -112,7 +110,7 @@ export default {
             }, 
             categories: [],
             provinces: [],
-            // file: []
+            files: []
         }
     },
     created() {
@@ -123,11 +121,14 @@ export default {
       post () {
         // this.$emit will invoke parent method (postJob) 
         // and pass this.form back to parent
-        this.$emit('postJob', this.form)
+      let returnData = {
+        body: this.form,
+        img: this.files
+      }
+        this.$emit('postJob', returnData)
       },
 
       async getCategories() {
-        //console.log("eiei")
         await CategoryStore.dispatch('fetchData')
         this.categories = CategoryStore.getters.getCategories
       },
@@ -135,29 +136,29 @@ export default {
         let res = await Axios.get(`https://thaiaddressapi-thaikub.herokuapp.com/v1/thailand/provinces`);
         this.provinces = res.data;
       },
-      // handleFilesUpload(event) {
-      //       this.files = [...event.target.files]
-      //   },
-      //   async uploadFiles() {
-      //       try {
-      //           let formData = new FormData()
-      //           this.files.forEach(async (file) => {
-      //               formData.append('photo', file)
-      //               let res = await axios.post('http://localhost:8000/api/images', formData, {
-      //                   headers: {
-      //                       'X-JOB-ID': 1
-      //                   }
-      //               })
-      //               console.log(res)
-      //               if (res.status === 200) {
-      //                   console.log('upload success!')
-      //               }
-      //           })
+      handleFilesUpload(event) {
+            this.files = [...event.target.files]
+        },
+         async uploadFiles() {
+            // try {
+            //     let formData = new FormData()
+            //     this.files.forEach(async (file) => {
+            //         formData.append('photo', file)
+            //         let res = await axios.post('http://localhost:8000/api/images', formData, {
+            //             headers: {
+            //                 'X-JOB-ID': 1
+            //             }
+            //         })
+            //         console.log(res)
+            //         if (res.status === 200) {
+            //             console.log('upload success!')
+            //         }
+            //     })
                 
-      //       } catch (e) {
-      //           console.log(e)
-      //       }
-      //   }
+            // } catch (e) {
+            //     console.log(e)
+            // }
+         }
     }
 };
 </script>

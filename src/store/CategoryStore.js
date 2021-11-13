@@ -1,34 +1,57 @@
-import Axios from "axios";
 import Vue from "vue";
 import Vuex from "vuex";
-import AuthService from "../services/Authservice";
+import backendInstance from "../services/backendInstance";
 
-let api_endpoint = process.env.VUE_APP_JOBSERM_ENDPOINT || "http://localhost:8000";
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
         categories: [],
+        categories_after_remove: [],
+        category: {}
     },
 
     getters: {
         getCategories: (state) => state.categories,
+        getCategory: (state) => state.category,
     },
 
     mutations: {
         setCategories(state, res) {
             state.categories = res;
         },
+        removeCategory(state, data) {
+            state.categories_after_remove = state.categories_after_remove.map((category) => category.id != data.id);
+        },
+        setCategory(state, res) {
+            state.category = res;
+        }
     },
 
     actions: {
         async fetchData({ commit }) {
-            let header = AuthService.getApiHeader();
-            // let res = await Axios.get(`${api_endpoint}/api/categories`, header);
-            let res = await Axios.get(`${api_endpoint}/api/categories`);
+            let res = await backendInstance.get(`/api/categories`);
             commit("setCategories", res.data)
         },
+
+        async removeCategory({ commit }, id) {
+            let res = await backendInstance.delete(`api/categories/${id}`)
+            commit("removeCategory", res.data)
+        },
+
+        async fetchCategoryById({ commit }, id) {
+            let res = await backendInstance.get(`/api/categories/${id}`)
+            commit("setCategory", res.data)
+        },
+
+        async editCategory({ commit }, body) {
+            let res = await backendInstance.put(`/api/categories/${body.id}`, body)
+        },
+
+        async addCategory({ commit }, body) {
+            let res = await backendInstance.post(`/api/categories/`, body)
+        }
     },
     
     modules: {},

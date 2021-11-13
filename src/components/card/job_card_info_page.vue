@@ -1,40 +1,94 @@
 <template>
     <div>
-        
         <body>
-            <div class="cards">
-                
-                <div class="services" v-for="index in jobs.slice(0,3)" :key="index.id">
-                    
-                    
-                    <div class="content">
-                        
-                        <c-image class="pic" src="https://static.toiimg.com/photo/msid-67586673/67586673.jpg?3918697" />
-                        <div>
-                            <c-text  fontSize="2xl">{{ index.title }}</c-text>
-                            <c-text >{{ index.description }}</c-text>
-                            <c-text>{{ index.requirement }}</c-text>
-                            <c-text fontSize="xl">ค่าจ้าง {{ index.compensation }} บาท/ชม</c-text>
-                            <br>
-                            <a @click='value(index.id)' :href="'#/job'" v-bind="index">รายละเอียดงาน</a>
-                        </div>
-                        
-                    
-                        
-
-                    </div>
-                </div>
-            </div>
+            <c-simple-grid :columns="[1, 1, 1, 3]" spacing="10" mr="10rem">
+            <div v-for="index in jobs.slice(0,3)" :key="index.id">
+        <c-box mt="4rem" m="2rem" maxW="sm" border-width="2px" rounded="lg" overflow="hidden" border-color="black" :_hover="{bg: 'indigo.100' , borderColor:'indigo'}" fontSize="xl">
             
-        </body>
+            <c-image src="https://static.toiimg.com/photo/msid-67586673/67586673.jpg?3918697" alt="cat" />
+            <c-box p="6">
+                <c-box d="flex" align-items="baseline">
+                    <c-badge rounded="full" px="5" variant-color="green" font-size="0.75em" v-if="index.working_status === 'AVAILABLE'">
+                        AVALIABLE
+                    </c-badge>
+                    <c-badge rounded="full" px="5" variant-color="yellow" font-size="0.75em" v-if="index.working_status === 'IN PROGRESS'">
+                        IN PROGRESS
+                    </c-badge>
+                    <c-badge rounded="full" px="5" variant-color="red" font-size="0.75em" v-if="index.working_status === 'FINISH'">
+                        FINISH
+                    </c-badge>
+                    <c-box
+                        color="gray.500"
+                        font-weight="semibold"
+                        letter-spacing="wide"
+                        font-size="0.75em"
+                        text-transform="uppercase"
+                        ml="2"
+                        >
+                        {{ index.province }}   
+                    </c-box>
+                </c-box>
+                <c-box
+                    mt="1"
+                    font-weight="semibold"
+                    as="h4"
+                    line-height="tight"
+                    is-truncated
+                >
+                    {{ index.title }}
+                </c-box>
 
-        
+                <c-box>
+                    {{ index.description }}
+                </c-box>
+
+                <c-box
+                    mt="1.5rem"
+                    font-weight="semibold"
+                    as="h4"
+                    line-height="tight"
+                    is-truncated
+                >
+                    {{ "คุณสมบัติที่ต้องการ" }}
+                </c-box>
+                <c-box>
+                    {{ index.requirement }} 
+                </c-box>
+
+                <c-box
+                    mt="1.5rem"
+                    font-weight="semibold"
+                    as="h4"
+                    line-height="tight"
+                    is-truncated
+                >
+                    {{ "ค่าจ้าง" }}
+                </c-box>
+                <c-box>
+                    {{ index.compensation }} บาท/ชม
+                </c-box>
+
+                    <!-- {{ index.user_id }} -->
+                <c-flex jusify="center">
+                    <c-button  mt="1rem" bgColor="black" color="white" size="lg" :_hover="{bg: 'pink.400'}" v-if="!index.apply">
+                        <a @click='value(index.id)' :href="'#/job'" v-bind="index">รายละเอียดงาน</a>
+                    </c-button>
+                    <c-flex jusify="center" v-if="index.apply">
+                    <c-text color="red">คุณสมัครงานนี้ไปแล้ว</c-text>
+                </c-flex>
+                </c-flex>
+            </c-box>
+        </c-box>
+    </div>
+    </c-simple-grid>
+    </body>
         
     </div>
 </template>
 
 <script>
 import JobApi from "@/store/JobApi.js"
+import UserApi from "@/store/AuthUser.js"
 
 export default {
     components: { 
@@ -47,15 +101,52 @@ export default {
             payload_url:"",
             job_id:0,
             jobId:[],
-            id:0
+            id:0,
+            user_id:0,
+            user:[]
         }
     },
     async created(){
         this.jobId = JSON.parse(localStorage.getItem('YourItem'));
         console.log("created jobId",this.jobId.id)
          await this.fetchJobs(this.jobId.id)
+         await this.fetchUser()
+         await this.ftechJobUserApply()
     },
     methods:{
+        fetchUser(){
+            this.user = UserApi.getters.user
+            this.user_id = this.user.id
+            console.log("this.user==>",this.user)
+        },
+        async ftechJobUserApply(){
+        let payload={
+            user_id : this.user_id,
+            working_status : "AVAILABLE"
+        }
+        await JobApi.dispatch("fetchJobUserApply", payload)
+        this.jobsApply = JobApi.getters.getJobsThatUserApply
+        // this.count_job = this.jobs.meta.total
+        console.log("jobs L ",this.jobs.length)
+        console.log("jobsApply L",this.jobsApply.length)
+        for(let i = 0 ; i < this.jobs.length ; i++)
+                {
+                    var obj = this.jobs[i]
+                        obj["apply"] = false;
+                    for(let y = 0 ; y < this.jobsApply.length ; y++)
+                    {
+                        console.log("i", i)
+                        console.log("y", y)
+                        if(this.jobsApply[y].id == this.jobs[i].id)
+                        {
+                            obj["apply"] = true;
+                            console.log("i--", this.jobsApply[y].id)
+                            console.log("y--", this.jobs[i].id)
+                        }
+                            
+                    }
+                }
+    },
         async fetchJobs(id){
             await JobApi.dispatch("fetchJobSuggest",id)
             this.jobs = JobApi.getters.getJobSuggest

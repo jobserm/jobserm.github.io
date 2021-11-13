@@ -7,9 +7,10 @@
             <Header header="Jobs Management" icon="briefcase"/>
             <!-- <JobChart /> -->
             <JobTable @parentGetJobById="getJobById" />
-            <Jobs v-bind:job="job"/>
+            <Jobs v-bind:job="job" v-bind:showDeleteBtn="showDeleteBtn"/>
             <Header header="Categories Management" icon="tag"/>
-            <CategoryTable />
+            <CategoryTable @parentGetCategoryById="getCategoryById" />
+            <CategoryInfo v-bind:category="category" v-bind:showEditBtn="showEditBtn"/>
           </c-stack>
         </c-flex>
       </c-flex>
@@ -23,11 +24,15 @@ import Header from '../../components/admin/Header.vue'
 import CategoryTable from "../../components/admin/CategoryTable.vue";
 import JobTable from "../../components/admin/jobs/JobTable.vue";
 import Jobs from "../../components/admin/JobInfo.vue";
+import CategoryInfo from "../../components/admin/CategoryInfo.vue"
 
 export default {
   data() {
     return {
-      job: {}
+      job: {},
+      showDeleteBtn: false,
+      category: {},
+      showEditBtn: false
     }
   },
     components: {
@@ -37,12 +42,42 @@ export default {
         CategoryTable,
         JobTable,
         Jobs,
+        CategoryInfo,
+    },
+    created() {
+      this.$root.$refs.jobInfo = this
     },
     methods: {
       getJobById(value){
         this.job = value
-        console.log(this.job)
-      } 
+        this.showDeleteBtn = true
+      },
+      clearJob() {
+        this.job = {
+          title: '',
+          description: '',
+          requirement: '',
+          province: '', 
+          compensation: '',
+          status: '',
+          category_name: [{
+            category_name:"-"
+          }]
+
+      },
+        this.showDeleteBtn = false
+      },
+      getCategoryById(value) {
+        this.category = value
+        this.showEditBtn = true
+      },
+      clearCategory() {
+        this.category = {
+          category_name: '',
+          job_count: 0
+        }
+        this.showEditBtn = false
+      }
     }
 }
 </script>

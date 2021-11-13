@@ -1,6 +1,6 @@
 <template>
   <c-stack>
-    <c-heading align="center" as="h3" size="lg">Register page</c-heading>
+    
     <br>
     <br>
     <register1/>

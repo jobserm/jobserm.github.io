@@ -18,7 +18,7 @@
             </c-flex>
 
             <c-flex justify="center">
-                <c-text>{{ jobUser.name }} {{ jobUser.lastname }}</c-text>
+                <c-text>{{ user.name }} {{ user.lastname }}</c-text>
             </c-flex>
         </c-stack>
 
@@ -41,7 +41,7 @@
         >
             <c-box>
                 <c-text fontSize="2xl">
-                    {{ "คอมเม้น" }}
+                    {{ "คอมเมนต์" }}
                 </c-text>
                 <c-text fontSize="md" color="gray.400">
                     {{"Leave your comment"}}
@@ -114,21 +114,36 @@ export default {
       hasdescription: true,
       starsize: "lg", //xs/6x
       maxstars: 5,
-      disabled: false
+      disabled: false,
+      jobID:0
       },
 
     };
   },
   async created() {
     this.job = JSON.parse(localStorage.getItem('YourItem'));
-    console.log(this.job)
+    console.log("job",this.job)
     // รับ user คนที่ถูกรีวิวมาเงอะ
     this.jobUser = JSON.parse(localStorage.getItem('userToReview'));
-    console.log("this.jobUser", this.jobUser)
+    this.jobID = JSON.parse(localStorage.getItem('JobId'));
+    for(let i = 0 ; i < this.job.users.length ; i++)
+    {
+      console.log("-")
+      for(let y = 0 ; y < this.job.users[i].info.length ; y++)
+      {
+        console.log("is_se",this.job.users[i].info[y].pivot.is_selected)
+        if(this.job.users[i].info[y].pivot.is_selected == 1)
+        {
+          this.user = this.job.users[i]
+        }
+      }
+
+    }
+    console.log("this.jobUser", this.user)
   },
-  async mounted() {
-    this.user = await AuthUser.getters.user;
-  },
+  // async mounted() {
+  //   this.user = await AuthUser.getters.user;
+  // },
   methods:{
     async saveInfo() {
       console.log("star", this.score)
@@ -137,16 +152,16 @@ export default {
           id: this.user.id,
           comment: this.form.comment
       }
-      let user_id = this.jobUser.id
+      let job_id = this.job.id
       if(this.form.comment !== "" )
       { 
          this.$swal("รีวิวเสร็จสิ้น",'ขอบคุณที่ใช้งานเวปของเรา','success')
         await ReviewApi.dispatch("addReview", payload)
-        await JobApi.dispatch("fetchUserFinish",user_id)
+        await JobApi.dispatch("fetchUserFinish",job_id)
         this.$router.push("/userJob")
       }
       else
-        this.$swal("กรุณากรอกรีวิว",'','error')
+        this.$swal("คุณไม่ได้รีวิว",'','error')
       
     },
     // async getUser

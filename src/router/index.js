@@ -52,7 +52,25 @@ const routes = [
     component: () => import('../views/userJob.vue')
   },
   {
-    path: '/job',
+    path: '/userJobApply',
+    name: 'userJobApply',
+    meta: {
+      layout: "Main",
+      requiresAuth: true,
+    },
+    component: () => import('../views/userJobApply.vue')
+  },
+  {
+    path: '/JobInfoApply',
+    name: 'JobInfoApply',
+    meta: {
+      layout: "Main",
+      requiresAuth: true,
+    },
+    component: () => import('../views/JobInformationForApply.vue')
+  },
+  {
+    path: '/job/:id',
     name: 'Job',
     props: true,
     meta: {
@@ -104,17 +122,17 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/Register.vue"),
   },
   {
-    path: "/allusers",
-    name: "allusers",
+    path: "/all-freelance",
+    name: "AllFreelance",
     meta: {
       layout: "Main",
       requiresAuth: true,
     },
-    component: () => import("../views/AllUserForm.vue"),
+    component: () => import("../views/AllFreelance.vue"),
   },
   {
-    path: "/freelance",
-    name: "Freelance",
+    path: "/all-freelance-who-interested-in-job/:id",
+    name: "AllFreelanceWhoInterestedInJob",
     meta: {
       layout: "Main",
       requiresAuth: true,
@@ -123,16 +141,16 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Freelance.vue"),
+      import(/* webpackChunkName: "about" */ "../views/AllFreelanceWhoInterestedInJob.vue"),
   },
   {
-    path: "/profiles",
+    path: "/profiles/:id",
     name: "profiles",
     meta: {
       layout: "Main",
       requiresAuth: true,
     },
-    component: () => import("../views/DetailForm.vue"),
+    component: () => import("../views/Profiles.vue"),
   },
   // {
   //   path: "/personalinformation",
@@ -173,11 +191,11 @@ const routes = [
   {
     path: "/admin",
     name: "admin",
-    // meta: {
-    //   layout: "Main",
-    //   requiresAuth: true,
-    //   requiresAdmin: true,
-    // },
+    meta: {
+      layout: "Main",
+      requiresAuth: true,
+      requiresAdmin: true,
+    },
     component: () => import("../views/admin/index.vue"),
   },
   {
@@ -210,11 +228,11 @@ const routes = [
   {
     path: '/admin/accountsetting',
     name: "account setting",
-    // meta: {
-    //   layout: "Main",
-    //   requiresAuth: true,
-    //   requiresAdmin: true,
-    // },
+    meta: {
+      layout: "Main",
+      requiresAuth: true,
+      requiresAdmin: true,
+    },
     component: () => import("../views/admin/AccountSetting.vue")
   },
   {
@@ -230,17 +248,35 @@ const routes = [
   {
     path: '/admin/review',
     name: "review setting",
-    // meta: {
-    //   layout: "Main",
-    //   requiresAuth: true,
-    //   requiresAdmin: true,
-    // },
+    meta: {
+      layout: "Main",
+      requiresAuth: true,
+      requiresAdmin: true,
+    },
     component: () => import("../views/admin/Review.vue")
   },
   {
     path: '/testupload',
     name: "test upload",
     component: () => import("../views/testUpload.vue")
+  },
+  {
+    path: "/auth-profile",
+    name: "auth-profile",
+    meta: {
+      layout: "Main",
+      requiresAuth: true,
+    },
+    component: () => import("../views/AuthProfiles.vue"),
+  },
+  {
+    path: "/candidate-profile/:job_id/:user_id",
+    name: "candidate-profile",
+    meta: {
+      layout: "Main",
+      requiresAuth: true,
+    },
+    component: () => import("../views/CandidateProfile.vue"),
   },
 ];
 

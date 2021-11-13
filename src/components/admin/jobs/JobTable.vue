@@ -55,12 +55,13 @@ export default {
                     const text = row['job_owner'][0];
                     return (
                     <span>
-                          {text.name}
+                          {text.name + ' ' + text.lastname}
                     </span>
                 );
           },
                 },
-                { field: "report", key: "d", title: "รายงานความไม่เหมาะสม", align: "left" },
+                { field: "selected_user_admin", key: "d", title: "ผู้รับผิดชอบงาน", align: "left" },
+                { field: "report", key: "e", title: "รายงานความไม่เหมาะสม", align: "left" },
             ],
             // loading: true,
             rawData: [],
@@ -71,7 +72,6 @@ export default {
             id: ''
         }
     },
-
     computed: {
         countIndex() {
             return this.rawData.length
@@ -83,6 +83,7 @@ export default {
     },
     async created () {
         await this.fetchAllJobs();
+        this.$root.$refs.jobTable = this;
     },
     methods: {
         pageNumberChange( pageIndex ) {
@@ -94,6 +95,7 @@ export default {
         },
 
          async fetchAllJobs() {
+             this.loading = true;
              await JobApi.dispatch('fetchAllJobs')
              let jobs = JobApi.getters.getAllJobs
              if (jobs.length > 0) {
@@ -104,17 +106,12 @@ export default {
              this.loading = false
         },
         async getJobByID(id) {
-            let headers = {
-                'Authorization': `Bearer ${AuthUser.getters.jwt}`
-            }
+            this.loading = true;
             this.id = id;
-            let body = {
-                id: this.id,
-                headers: headers 
-            }
-            await JobApi.dispatch('fetchJobByID', body)
+            await JobApi.dispatch('fetchJobByID', id)
             let job = JobApi.getters.getJobById
             this.$emit('parentGetJobById', job)
+            this.loading = false;
         }
     },
 

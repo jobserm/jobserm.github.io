@@ -1,89 +1,74 @@
 <template>
    <c-box px="20" py="10">
-      <c-stack>
-          <c-heading py="12">ผู้ที่สนใจ <br> {{ job.title }}</c-heading>
-      </c-stack>
+        <loading v-if="isLoading" />
+        <div v-if="!isLoading">
+            <c-stack>
+                <c-heading py="12" size="2xl">ฟรีแลนซ์ที่กำลังหางาน</c-heading>
+            </c-stack>
 
-      <c-flex>
-          <!-- <div v-for="image in job_images" :key="image">
-              <c-image 
-              :src="require(`${image.dog}`)"
-              w="350px"
-              objectFit="scale-down"
-              p="2"
-              />
-          </div> -->
-      </c-flex>
+            <c-simple-grid :columns="[1, 1, 1, 5]" spacing="12" align="center" py="16">
+                <div v-for="user in users" :key="user.id">
 
-      <c-simple-grid :columns="[1, 1, 1, 5]" spacing="8" align="center" py="16">
-        <div v-for="user in jobId.users" :key="user.id">
-          <router-link to="/profiles" >
-            <div @click="freelancerInfo(user)">   
-              <info
-                image="require(`${user.path}`)"
-                v-bind:freelancerName="user.name + user.lastname"
-                v-bind:rating="user.review || 0"
-                v-bind:age="user.birthdate"
-                :star="require(`./star.png`)"
-              />
-            </div>
-            </router-link>
+                    <a :href="'#/profiles/'+user.id">   
+                    <info
+                        v-bind:freelancerName="user.name"
+                        v-bind:freelancerLastname="user.lastname"
+                        v-bind:rating="user.review"
+                        v-bind:age="user.birthdate"
+                        v-bind:image="user.img_url"
+                        :star="require(`./star.png`)"
+                    />
+                    </a>
+
+                </div>
+            </c-simple-grid>
+
         </div>
-      </c-simple-grid>
-
-
   </c-box>
 </template>
 
 <script>
 import info from "./Info.vue"
-import JobApi from "../../store/JobApi"
+import UserStore from "../../store/UserStore";
+
 export default {
     components: { info },
     name: "Info",
     data() {
-      return {
-        id: '',
-        job: {},
-        jobs:[],
-        jobId:[]
-      }
+        return {
+            users: [],
+            isLoading: true
+        }
     },
     async created() {
-      await JobApi.watch(
-        (state) => {
-          return JobApi.getters.job_filtered
-        },
-        (newValue, oldValue) => {
-          this.jobs.push(newValue)
-          localStorage.setItem('YourItem',JSON.stringify(newValue))
-          this.jobId = JSON.parse(localStorage.getItem('YourItem'));
-          console.log("this.jobId" ,this.jobId)
-          console.log(localStorage)
-          console.log("this.newValue" ,newValue)
-          console.log("this.job" ,this.jobs)
-        }
-      )
-      this.jobId = JSON.parse(localStorage.getItem('YourItem'));
-      console.log("this.jobId" ,this.jobId)
-      console.log("created")
-      this.getEsaaa()
+        await UserStore.dispatch("fetchUsersArePublish")
+        let res = UserStore.getters.fetchUsersArePublish
+        this.users = res
+        console.log("----user--")
+        console.log(this.users)
+        this.editFormat()
+        this.isLoading = false
     },
     methods: {
-      async getEsaaa() {
-        this.jobId.users.map(item => {
-          if (item.birthdate) {
-            let ageDifMs = Date.now() - new Date(item.birthdate).getTime()
-            let ageDate = new Date(ageDifMs)
-            item.birthdate = Math.abs(ageDate.getUTCFullYear() - 1970)
-          }
-          return item
-        })
-      },
-      freelancerInfo(user){
-        localStorage.setItem('user',JSON.stringify(user))
-        
-      },
+        async editFormat() {
+            this.users.map(item => {
+                if (item.birthdate) {
+                    let ageDifMs = Date.now() - new Date(item.birthdate).getTime()
+                    let ageDate = new Date(ageDifMs)
+                    item.birthdate = Math.abs(ageDate.getUTCFullYear() - 1970)
+                }
+                if (item.review === null) {
+                    item.review = 0
+                } else {
+                    item.review = item.review.toFixed(1)
+                }
+                return item
+            })
+        },
+
+        // async freelancerInfo(id) {
+        //     await
+        // }
     },
     
 }

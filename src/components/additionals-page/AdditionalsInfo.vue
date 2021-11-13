@@ -104,22 +104,41 @@ export default {
                 remark: this.form.remark,
                 job_id: this.jobId.id
             }
-            if(this.form.remark === ''){
+            if(this.form.remark === '') {
                 this.$swal("กรุณาใส่คำแนะนำตัวเอง",'',"error")
             }
-            else{
-                try{
-                    await JobApi.dispatch("addRemarks", payload)
-                    this.$swal("สมัครเรียบร้อย",'รอการติดต่อจากผู้ว่าจ้าง',"success")
-                } catch(error) {
-                    this.$swal("สมัครไปแล้ว",'',"error")
-                    this.$router.push("/jobinfo")
-                }
+            else {
+                this.$swal("ส่งข้อมูลเสร็จสิ้น", 'รอการติดต่อจากผู้ว่าจ้าง','success')
+                await JobApi.dispatch("addRemarks", payload)
+                this.$router.push("/jobinfo")
+                // this.$swal({
+                //     title: "ยืนยันการส่งข้อมูล",
+                //     text: "",
+                //     icon: "warning",
+                //     buttons: true,
+                //     dangerMode: true,
+                // })
+                // .then((addRemark) => {
+                //     if (addRemark) {
+                //         //let res = this.addRemarkToEmployer();
+                //         if (res.success) {
+                //             this.$swal("ส่งข้อมูลเสร็จสิ้น", {
+                //                 text: "รอการติดต่อจากผู้ว่าจ้าง",
+                //                 icon: "success",
+                //             })
+                //             this.$router.push("/")
+                //         }
+                //         else {
+                //             this.$swal("คุณเคยส่งข้อมูลไปแล้ว",'',"error")
+                //             this.$router.push("/jobinfo")
+                //         }
+                //     } 
+                //     else {
+                //         this.$swal("ยกเลิกการทำรายการ");
+                //     }
+                // });
             }
-
-            
-            
-        }
+        },
     }
 }
 </script>

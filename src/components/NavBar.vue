@@ -30,7 +30,7 @@
         </div>
 
         <div v-if="isAuthen() && !isAdmin()">
-          <router-link to="/freelance">
+          <router-link to="/all-freelance">
             <c-text ms="5">เริ่มหาฟรีแลนซ์</c-text></router-link
           >
         </div>
@@ -67,6 +67,10 @@
             </c-menu>
         </c-flex>
         <div v-if="isAuthen() && !isAdmin()">
+          <button-secondary :url="`/userJobApply`" :text="`งานที่คุณสมัคร`" mx="4" />
+        </div>
+
+        <div v-if="isAuthen() && !isAdmin()">
           <button-secondary :text="`โพสต์ของคุณ`" :url="`/userJob`" mx="4" />
         </div>
         <!-- <div v-if="isAuthen() && !isAdmin()">
@@ -82,6 +86,12 @@
         
         <div v-if="!isAuthen()">
           <button-primary :url="`/register`" :text="`สมัครสมาชิก`" mx="4" />
+        </div>
+
+        <div v-if="isAuthen() && !isAdmin()">
+          <router-link to="/auth-profile">
+            <c-avatar w="3rem" h="3rem" :src="user.img_url" />
+          </router-link>
         </div>
         
       </c-flex>
@@ -107,8 +117,8 @@ export default {
     };
   },
 
-  created() {
-    this.getUser()
+  async created() {
+    await this.getUser()
   },
 
   methods: {
@@ -120,8 +130,10 @@ export default {
       return AuthUser.getters.isAdmin
     },
 
-    getUser() {
+    async getUser() {
+      await AuthUser.dispatch('me');
       this.user = AuthUser.getters.user
+      console.log(this.user)
     }
   },
 };

@@ -23,15 +23,12 @@
                 </c-flex>
             </c-flex>
 
-            <c-text fontSize="5xl" align="center" color="red" mt="4rem" v-if="this.check === -1">คุณยังไม่ได้โพสต์งาน</c-text>
-            <c-text fontSize="5xl" align="center" color="red" mt="4rem" v-if="this.check === -2">ไม่มีงานที่ AVALIABLE</c-text>
-            <c-text fontSize="5xl" align="center" color="red" mt="4rem" v-if="this.check === -3">ไม่มีงานที่ IN PROGRESS</c-text>
-            <c-text fontSize="5xl" align="center" color="red" mt="4rem" v-if="this.check === -4">ไม่มีงานที่ FINISH</c-text>
-             <c-text fontSize="5xl" ml="4rem" color="indigo.400" mt="4rem" >งานที่คุณโพส</c-text>
+            <c-text fontSize="5xl" align="center" color="red" mt="4rem" v-if="this.jobs.length === 0">ยังไม่มีงานที่คุณสมัคร</c-text>
+            <c-text fontSize="5xl" ml="4rem" color="indigo.400" mt="4rem" >งานที่คุณสมัครไป</c-text>
     <c-simple-grid :columns="[1, 1, 1, 6]" spacing="8" m="10">
-    <div v-for="index in jobs.data" :key="index.id">
+    <div v-for="index in jobs" :key="index.id">
         <c-box mt="4rem"  maxW="sm" border-width="4px" rounded="lg" overflow="hidden" border-color="black" :_hover="{bg: 'indigo.100' , borderColor:'indigo'}" fontSize="xl">
-
+            
             <c-image :src="index.image[0].path" alt="cat" />
             <c-box p="6">
                 <c-box d="flex" align-items="baseline">
@@ -98,13 +95,11 @@
 
                 <c-flex jusify="center">
                     <c-button mt="2rem" m="3" bgColor="black" color="white" size="lg" :_hover="{bg: 'pink.400'}">
-                        <a @click='value(index.id)' :href="'#/job/'+index.id" v-bind="index">รายละเอียดงาน</a>
+                        <a @click='value(index.id)' :href="'#/JobInfoApply'" v-bind="index">รายละเอียดงาน</a>
                     </c-button>
 
                     <div v-if="index.working_status !== 'IN PROGRESS' && index.working_status !== 'FINISH'">
-                    <c-button mt="2rem" m="3" bgColor="black" color="white" size="lg" :_hover="{bg: 'pink.400'}">
-                        <a @click='Freelance(index.id)' :href="'#/all-freelance-who-interested-in-job/'+index.id" v-bind="index">ผู้ที่สนใจงาน</a>
-                    </c-button>
+                   
 
                     </div>
                     
@@ -144,7 +139,6 @@ export default {
             provinces: [],
             categories: [],
             isLoading: true,
-            check:0
         }
     },
     async created(){
@@ -161,27 +155,8 @@ export default {
             user_id : this.user_id,
             working_status : working_status
         }
-        await JobApi.dispatch("fetchJobUserId", payload)
-        this.jobs = JobApi.getters.getJobByUser
-        this.check = 0;
-        if(this.jobs.data.length == 0)
-        {
-            if(working_status == "AVAILABLE")
-            {
-                this.check = -2
-            }
-            if(working_status == "IN PROGRESS")
-            {
-                this.check = -3
-            }
-            if(working_status == "FINISH")
-            {
-                this.check = -4
-            }
-            
-                
-        }
-        
+        await JobApi.dispatch("fetchJobUserApply", payload)
+        this.jobs = JobApi.getters.getJobsThatUserApply
         // this.count_job = this.jobs.meta.total
         console.log("fetch=================",this.jobs)
 
@@ -204,15 +179,10 @@ export default {
             user_id : this.user_id,
             working_status : "ALL"
         }
-        await JobApi.dispatch("fetchJobUserId", payload)
-        this.jobs = JobApi.getters.getJobByUser
+        await JobApi.dispatch("fetchJobUserApply", payload)
+        this.jobs = JobApi.getters.getJobsThatUserApply
         // this.count_job = this.jobs.meta.total
         console.log("fetch=================",this.jobs)
-        this.check = 0;
-        if(this.jobs.data.length == 0)
-        {
-            this.check = -1
-        }
         this.form.working_status = ""
         // console.log("this.jobs")
         // console.log(this.jobs.data)

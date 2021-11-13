@@ -1,18 +1,19 @@
 <template>
     <c-box>
         <c-box  px="20" py="10" >
-            <loading v-if="isLoading" />
-            <div v-if="!isLoading">
+        <loading v-if="isLoading" />
+        <div v-if="!isLoading">
             <c-stack>
                 <c-heading align="center" fontSize="5xl" py="5">ประวัติส่วนตัว</c-heading>
             </c-stack>
             
+
             <c-flex py="16" justify="center">
                 <info-profile
                     v-bind:freelancerName="this.user.name"
                     v-bind:freelancerLastname="this.user.lastname"
-                    v-bind:rating="this.user.review"
-                    v-bind:age="this.user.birthdate"
+                    v-bind:rating="user.review"
+                    v-bind:age="user.birthdate"
                     v-bind:image="this.user.img_url"
                     :star="require(`./star.png`)"
                 />
@@ -149,16 +150,50 @@
                         opacity="0.9"
                         px="24"
                         lineHeight="2.5"
-                        pb="5"
                     >
                     ความสามารถ : {{ this.user.skill }}
                     </c-text>
+
+                    
+                    <c-heading
+                        as="h2"
+                        size="xl"
+                        color="black"
+                        opacity="0.9"
+                        px="24"
+                        lineHeight="3"
+                        mt="1rem"
+                    >
+                    สิ่งที่อยากบอก
+                    </c-heading>
+
+                    <c-text 
+                        as="h1"
+                        fontSize="2xl"
+                        color="black"
+                        opacity="0.9"
+                        px="24"
+                        lineHeight="2.5"
+                    >
+                    ข้อความเพิ่มเติมจากผู้สมัคร : {{ remark }}
+                    </c-text>
+
+                    <c-button
+                        mx="24" 
+                        :_hover="{ bg: '#E2E8F0'}"
+                        bgColor="brand.500"
+                        p="6"
+                        my="8"
+                        ml="85%"
+                        color="white"
+                        fontSize="2xl"
+                        @click="selectFreelance">จ้างงาน</c-button>
                 </c-box>
             </c-flex>
-            </div>
-            <!-- รีวิว -->
-            <c-heading size="2xl" py="5" mt="5rem" ml="5rem" v-if="this.user.review !== 0">รีวิวจากผู้ว่าจ้าง</c-heading>
-            <c-simple-grid :columns="[1, 1, 1, 2]" spacing="10" ml="4rem">
+        </div>
+        <!-- รีวิว -->
+        <c-heading size="2xl" py="5" mt="5%" ml="4%" v-if="this.user.review !== 0">รีวิวจากผู้ว่าจ้าง</c-heading>
+        <c-simple-grid :columns="[1, 1, 1, 2]" spacing="10" ml="3%">
                     <div v-for="review in this.reviews" :key="review.id">
                         <c-stack
                             wrap="wrap"
@@ -175,17 +210,18 @@
                             <c-heading fontSize="2xl" pb="2">{{ review.comment }} 
                                 <br>
                                 <br>
-                                คะแนนรีวิว {{ review.rating.toFixed(1) }}
+                                คะแนนรีวิว {{ review.rating.toFixed(1) }} 
                             </c-heading>
         
                         </c-stack>
                     </div>
-            </c-simple-grid>
-        </c-box> 
-    </c-box>  
+                </c-simple-grid>
+        </c-box>
+    </c-box>   
 </template>
 
 <script>
+import JobApi from '../../store/JobApi'
 import UserStore from '../../store/UserStore'
 import InfoProfile from './InfoProfile.vue'
 import ReviewApi from '../../store/ReviewApi'
@@ -193,24 +229,22 @@ import ReviewApi from '../../store/ReviewApi'
 export default {
     components: {
         InfoProfile,
-},
+    },
     data() {
         return {
             user: {},
             reviews: [],
             isLoading: true,
-            user_id : this.$route.params.id
+            job_id: this.$route.params.job_id,
+            user_id: this.$route.params.user_id,
+            remark:""
         }
     },
 
     async created() {
-        await this.fetchUser(this.user_id)
+        //console.log(this.job_id)
+        this.fetchData(this.user_id)
 
-        await ReviewApi.dispatch("getReviewByUserID", this.user.id)
-        let res = ReviewApi.getters.getReviewsByUserID
-        this.reviews = res
-
-        this.editFormat()
     },
 
     methods: {
@@ -227,11 +261,45 @@ export default {
             }
         },
 
-        async fetchUser(id) {
+        async fetchData(id) {
             await UserStore.dispatch("fetchUserByID", id)
             let res = UserStore.getters.fetchUser
             this.user = res
+
+            console.log(this.user)
+            console.log("length" , this.job_id)
+
+            for(let i = 0 ; i<this.user.info.length ; i++)
+            {
+                console.log("this.user.info[i]" , this.user.info[i])
+                if(this.user.info[i].id == this.job_id)
+                {
+                    
+                    this.remark =this.user.info[i].pivot.remark
+                }
+            }
+
+            await ReviewApi.dispatch("getReviewByUserID", this.user.id)
+            let res2 = ReviewApi.getters.getReviewsByUserID
+            this.reviews = res2
+
             this.isLoading = false
+            this.editFormat()
+        },
+
+        async selectFreelance() {
+          let body1 = {
+            job_id : this.job_id,
+            user_id : this.user_id
+          }
+          let res = await JobApi.dispatch("employerSelectFreelancer", body1)
+
+          if (res.success) {
+            this.$router.push("/userJob")
+            this.$swal("จ้างงานเสร็จสิ้น", {icon: "success"})
+          } else {
+            console.log("-----??")
+          }
         }
     },
 }

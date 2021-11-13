@@ -1,12 +1,13 @@
 <template>
     <c-box>
         <c-box  px="20" py="10" >
-            <loading v-if="isLoading" />
-            <div v-if="!isLoading">
+        <loading v-if="isLoading" />
+        <div v-if="!isLoading">
             <c-stack>
                 <c-heading align="center" fontSize="5xl" py="5">ประวัติส่วนตัว</c-heading>
             </c-stack>
             
+
             <c-flex py="16" justify="center">
                 <info-profile
                     v-bind:freelancerName="this.user.name"
@@ -155,10 +156,10 @@
                     </c-text>
                 </c-box>
             </c-flex>
-            </div>
-            <!-- รีวิว -->
-            <c-heading size="2xl" py="5" mt="5rem" ml="5rem" v-if="this.user.review !== 0">รีวิวจากผู้ว่าจ้าง</c-heading>
-            <c-simple-grid :columns="[1, 1, 1, 2]" spacing="10" ml="4rem">
+        </div>
+        <!-- รีวิว -->
+        <c-heading size="2xl" py="5" mt="5rem" ml="5rem" v-if="this.user.review !== 0">รีวิวจากผู้ว่าจ้าง</c-heading>
+        <c-simple-grid :columns="[1, 1, 1, 2]" spacing="10" ml="4rem">
                     <div v-for="review in this.reviews" :key="review.id">
                         <c-stack
                             wrap="wrap"
@@ -175,17 +176,18 @@
                             <c-heading fontSize="2xl" pb="2">{{ review.comment }} 
                                 <br>
                                 <br>
-                                คะแนนรีวิว {{ review.rating.toFixed(1) }}
+                                คะแนนรีวิว {{ review.rating.toFixed(1) }} 
                             </c-heading>
         
                         </c-stack>
                     </div>
-            </c-simple-grid>
-        </c-box> 
-    </c-box>  
+                </c-simple-grid>
+        </c-box>
+    </c-box>   
 </template>
 
 <script>
+import AuthUser from '../../store/AuthUser'
 import UserStore from '../../store/UserStore'
 import InfoProfile from './InfoProfile.vue'
 import ReviewApi from '../../store/ReviewApi'
@@ -193,24 +195,19 @@ import ReviewApi from '../../store/ReviewApi'
 export default {
     components: {
         InfoProfile,
-},
+    },
     data() {
         return {
             user: {},
             reviews: [],
             isLoading: true,
-            user_id : this.$route.params.id
         }
     },
 
     async created() {
-        await this.fetchUser(this.user_id)
 
-        await ReviewApi.dispatch("getReviewByUserID", this.user.id)
-        let res = ReviewApi.getters.getReviewsByUserID
-        this.reviews = res
+        this.fetchData()
 
-        this.editFormat()
     },
 
     methods: {
@@ -227,12 +224,19 @@ export default {
             }
         },
 
-        async fetchUser(id) {
-            await UserStore.dispatch("fetchUserByID", id)
+        async fetchData() {
+            let auth_user = AuthUser.getters.user
+            await UserStore.dispatch("fetchUserByID", auth_user.id)
             let res = UserStore.getters.fetchUser
             this.user = res
+
+            await ReviewApi.dispatch("getReviewByUserID", this.user.id)
+            let res2 = ReviewApi.getters.getReviewsByUserID
+            this.reviews = res2
+
             this.isLoading = false
-        }
+            this.editFormat()
+        },
     },
 }
 </script>
